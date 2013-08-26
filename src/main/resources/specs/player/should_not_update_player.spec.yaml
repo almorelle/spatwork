@@ -1,0 +1,14 @@
+title: "should not update player"
+given:
+  - time: 2013-05-26T09:17:10.132+02:00
+  - collection: players
+    data: |
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc0" } , "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc1" } , "firstName" : "Magic" , "lastName" : "Mike" , "goals" : 5 , "wins" : 2 , "losses" : 0 }
+wts:
+  - when: |
+       PUT players/51a1b6b1f8caff745206bbc0
+
+       { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 }
+    then: |
+       404

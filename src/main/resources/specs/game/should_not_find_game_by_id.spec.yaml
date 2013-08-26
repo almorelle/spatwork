@@ -1,0 +1,10 @@
+title: "should not find game by id"
+given:
+  - time: 2013-05-26T09:16:34.523+02:00
+  - collection: games
+    data: |
+        { "_id" : { "$oid" : "32c1f6b10edeff092741eac7" } , "teamARef" : "63a1c6a50caecf0479135bc9" , "teamBRef" : "63a1c6a50caecf0479135bd0" }
+wts:
+  - when: GET games/63a1c6a50caecf04791316d0
+    then: |
+        404

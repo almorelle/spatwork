@@ -1,0 +1,20 @@
+title: "should create team"
+given:
+  - time: 2013-05-26T09:17:30.440+02:00
+  - collection: teams
+    data: |
+
+    sequence: 63a1c6a50caecf0479135bc9
+wts:
+  - when: GET teams
+    then: "[ ]"
+  - when: |
+          POST teams
+            { "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 8 }
+    then: |
+            { "_id" : "63a1c6a50caecf0479135bc9" , "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 8 }
+  - when: GET teams
+    then: |
+        [
+            { "_id" : "63a1c6a50caecf0479135bc9" , "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 8 }
+        ]

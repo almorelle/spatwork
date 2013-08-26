@@ -1,0 +1,20 @@
+title: "should create player"
+given:
+  - time: 2013-05-24T12:00:00Z
+  - collection: players
+    data: |
+
+    sequence: 51a1b6b10edeff044953bbc0
+wts:
+  - when: GET players
+    then: "[ ]"
+  - when: |
+          POST players
+          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 }
+    then: |
+          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 , "_id" : "51a1b6b10edeff044953bbc0" }
+  - when: GET players
+    then: |
+        [
+          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 , "_id" : "51a1b6b10edeff044953bbc0" }
+        ]

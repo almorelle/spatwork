@@ -1,0 +1,20 @@
+title: "should update player"
+given:
+  - time: 2013-05-26T09:17:30.440+02:00
+  - collection: players
+    data: |
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc0" } , "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc1" } , "firstName" : "Magic" , "lastName" : "Mike" , "goals" : 5 , "wins" : 2 , "losses" : 0 }
+wts:
+  - when: |
+       PUT players/51a1b6b10edeff044953bbc0
+
+        { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 13 , "wins" : 6 , "losses" : 1 , "_id" : "51a1b6b10edeff044953bbc0" }
+    then: |
+        { "_id" : "51a1b6b10edeff044953bbc0" , "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 13 , "wins" : 6 , "losses" : 1 }
+  - when: GET players
+    then: |
+        [
+            { "_id" : "51a1b6b10edeff044953bbc0" , "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 13 , "wins" : 6 , "losses" : 1 },
+            { "_id" : "51a1b6b10edeff044953bbc1" , "firstName" : "Magic" , "lastName" : "Mike" , "goals" : 5 , "wins" : 2 , "losses" : 0 }
+        ]

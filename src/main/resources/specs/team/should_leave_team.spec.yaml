@@ -1,0 +1,31 @@
+title: "should leave team"
+given:
+  - time: 2013-05-26T09:17:30.440+02:00
+  - collection: teams
+    data: |
+        { "_id" : { "$oid" : "63a1c6a50caecf0479135bc9" } , "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 8 }
+        { "_id" : { "$oid" : "63a1c6a50caecf0479135bd0" } , "teammateRefs" : [ "51a1b6b10edeff044953bbc1" , "51a1b6b10edeff044953bbc3" ] , "score" : 6 }
+  - collection: players
+    data: |
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc0" } , "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 3 }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc1" } , "firstName" : "Magic" , "lastName" : "Mike" , "goals" : 5 , "wins" : 5 , "losses" : 9 }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc2" } , "firstName" : "Tony" , "lastName" : "Chu" , "goals" : 9 , "wins" : 7 , "losses" : 8 }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc3" } , "firstName" : "Hold" , "lastName" : "On" , "goals" : 3 , "wins" : 1 , "losses" : 0 }
+wts:
+  - when: GET teams
+    then: |
+        [
+            { "_id" : "63a1c6a50caecf0479135bc9" , "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 8 },
+            { "_id" : "63a1c6a50caecf0479135bd0" , "teammateRefs" : [ "51a1b6b10edeff044953bbc1" , "51a1b6b10edeff044953bbc3" ] , "score" : 6 }
+        ]
+  - when: |
+       PUT teams/player/leave/63a1c6a50caecf0479135bc9/51a1b6b10edeff044953bbc0
+
+    then: |
+        { "_id" : "63a1c6a50caecf0479135bc9" , "teammateRefs" : [ "51a1b6b10edeff044953bbc2" ] , "score" : 8 }
+  - when: GET teams
+    then: |
+        [
+            { "_id" : "63a1c6a50caecf0479135bc9" , "teammateRefs" : [ "51a1b6b10edeff044953bbc2" ] , "score" : 8 },
+            { "_id" : "63a1c6a50caecf0479135bd0" , "teammateRefs" : [ "51a1b6b10edeff044953bbc1" , "51a1b6b10edeff044953bbc3" ] , "score" : 6 }
+        ]
