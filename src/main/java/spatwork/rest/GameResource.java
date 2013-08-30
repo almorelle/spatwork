@@ -14,6 +14,8 @@ import spatwork.domain.Player;
 import spatwork.domain.Team;
 
 import javax.inject.Named;
+import java.util.Collection;
+import java.util.HashSet;
 
 import static restx.common.MorePreconditions.checkEquals;
 
@@ -72,9 +74,20 @@ public class GameResource {
     @PermitAll
     @PUT("/games/{key}")
     public Game updateGame(String key, Game game) {
-        Optional<Game> playerByKey = findGameByKey(key);
-        if(playerByKey.isPresent()){
+        Optional<Game> gameByKey = findGameByKey(key);
+        if(gameByKey.isPresent()){
             checkEquals("key", key, "game.key", game.getKey());
+            Collection<String> playersInGame = new HashSet<String>();
+            for(String playerKey: game.getTeamA().getTeammateRefs()){
+                if(!playersInGame.add(playerKey)){
+                    throw new WebException(HttpStatus.BAD_REQUEST);
+                }
+            }
+            for(String playerKey: game.getTeamB().getTeammateRefs()){
+                if(!playersInGame.add(playerKey)){
+                    throw new WebException(HttpStatus.BAD_REQUEST);
+                }
+            }
             games.get().save(game);
             return game;
         } else {
@@ -121,7 +134,7 @@ public class GameResource {
                 case "A":
                     teamByKey = Optional.of(game.getTeamA());
                     break;
-                case "b":
+                case "B":
                     teamByKey = Optional.of(game.getTeamB());
                     break;
                 default:
@@ -151,8 +164,7 @@ public class GameResource {
      * Closes a game by recording the result, clearing all the players and resetting the score.
      * @param key the reference game to update.
      * @return the updated game.
-     * @throws WebException HTTP400 if one of the referenced teams doesn't exists or HTTP404 if the referenced game
-     * doesn't exists.
+     * @throws WebException HTTP404 if the referenced game doesn't exists.
      */
     @PermitAll
     @PUT("/games/end/{key}")
