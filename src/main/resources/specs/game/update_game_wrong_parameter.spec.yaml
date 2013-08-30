@@ -1,0 +1,20 @@
+title: "update game wrong parameter"
+given:
+  - time: 2013-05-26T09:17:10.132+02:00
+  - collection: games
+    data: |
+        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":8},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":6}}
+wts:
+  - when: |
+       PUT games/3661f6b10ed576ea2741ef47
+       { "_id" : "3661f6b10ed576ea2741ef47","teamA":{"teammateRefs":[],"score":0},"teamB":{"teammateRefs":[],"score":0}}
+    then: |
+       404
+  - when: GET games
+    then: |
+        [
+            { "_id" : "32c1f6b10edeff092741eac7" ,
+            	"teamA" : { "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 8 } ,
+            	"teamB" : { "teammateRefs" : [ "51a1b6b10edeff044953bbc1" , "51a1b6b10edeff044953bbc3" ] , "score" : 6 }
+            }
+        ]
