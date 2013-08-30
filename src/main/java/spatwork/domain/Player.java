@@ -76,7 +76,7 @@ public class Player {
      * This method register the result of the game for the current player and sets him out of the team.
      * @param won Whether the player was in the winning team or not.
      */
-    public void endOfGame(boolean won) {
+    public void finishGame(boolean won) {
         if(won) { this.wins++; }
         else { this.losses++; }
     }
