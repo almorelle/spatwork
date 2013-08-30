@@ -7,29 +7,21 @@ given:
         { "_id" : { "$oid" : "51a1b6b10edeff044953bbc1" } , "firstName" : "Magic" , "lastName" : "Mike" , "goals" : 5 , "wins" : 5 , "losses" : 9 }
         { "_id" : { "$oid" : "51a1b6b10edeff044953bbc2" } , "firstName" : "Tony" , "lastName" : "Chu" , "goals" : 9 , "wins" : 7 , "losses" : 8 }
         { "_id" : { "$oid" : "51a1b6b10edeff044953bbc3" } , "firstName" : "Hold" , "lastName" : "On" , "goals" : 3 , "wins" : 1 , "losses" : 0 }
-  - collection: teams
-    data: |
-        { "_id" : { "$oid" : "63a1c6a50caecf0479135bc9" } , "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 4 }
-        { "_id" : { "$oid" : "63a1c6a50caecf0479135bd0" } , "teammateRefs" : [ "51a1b6b10edeff044953bbc1" , "51a1b6b10edeff044953bbc3" ] , "score" : 7 }
   - collection: games
     data: |
-        { "_id" : { "$oid" : "32c1f6b10edeff092741eac7" } , "teamARef" : "63a1c6a50caecf0479135bc9" , "teamBRef" : "63a1c6a50caecf0479135bd0" }
+        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":5},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":6}}
 wts:
   - when: |
        PUT games/end/32c1f6b10edeff092741eac7
-
     then: |
-        { "_id" : "32c1f6b10edeff092741eac7" , "teamARef" : "63a1c6a50caecf0479135bc9" , "teamBRef" : "63a1c6a50caecf0479135bd0" }
+        {"_id" : "32c1f6b10edeff092741eac7","teamA" : { "teammateRefs" : [ ] , "score" : 0 },"teamB" : { "teammateRefs" : [ ] , "score" : 0 }}
   - when: GET games
     then: |
         [
-            { "_id" : "32c1f6b10edeff092741eac7" , "teamARef" : "63a1c6a50caecf0479135bc9" , "teamBRef" : "63a1c6a50caecf0479135bd0" }
-        ]
-  - when: GET teams
-    then: |
-        [
-            { "_id" : "63a1c6a50caecf0479135bc9" , "teammateRefs" : [ ] , "score" : 0 },
-            { "_id" : "63a1c6a50caecf0479135bd0" , "teammateRefs" : [ ] , "score" : 0 }
+            { "_id" : "32c1f6b10edeff092741eac7" ,
+            	"teamA" : { "teammateRefs" : [ ] , "score" : 0 } ,
+            	"teamB" : { "teammateRefs" : [ ] , "score" : 0 }
+            }
         ]
   - when: GET players
     then: |

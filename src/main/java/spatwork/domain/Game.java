@@ -1,7 +1,10 @@
 package spatwork.domain;
 
+import com.google.common.base.Optional;
 import org.jongo.marshall.jackson.oid.Id;
 import org.jongo.marshall.jackson.oid.ObjectId;
+
+import java.util.Collection;
 
 /**
  * Simple POJO of a game
@@ -10,8 +13,8 @@ public class Game {
     @Id @ObjectId
     private String key;
 
-    private String teamARef;
-    private String teamBRef;
+    private Team teamA;
+    private Team teamB;
 
     public String getKey() {
         return key;
@@ -21,29 +24,35 @@ public class Game {
         this.key = key;
     }
 
-    public String getTeamARef() {
-        return teamARef;
+    public void setTeamA(Team teamA) {
+        this.teamA = teamA;
     }
 
-    public void setTeamARef(String teamARef) {
-        this.teamARef = teamARef;
+    public Team getTeamA() {
+        return teamA;
     }
 
-    public String getTeamBRef() {
-        return teamBRef;
+    public void setTeamB(Team teamB) {
+        this.teamB = teamB;
     }
 
-    public void setTeamBRef(String teamBRef) {
-        this.teamBRef = teamBRef;
+    public Team getTeamB() {
+        return teamB;
     }
 
     @Override
     public String toString() {
         return "Game{" +
                 "key='" + key + '\'' +
-                ", teamARef=" + teamARef +
-                ", teamBRef=" + teamBRef +
+                ", teamA=" + teamA +
+                ", teamB=" + teamB +
                 '}';
+    }
+
+    public GameResult winner(){
+        return teamA.getScore() > teamB.getScore() ?
+                GameResult.TEAM_A_WON : teamA.getScore() < teamB.getScore() ?
+                GameResult.TEAM_B_WON : GameResult.DRAW;
     }
 
     /**

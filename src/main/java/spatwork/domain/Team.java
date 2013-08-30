@@ -1,29 +1,14 @@
 package spatwork.domain;
 
-import org.jongo.marshall.jackson.oid.Id;
-import org.jongo.marshall.jackson.oid.ObjectId;
-
 import java.util.Collection;
 
 /**
- *  Simple POJO of a sport team
+ * Teams.
  */
 public class Team {
-    @Id
-    @ObjectId
-    private String key;
 
     private Collection<String> teammateRefs;
-
     private int score;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public Collection<String> getTeammateRefs() {
         return teammateRefs;
@@ -78,8 +63,7 @@ public class Team {
     @Override
     public String toString() {
         return "Team{" +
-                "key='" + key + '\'' +
-                ", teammateRefs=" + teammateRefs +
+                "teammateRefs=" + teammateRefs +
                 ", score=" + score +
                 '}';
     }

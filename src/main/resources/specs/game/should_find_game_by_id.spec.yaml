@@ -3,8 +3,8 @@ given:
   - time: 2013-05-26T09:16:34.523+02:00
   - collection: games
     data: |
-        { "_id" : { "$oid" : "32c1f6b10edeff092741eac7" } , "teamARef" : "63a1c6a50caecf0479135bc9" , "teamBRef" : "63a1c6a50caecf0479135bd0" }
+        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":8},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":6}}
 wts:
   - when: GET games/32c1f6b10edeff092741eac7
     then: |
-        { "_id" : "32c1f6b10edeff092741eac7" , "teamARef" : "63a1c6a50caecf0479135bc9" , "teamBRef" : "63a1c6a50caecf0479135bd0" }
+        { "_id" : "32c1f6b10edeff092741eac7" , "teamA" : { "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 8 } , "teamB" : { "teammateRefs" : [ "51a1b6b10edeff044953bbc1" , "51a1b6b10edeff044953bbc3" ] , "score" : 6 }}
