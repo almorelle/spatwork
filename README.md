@@ -1,4 +1,4 @@
-glowing-ninja
+Spatwork
 =============
 
 Simple REST API for keeping scores about who's the best in the office (just kidding).

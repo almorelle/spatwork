@@ -8,17 +8,17 @@
     <artifactId>spatwork-api</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Restx Spatwork API</name>
+    <name>Spatwork API</name>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/almorelle/glowing-ninja/issues</url>
+        <url>https://github.com/almorelle/spatwork/issues</url>
     </issueManagement>
     <scm>
-        <connection>scm:git:https://github.com/almorelle/glowing-ninja.git</connection>
-        <developerConnection>scm:git:https://github.com/almorelle/glowing-ninja.git</developerConnection>
+        <connection>scm:git:https://github.com/almorelle/spatwork.git</connection>
+        <developerConnection>scm:git:https://github.com/almorelle/spatwork.git</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/almorelle/glowing-ninja</url>
+        <url>https://github.com/almorelle/spatwork</url>
     </scm>
 
     <properties>
