@@ -3,8 +3,13 @@ Spatwork
 
 Simple REST API for keeping scores about who's the best in the office (just kidding).
 
-Build with `mvn package` and load the war in whatever container you want or simply launch `spatwork.AppServer`.
-You will need a [mongoDB](http://www.mongodb.org/) server running on localhost. It takes just few seconds to set up.
+[![Build Status](https://buildhive.cloudbees.com/job/almorelle/job/spatwork/badge/icon)](https://buildhive.cloudbees.com/job/almorelle/job/spatwork/)
+
+Build with `mvn package dependency:copy-dependencies`.
+
+Run with `java -cp target/classes:target/dependency/* spatwork.AppServer`.
+
+You will need a [mongoDB](http://www.mongodb.org/) server running on localhost (you can use `-Pembedmongo` during the build).
 
 ## Credits
 
