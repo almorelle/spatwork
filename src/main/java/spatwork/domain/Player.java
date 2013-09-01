@@ -17,6 +17,9 @@ public class Player {
     private int wins;
     private int losses;
 
+    private boolean subscription;
+    private boolean certificate;
+
     public String getKey() {
         return key;
     }
@@ -65,6 +68,22 @@ public class Player {
         this.losses = losses;
     }
 
+    public boolean getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(boolean subscription) {
+        this.subscription = subscription;
+    }
+
+    public boolean getCertificate() {
+        return certificate;
+    }
+
+    public void setCertificate(boolean certificate) {
+        this.certificate = certificate;
+    }
+
     /**
      * When a player scores, his goal count is incremented.
      */
@@ -107,6 +126,8 @@ public class Player {
                 ", goals='" + goals + '\'' +
                 ", wins='" + wins + '\'' +
                 ", losses='" + losses + '\'' +
+                ", subscription='" + subscription + '\'' +
+                ", certificate='" + certificate + '\'' +
                 '}';
     }
 }
