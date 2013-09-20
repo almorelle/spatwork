@@ -49,6 +49,15 @@ public class Game {
                 '}';
     }
 
+    /**
+     * Player leaves the game.
+     * @param playerKey The reference of the player leaving the team.
+     */
+    public void leaveGame(String playerKey){
+        getTeamA().leaveTeam(playerKey);
+        getTeamB().leaveTeam(playerKey);
+    }
+
     public GameResult winner(){
         return teamA.getScore() > teamB.getScore() ?
                 GameResult.TEAM_A_WON : teamA.getScore() < teamB.getScore() ?
