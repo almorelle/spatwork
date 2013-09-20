@@ -6,7 +6,7 @@
 
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="player in players | filter:{isPlaying:true} | orderBy:'firstName'">
-				<button type="button" class="btn btn-danger pull-left" ng-click="play(player, false)"><i class="icon-remove"></i></button>
+				<button type="button" class="btn btn-danger pull-left" ng-click="leave(player)"><i class="icon-remove"></i></button>
 				<p><strong>{{player.firstName}} {{player.lastName}}</strong>
 				<i class="icon-euro pull-right icon-border" style="color: green"></i>
 				<i class="icon-medkit pull-right icon-border" style="color: green"></i></p>
@@ -19,7 +19,7 @@
 
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="player in players | filter:{isPlaying:false} | orderBy:'firstName'">
-				<button type="button" class="btn btn-primary pull-left" ng-click="play(player, true)"><i class="icon-plus"></i></button>
+				<button type="button" class="btn btn-primary pull-left" ng-click="join(player)"><i class="icon-plus"></i></button>
 				<p><strong>{{player.firstName}} {{player.lastName}}</strong>
 				<i class="icon-euro pull-right icon-border" style="color: green"></i>
 				<i class="icon-medkit pull-right icon-border" style="color: green"></i></p>

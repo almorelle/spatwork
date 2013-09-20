@@ -9,6 +9,7 @@ var viewCtrl = controllers.controller("ViewCtrl", function($scope, Restangular){
         $scope.players = players;
         Restangular.all("games").getList().then(function(games){
             $scope.game = games[0];
+            console.log($scope.game);
             for(var i=0;i<$scope.players.length;i++){
                 var player = $scope.players[i];
                 player.isPlaying = ((_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) || (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1));
@@ -16,7 +17,12 @@ var viewCtrl = controllers.controller("ViewCtrl", function($scope, Restangular){
         });
     });
 
-    $scope.play = function(player, play){
-        player.isPlaying = play;
+    $scope.join = function(player){
+        $scope.game.customPUT("messages", {param: "myParam"}, {}, {name: "My Message"})
+        player.isPlaying = true;
+    }
+
+    $scope.leave = function(player){
+        player.isPlaying = false;
     }
 });

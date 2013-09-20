@@ -123,8 +123,8 @@ public class GameResource {
      * not exist.
      */
     @PermitAll
-    @PUT("/games/join/{key}/{keyTeam}/{keyPlayer}")
-    public Game join(String key, String keyTeam, String keyPlayer) {
+    @PUT("/games/join/{key}")
+    public Game join(String key, @Param(kind = Param.Kind.QUERY) String keyTeam, @Param(kind = Param.Kind.QUERY) String keyPlayer) {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
@@ -158,8 +158,8 @@ public class GameResource {
      * @throws @WebException HTTP404 whenever the referenced game is absent.
      */
     @PermitAll
-    @PUT("/games/leave/{key}/{keyPlayer}")
-    public Game leave(String key, String keyPlayer) {
+    @PUT("/games/leave/{key}")
+    public Game leave(String key, @Param(kind = Param.Kind.QUERY) String keyPlayer) {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
@@ -182,8 +182,8 @@ public class GameResource {
      * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team does not exist.
      */
     @PermitAll
-    @PUT("/games/goal/{key}/{keyTeam}/{keyScorer}")
-    public Game goal(String key, String keyTeam, String keyScorer) {
+    @PUT("/games/goal/{key}")
+    public Game goal(String key, @Param(kind = Param.Kind.QUERY) String keyTeam, @Param(kind = Param.Kind.QUERY) String keyScorer) {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
