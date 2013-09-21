@@ -1,4 +1,4 @@
-title: "update game wrong player parameter"
+title: "leave game wrong player parameter"
 given:
   - time: 2013-05-26T09:17:10.132+02:00
   - collection: players
@@ -12,7 +12,7 @@ given:
         {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":8},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":6}}
 wts:
   - when: |
-       PUT games/leave/32c1f6b10edeff092741eac7/3e71f6b10e56f1ca2741bb99
+       PUT games/32c1f6b10edeff092741eac7/leave?keyPlayer=3e71f6b10e56f1ca2741bb99
     then: |
        { "_id" : "32c1f6b10edeff092741eac7" , "teamA" : { "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 8 } , "teamB" : { "teammateRefs" : [ "51a1b6b10edeff044953bbc1" , "51a1b6b10edeff044953bbc3" ] , "score" : 6 } }
   - when: GET games

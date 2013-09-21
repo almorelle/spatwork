@@ -12,7 +12,7 @@ given:
         {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":3},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":5}}
 wts:
   - when: |
-       PUT games/goal/f761f6b15e3476ea1981efea/A/51a1b6b10edeff044953bbc0
+       PUT games/f761f6b15e3476ea1981efea/goal?keyTeam=A&keyScorer=51a1b6b10edeff044953bbc0
 
     then: |
         404
