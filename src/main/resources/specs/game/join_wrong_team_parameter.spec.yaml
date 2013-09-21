@@ -12,7 +12,7 @@ given:
         {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":3},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1"],"score":5}}
 wts:
   - when: |
-       PUT games/join/32c1f6b10edeff092741eac7?keyTeam=egfe&keyPlayer=51a1b6b10edeff044953bbc3
+       PUT games/32c1f6b10edeff092741eac7/join?keyTeam=egfe&keyPlayer=51a1b6b10edeff044953bbc3
     then: |
        400
   - when: GET games

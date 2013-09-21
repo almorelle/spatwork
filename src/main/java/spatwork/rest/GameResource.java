@@ -115,6 +115,7 @@ public class GameResource {
 
     /**
      * Join the game.
+     * "api-url/games/{gameKey}/join?keyTeam={keyTeam}&keyPlayer={keyPlayer}"
      * @param key the reference of the game to update.
      * @param keyTeam the reference of the team to join (accept A or B).
      * @param keyPlayer the reference of the player joining the game.
@@ -123,7 +124,7 @@ public class GameResource {
      * not exist.
      */
     @PermitAll
-    @PUT("/games/join/{key}")
+    @PUT("/games/{key}/join")
     public Game join(String key, @Param(kind = Param.Kind.QUERY) String keyTeam, @Param(kind = Param.Kind.QUERY) String keyPlayer) {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
@@ -152,13 +153,14 @@ public class GameResource {
 
     /**
      * Leave the game.
+     * "api-url/games/{gameKey}/leave?keyPlayer={keyPlayer}"
      * @param key the reference of the game to update.
      * @param keyPlayer the reference of the player leaving the game.
      * @return the updated game.
      * @throws @WebException HTTP404 whenever the referenced game is absent.
      */
     @PermitAll
-    @PUT("/games/leave/{key}")
+    @PUT("/games/{key}/leave")
     public Game leave(String key, @Param(kind = Param.Kind.QUERY) String keyPlayer) {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
@@ -173,6 +175,7 @@ public class GameResource {
 
     /**
      * Records a goal.
+     * "api-url/games/{gameKey}/goal?keyTeam={keyTeam}&keyScorer={keyScorer}"
      * @param key the reference of the game to update.
      * @param keyTeam the reference of the team who scored (accept A or B).
      * @param keyScorer the reference of the player who scored the goal. The goal is not counted for the player
@@ -182,7 +185,7 @@ public class GameResource {
      * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team does not exist.
      */
     @PermitAll
-    @PUT("/games/goal/{key}")
+    @PUT("/games/{key}/goal")
     public Game goal(String key, @Param(kind = Param.Kind.QUERY) String keyTeam, @Param(kind = Param.Kind.QUERY) String keyScorer) {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
@@ -220,12 +223,13 @@ public class GameResource {
 
     /**
      * Closes a game by recording the result, clearing all the players and resetting the score.
+     * "api-url/games/{gameKey}/end"
      * @param key the reference game to update.
      * @return the updated game.
      * @throws WebException HTTP404 if the referenced game is absent.
      */
     @PermitAll
-    @PUT("/games/end/{key}")
+    @PUT("/games/{key}/end")
     public Game endGame(String key) {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
