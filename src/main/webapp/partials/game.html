@@ -2,7 +2,7 @@
     <div class="jumbotron">
 		<div class="container text-center">
 			<p class="lead">Team Abdallah - Team Medjo</p>
-			<h1>3 - 5</h1>
+			<h1>{{game.teamA.score}} - {{game.teamB.score}}</h1>
 		</div>
     </div>
 
@@ -10,15 +10,19 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-lg-4">
-          <p><a class="btn btn-lg btn-success" href="#">Changer les équipes</a></p>
+          <p><a class="disabled btn btn-lg btn-success" href="">Changer les équipes</a></p>
         </div>
         <div class="col-lg-4">
-          <p><a class="btn btn-lg btn-success" href="#">Buuuuuut !!!!</a></p>
+          <p><a class="disabled btn btn-lg btn-success" href="" ng-click="goal()">Buuuuuut !!!!</a></p>
        </div>
         <div class="col-lg-4">
-          <p><a class="disabled btn btn-lg btn-success" href="#">Finir le match</a></p>
+          <p><a class="disabled btn btn-lg btn-success" href="">Fin de match</a></p>
         </div>
       </div>
+
+        <div class="alert alert-error">
+            Not working yet... :(
+        </div>
 
       <hr>
 
@@ -26,5 +30,7 @@
         <p>&copy; Alcatel-Lucent 2013</p>
       </footer>
     </div> <!-- /container -->
+
+
 
 

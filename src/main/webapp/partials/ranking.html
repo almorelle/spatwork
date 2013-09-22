@@ -1,0 +1,35 @@
+
+	<div class="container">
+
+        <div class="page-header">
+            <h2>Classement :</h2>
+        </div>
+
+        <table class="table table-condensed  table-striped  table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><a href="" ng-click="predicate = 'firstName'; reverse=!reverse">Joueur</a></th>
+                    <th><a href="" ng-click="predicate = ['wins', 'goals']; reverse=!reverse">V</a></th>
+                    <th><a href="" ng-click="predicate = 'losses'; reverse=!reverse">D</a></th>
+                    <th><a href="" ng-click="predicate = ['goals', 'wins']; reverse=!reverse">G</a></th>
+                    <th><i class="icon-medkit"></i></th>
+                    <th><i class="icon-euro"></i></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="player in players | orderBy:predicate:reverse">
+                    <td>{{$index+1}}</td>
+                    <td>{{player.firstName}} {{player.lastName}}</td>
+                    <td>{{player.wins}}</td>
+                    <td>{{player.losses}}</td>
+                    <td>{{player.goals}}</td>
+                    <td><i class="{{player.certificate | checkmark}}"></i></td>
+                    <td><i class="{{player.subscription | checkmark}}"></i></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div><!-- /.container -->
+
+

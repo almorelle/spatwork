@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-var spatwork = angular.module('spatwork', ['spatwork.controllers']);
+var spatwork = angular.module('spatwork', ['spatwork.controllers', 'spatworkFilters']);
 
 spatwork.config(function($routeProvider, RestangularProvider) {
 
@@ -11,6 +11,12 @@ spatwork.config(function($routeProvider, RestangularProvider) {
             templateUrl: 'partials/home.html',
             controller: 'ViewCtrl'
         });
+
+    $routeProvider
+        .when('/ranking', {
+            templateUrl: 'partials/ranking.html',
+            controller: 'RankCtrl'
+    });
 
     $routeProvider
         .when('/game', {
