@@ -78,4 +78,28 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
     }, function errorCallback() {
         alert("Oops unable to get info from server. Please refresh. :(");
     });
+
+    $scope.goal = function(){
+
+        var keyTeam;
+        var scorer;
+
+        $('#updateFade').modal('toggle');
+        $scope.game.customPUT({}, "goal", {keyTeam: keyTeam, keyScorer: scorer._id}).then(function(){
+            $('#updateFade').modal('toggle');
+        }), function errorCallback() {
+            $('#updateFade').modal('toggle');
+            alert("Oops unable to update server. Please refresh. :(");
+        };
+    };
+
+    $scope.end = function(){
+        $('#updateFade').modal('toggle');
+        $scope.game.customPUT({}, "end", {}).then(function(){
+            $('#updateFade').modal('toggle');
+        }, function errorCallback() {
+            $('#updateFade').modal('toggle');
+            alert("Oops unable to update server. Please refresh. :(");
+         });
+    };
 });
