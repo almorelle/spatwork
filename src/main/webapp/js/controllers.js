@@ -59,7 +59,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, Restangular){
     }, function errorCallback() {
         alert("Oops unable to update server. Please refresh. :(");
     });
-    $scope.predicate = ['-wins', '-goals'];
+    $scope.predicate = ['-wins', '-goals', 'firstName'];
 });
 
 var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){

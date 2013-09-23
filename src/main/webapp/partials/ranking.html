@@ -5,15 +5,20 @@
             <h2>Classement :</h2>
         </div>
 
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-remove"></i></button>
+            <span class="glyphicon glyphicon-warning-sign"></span> <strong>Attention</strong>, à partir du mois d'Octobre, ceux qui ne sont pas inscrits passeront en seconde partie de classement.
+        </div>
+
         <table class="table table-condensed  table-striped  table-hover">
             <thead>
                 <tr>
                     <th>#</th>
                     <th><a href="" ng-click="predicate = 'firstName'; reverse=!reverse">Joueur</a></th>
-                    <th><a href="" ng-click="predicate = ['wins', 'goals']; reverse=!reverse">V</a></th>
-                    <th><a href="" ng-click="predicate = 'losses'; reverse=!reverse">D</a></th>
-                    <th><a href="" ng-click="predicate = ['goals', 'wins']; reverse=!reverse">G</a></th>
-                    <th><i class="icon-medkit"></i></th>
+                    <th><a href="" ng-click="predicate = ['wins', 'goals', 'firstName']; reverse=!reverse">V</a></th>
+                    <th><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse">D</a></th>
+                    <th><a href="" ng-click="predicate = ['goals', 'firstName']; reverse=!reverse">G</a></th>
+                    <th><i class="icon-user-md"></i></th>
                     <th><i class="icon-euro"></i></th>
                 </tr>
             </thead>
