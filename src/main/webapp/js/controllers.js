@@ -22,19 +22,19 @@ var viewCtrl = controllers.controller("ViewCtrl", function($scope, Restangular){
     });
 
     $scope.join = function(player){
-        $('#updateModal').modal('toggle')
+        $('#updateFade').modal('toggle');
         $scope.game.customPUT({}, "join", {keyTeam: "A", keyPlayer: player._id}).then(function(){
             $scope.game.teamA.teammateRefs.push(player._id);
             player.isPlaying = true;
-            $('#updateModal').modal('toggle');
+            $('#updateFade').modal('toggle');
         }), function errorCallback() {
-            $('#updateModal').modal('toggle');
+            $('#updateFade').modal('toggle');
             alert("Oops unable to update server. Please refresh. :(");
         };
     }
 
     $scope.leave = function(player){
-        $('#updateModal').modal('toggle')
+        $('#updateFade').modal('toggle');
         $scope.game.customPUT({}, "leave", {keyPlayer: player._id}).then(function(){
             var i = $scope.game.teamA.teammateRefs.indexOf(player._id);
             if($scope.game.teamA.teammateRefs.indexOf(player._id) != -1) {
@@ -45,9 +45,9 @@ var viewCtrl = controllers.controller("ViewCtrl", function($scope, Restangular){
                 $scope.game.teamB.teammateRefs.splice(i, 1);
             }
             player.isPlaying = false;
-            $('#updateModal').modal('toggle');
+            $('#updateFade').modal('toggle');
         }, function errorCallback() {
-            $('#updateModal').modal('toggle');
+            $('#updateFade').modal('toggle');
             alert("Oops unable to update server. Please refresh. :(");
          });
     }
@@ -86,21 +86,21 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
         var keyTeam;
         var scorer;
 
-        $('#updateModal').modal('toggle')
+        $('#updateFade').modal('toggle');
         $scope.game.customPUT({}, "goal", {keyTeam: keyTeam, keyScorer: scorer._id}).then(function(){
-            $('#updateModal').modal('toggle');
+            $('#updateFade').modal('toggle');
         }), function errorCallback() {
-            $('#updateModal').modal('toggle');
+            $('#updateFade').modal('toggle');
             alert("Oops unable to update server. Please refresh. :(");
         };
     };
 
     $scope.end = function(){
-        $('#updateModal').modal('toggle')
+        $('#updateFade').modal('toggle');
         $scope.game.customPUT({}, "end", {}).then(function(){
-            $('#updateModal').modal('toggle');
+            $('#updateFade').modal('toggle');
         }, function errorCallback() {
-            $('#updateModal').modal('toggle');
+            $('#updateFade').modal('toggle');
             alert("Oops unable to update server. Please refresh. :(");
          });
     };
