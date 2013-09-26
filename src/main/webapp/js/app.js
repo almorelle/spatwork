@@ -3,13 +3,16 @@
 // Declare app level module which depends on filters, and services
 var spatwork = angular.module('spatwork', ['spatwork.controllers', 'spatworkFilters']);
 
+//App controllers
+var controllers = angular.module('spatwork.controllers', ['restangular']);
+
 spatwork.config(function($routeProvider, RestangularProvider) {
 
     $routeProvider
         .when('/home',
         {
             templateUrl: 'partials/home.html',
-            controller: 'ViewCtrl'
+            controller: 'PlayerCtrl'
         });
 
     $routeProvider
