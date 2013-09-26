@@ -26,11 +26,10 @@ var viewCtrl = controllers.controller("ViewCtrl", function($scope, Restangular){
         $scope.game.customPUT({}, "join", {keyTeam: "A", keyPlayer: player._id}).then(function(){
             $scope.game.teamA.teammateRefs.push(player._id);
             player.isPlaying = true;
-            $('#updateFade').modal('toggle');
         }), function errorCallback() {
-            $('#updateFade').modal('toggle');
             alert("Oops unable to update server. Please refresh. :(");
         };
+        $('#updateFade').modal('toggle');
     }
 
     $scope.leave = function(player){
@@ -45,11 +44,25 @@ var viewCtrl = controllers.controller("ViewCtrl", function($scope, Restangular){
                 $scope.game.teamB.teammateRefs.splice(i, 1);
             }
             player.isPlaying = false;
-            $('#updateFade').modal('toggle');
         }, function errorCallback() {
-            $('#updateFade').modal('toggle');
             alert("Oops unable to update server. Please refresh. :(");
          });
+         $('#updateFade').modal('toggle');
+    }
+
+    $scope.addPlayer = function(){
+        var newPlayer = {firstName: $scope.newFirstName, lastName: $scope.newLastName, goals: 0, wins: 0, losses: 0, subscription: false, certificate: false};
+        $scope.players.post(newPlayer).then(function(playerPostResponse) {
+            $scope.newFirstName="";
+            $scope.newLastName="";
+            playerPostResponse.isPlaying = false;
+            $scope.players.push(playerPostResponse);
+        }, function errorCallback(){
+            $scope.newFirstName="";
+            $scope.newLastName="";
+            alert("Oops unable to update server. Please refresh. :(");
+        });
+        $('#addPlayerModal').modal('toggle');
     }
 });
 
