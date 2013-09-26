@@ -21,7 +21,7 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
             $scope.game.teamA.teammateRefs.push(player._id);
             player.isPlaying = true;
         }), function errorCallback() {
-            alert("Oops unable to update server. Please refresh. :(");
+            alert("Oooops unable to update server. Please refresh. :(");
         };
         $('#updateFade').modal('toggle');
     }
@@ -39,12 +39,12 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
             }
             player.isPlaying = false;
         }, function errorCallback() {
-            alert("Oops unable to update server. Please refresh. :(");
+            alert("Oooops unable to update server. Please refresh. :(");
          });
          $('#updateFade').modal('toggle');
     }
 
-    $scope.addPlayer = function(){
+    $scope.createPlayer = function(){
         var newPlayer = {firstName: $scope.newFirstName, lastName: $scope.newLastName, goals: 0, wins: 0, losses: 0, subscription: false, certificate: false};
         $scope.players.post(newPlayer).then(function(playerPostResponse) {
             $scope.newFirstName="";
@@ -54,8 +54,16 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
         }, function errorCallback(){
             $scope.newFirstName="";
             $scope.newLastName="";
-            alert("Oops unable to update server. Please refresh. :(");
+            alert("Oooops unable to create from server. Please refresh. :(");
         });
         $('#addPlayerModal').modal('toggle');
+    }
+
+    $scope.destroyPlayer = function(player){
+        player.remove().then(function() {
+            $scope.players = _.without($scope.players, player);
+        }, function errorCallback(){
+            alert("Oooops unable to delete from server. Please refresh. :(");
+        });
     }
 });
