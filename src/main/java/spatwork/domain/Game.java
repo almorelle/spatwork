@@ -1,10 +1,7 @@
 package spatwork.domain;
 
-import com.google.common.base.Optional;
 import org.jongo.marshall.jackson.oid.Id;
 import org.jongo.marshall.jackson.oid.ObjectId;
-
-import java.util.Collection;
 
 /**
  * Simple POJO of a game
