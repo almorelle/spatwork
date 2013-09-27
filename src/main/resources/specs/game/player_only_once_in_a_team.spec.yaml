@@ -3,10 +3,10 @@ given:
   - time: 2013-05-26T09:17:30.440+02:00
   - collection: players
     data: |
-        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc0" } , "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 3 , "subscription" : true , "certificate" : true }
-        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc1" } , "firstName" : "Magic" , "lastName" : "Mike" , "goals" : 5 , "wins" : 5 , "losses" : 9 , "subscription" : true , "certificate" : true }
-        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc2" } , "firstName" : "Tony" , "lastName" : "Chu" , "goals" : 9 , "wins" : 7 , "losses" : 8 , "subscription" : true , "certificate" : true }
-        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc3" } , "firstName" : "Hold" , "lastName" : "On" , "goals" : 3 , "wins" : 1 , "losses" : 0 , "subscription" : true , "certificate" : true }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc0" } , "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 3  , "draws" : 0 , "subscription" : true , "certificate" : true }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc1" } , "firstName" : "Magic" , "lastName" : "Mike" , "goals" : 5 , "wins" : 5 , "losses" : 9  , "draws" : 0 , "subscription" : true , "certificate" : true }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc2" } , "firstName" : "Tony" , "lastName" : "Chu" , "goals" : 9 , "wins" : 7 , "losses" : 8  , "draws" : 0 , "subscription" : true , "certificate" : true }
+        { "_id" : { "$oid" : "51a1b6b10edeff044953bbc3" } , "firstName" : "Hold" , "lastName" : "On" , "goals" : 3 , "wins" : 1 , "losses" : 0  , "draws" : 0 , "subscription" : true , "certificate" : true }
   - collection: games
     data: |
         {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0"],"score":3},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":5}}
