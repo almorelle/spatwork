@@ -10,6 +10,7 @@ import restx.factory.Component;
 import restx.jongo.JongoCollection;
 import restx.security.PermitAll;
 import spatwork.domain.Game;
+import spatwork.domain.GameResult;
 import spatwork.domain.Player;
 import spatwork.domain.Team;
 
@@ -234,18 +235,18 @@ public class GameResource {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
-            switch (game.winner()) {
+            switch (game.result()) {
                 case TEAM_A_WON:
-                    finishGame(game.getTeamA(), true);
-                    finishGame(game.getTeamB(), false);
+                    finishGame(game.getTeamA(), true, GameResult.TEAM_A_WON);
+                    finishGame(game.getTeamB(), false, GameResult.TEAM_A_WON);
                     break;
                 case TEAM_B_WON:
-                    finishGame(game.getTeamA(), false);
-                    finishGame(game.getTeamB(), true);
+                    finishGame(game.getTeamA(), false, GameResult.TEAM_B_WON);
+                    finishGame(game.getTeamB(), true, GameResult.TEAM_B_WON);
                     break;
                 case DRAW:
-                    finishGame(game.getTeamA(), true);
-                    finishGame(game.getTeamB(), true);
+                    finishGame(game.getTeamA(), false, GameResult.DRAW);
+                    finishGame(game.getTeamB(), false, GameResult.DRAW);
                     break;
             }
             games.get().save(game);
@@ -258,14 +259,15 @@ public class GameResource {
     /**
      * Records the result and reset the team.
      * @param team the team to update.
-     * @param result true if the team has won or if the game was a draw, false otherwise.
+     * @param hasWon whether the team has won or not.
+     * @param result result of the game.
      */
-    public void finishGame(Team team, boolean result) {
+    public void finishGame(Team team, boolean hasWon, GameResult result) {
         for(String playerKey : team.getTeammateRefs()){
             Optional<Player> playerByKey = playerResource.findPlayerByKey(playerKey);
             if(playerByKey.isPresent()){
                 Player player = playerByKey.get();
-                player.finishGame(result);
+                player.finishGame(hasWon, result);
                 playerResource.updatePlayer(playerKey, player);
             }
         }
