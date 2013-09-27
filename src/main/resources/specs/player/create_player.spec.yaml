@@ -10,11 +10,11 @@ wts:
     then: "[ ]"
   - when: |
           POST players
-          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 , "subscription" : true , "certificate" : true }
+          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 , "draws" : 0 , "subscription" : true , "certificate" : true }
     then: |
-          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 , "subscription" : true , "certificate" : true , "_id" : "51a1b6b10edeff044953bbc0" }
+          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 , "draws" : 0 , "subscription" : true , "certificate" : true , "_id" : "51a1b6b10edeff044953bbc0" }
   - when: GET players
     then: |
         [
-          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 , "subscription" : true , "certificate" : true , "_id" : "51a1b6b10edeff044953bbc0" }
+          { "firstName" : "Usain" , "lastName" : "Bolt" , "goals" : 12 , "wins" : 6 , "losses" : 1 , "draws" : 0 , "subscription" : true , "certificate" : true , "_id" : "51a1b6b10edeff044953bbc0" }
         ]
