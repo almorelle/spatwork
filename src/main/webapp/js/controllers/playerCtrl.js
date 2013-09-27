@@ -66,4 +66,22 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
             alert("Oooops unable to delete from server. Please refresh. :(");
         });
     }
+
+    $scope.editPlayer = function(player){
+        $scope.editedPlayer = Restangular.copy(player);
+        console.log($scope.editedPlayer);
+        $('#editPlayerModal').modal('toggle');
+    }
+
+    $scope.updatePlayer = function(){
+        $scope.editedPlayer.put().then(function() {
+            $scope.players[_.indexOf($scope.players, _.findWhere($scope.players, {_id: $scope.editedPlayer._id}))] = $scope.editedPlayer;
+            console.log($scope.players);
+            $scope.editedPlayer = {};
+        }, function errorCallback(){
+            $scope.editedPlayer = {};
+            alert("Oooops unable to update from server. Please refresh. :(");
+        });
+        $('#editPlayerModal').modal('toggle');
+    }
 });

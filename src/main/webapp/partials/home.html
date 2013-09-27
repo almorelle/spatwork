@@ -7,12 +7,11 @@
 
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="player in players | filter:{isPlaying:true} | orderBy:'firstName'">
-                <a type="button" class="btn btn-danger btn-xs" ng-click="leave(player)" href=""><i class="icon-remove"></i></a>
+                <a type="button" class="btn btn-danger btn-xs" ng-click="leave(player)" href=""><i class="icon-signout"></i></a>
                 <strong>{{player.firstName}} {{player.lastName}}</strong>
                 <div class="btn-group btn-group-xs pull-right">
-                    <button type="button" class="btn btn-default"><i class="icon-user"></i></button>
-                    <button type="button" class="btn btn-default"><i class="icon-edit"></i></button>
-                    <button type="button" class="btn btn-default" ng-click="destroyPlayer(player)"><i class="icon-remove"></i></button>
+                    <button type="button" class="btn disabled btn-default" ng-click="editPlayer(player)"><i class="icon-edit"></i></button>
+                    <button type="button" class="btn disabled btn-default" ng-click="destroyPlayer(player)"><i class="icon-remove"></i></button>
                 </div>
 			</li>
 		</ul>
@@ -23,12 +22,11 @@
 
 		<ul class="list-group">
 			<li class="list-group-item" ng-repeat="player in players | filter:{isPlaying:false} | orderBy:'firstName'">
-                <a type="button" class="btn btn-primary btn-xs" ng-click="join(player)" href=""><i class="icon-plus"></i></a>
+                <a type="button" class="btn btn-primary btn-xs" ng-click="join(player)" href=""><i class="icon-signin"></i></a>
 				<strong>{{player.firstName}} {{player.lastName}}</strong>
                 <div class="btn-group btn-group-xs pull-right">
-                    <button type="button" class="btn btn-default"><i class="icon-user"></i></button>
-                    <button type="button" class="btn btn-default"><i class="icon-edit"></i></button>
-                    <button type="button" class="btn btn-default" ng-click="destroyPlayer(player)"><i class="icon-remove"></i></button>
+                    <button type="button" class="btn disabled btn-default" ng-click="editPlayer(player)"><i class="icon-edit"></i></button>
+                    <button type="button" class="btn disabled btn-default" ng-click="destroyPlayer(player)"><i class="icon-remove"></i></button>
                 </div>
 			</li>
             <li class="list-group-item">
@@ -60,6 +58,43 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" ng-click="createPlayer()">Create Player</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="editPlayerModal" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Edit player...</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" ng-model="editedPlayer.firstName" id="editFirstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" ng-model="editedPlayer.lastName" id="editLastName">
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <label class="checkbox-inline col-lg-4">
+                                    <input type="checkbox" ng-model="editedPlayer.certificate"> Certificate
+                                </label>
+                                <label class="checkbox-inline col-lg-4">
+                                    <input type="checkbox" ng-model="editedPlayer.subscription"> Subscription
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" ng-click="updatePlayer()">Update Player</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
