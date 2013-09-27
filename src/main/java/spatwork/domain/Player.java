@@ -16,6 +16,7 @@ public class Player {
     private int goals;
     private int wins;
     private int losses;
+    private int draws;
 
     private boolean subscription;
     private boolean certificate;
@@ -68,6 +69,14 @@ public class Player {
         this.losses = losses;
     }
 
+    public int getDraws() {
+        return draws;
+    }
+
+    public void setDraws(int draws) {
+        this.draws = draws;
+    }
+
     public boolean getSubscription() {
         return subscription;
     }
@@ -92,12 +101,14 @@ public class Player {
     }
 
     /**
-     * This method register the result of the game for the current player and sets him out of the team.
+     * This method register the result of the game for the current player.
      * @param won Whether the player was in the winning team or not.
+     * @param result Result of the game.
      */
-    public void finishGame(boolean won) {
+    public void finishGame(boolean won, GameResult result) {
         if(won) { this.wins++; }
-        else { this.losses++; }
+        else if(GameResult.DRAW.equals(result)) { this.draws++; }
+        else { losses++; }
     }
 
     @Override
@@ -126,6 +137,7 @@ public class Player {
                 ", goals='" + goals + '\'' +
                 ", wins='" + wins + '\'' +
                 ", losses='" + losses + '\'' +
+                ", draws='" + draws + '\'' +
                 ", subscription='" + subscription + '\'' +
                 ", certificate='" + certificate + '\'' +
                 '}';

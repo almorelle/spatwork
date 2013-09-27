@@ -55,16 +55,9 @@ public class Game {
         getTeamB().leaveTeam(playerKey);
     }
 
-    public GameResult winner(){
+    public GameResult result(){
         return teamA.getScore() > teamB.getScore() ?
                 GameResult.TEAM_A_WON : teamA.getScore() < teamB.getScore() ?
                 GameResult.TEAM_B_WON : GameResult.DRAW;
-    }
-
-    /**
-     * Possible game results.
-     */
-    public static enum GameResult {
-        TEAM_A_WON, TEAM_B_WON, DRAW
     }
 }
