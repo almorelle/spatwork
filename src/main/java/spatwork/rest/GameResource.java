@@ -134,9 +134,11 @@ public class GameResource {
             if(playerByKey.isPresent()){
                 switch(keyTeam){
                     case "A":
+                        game.getTeamB().leaveTeam(keyPlayer);
                         game.getTeamA().joinTeam(keyPlayer);
                         break;
                     case "B":
+                        game.getTeamA().leaveTeam(keyPlayer);
                         game.getTeamB().joinTeam(keyPlayer);
                         break;
                     default:
