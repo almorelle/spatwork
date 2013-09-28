@@ -5,8 +5,9 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
             $scope.game = games[0];
             for(var i=0;i<$scope.players.length;i++){
                 var player = $scope.players[i];
-                player.isPlaying = ((_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) ||
-                                    (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1));
+                player.teamRef = (_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) ?
+                                 "A" : (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1) ?
+                                 "B" : "N";
             }
         }, function errorCallback() {
             alert("Oops unable to get info from server. Please refresh. :(");
@@ -15,13 +16,22 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
         alert("Oops unable to get info from server. Please refresh. :(");
     });
 
+    $('.tooltiped').tooltip({container: 'body'});
+
     $scope.join = function(player){
         $('#updateFade').modal('toggle');
-        var team = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? $scope.game.teamA : $scope.game.teamB ;
-        var keyTeam = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? "A" : "B" ;
+        var team = {};
+        var keyTeam = "";
+        if(player.teamRef==="N"){
+            team = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? $scope.game.teamA : $scope.game.teamB ;
+            keyTeam = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? "A" : "B" ;
+        } else {
+            team = (player.teamRef==="A") ? $scope.game.teamB : $scope.game.teamA ;
+            keyTeam = (player.teamRef==="A") ? "B" : "A" ;
+        }
         $scope.game.customPUT({}, "join", {keyTeam: keyTeam, keyPlayer: player._id}).then(function(){
             team.teammateRefs.push(player._id);
-            player.isPlaying = true;
+            player.teamRef = keyTeam;
         }), function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
         };
@@ -39,7 +49,7 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
             if ($scope.game.teamB.teammateRefs.indexOf(player._id) != -1) {
                 $scope.game.teamB.teammateRefs.splice(i, 1);
             }
-            player.isPlaying = false;
+            player.teamRef = "N";
         }, function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
          });
@@ -51,7 +61,7 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
         $scope.players.post(newPlayer).then(function(playerPostResponse) {
             $scope.newFirstName="";
             $scope.newLastName="";
-            playerPostResponse.isPlaying = false;
+            playerPostResponse.teamRef = "N";
             $scope.players.push(playerPostResponse);
         }, function errorCallback(){
             $scope.newFirstName="";

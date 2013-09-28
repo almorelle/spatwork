@@ -13,8 +13,9 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
                 $scope.game = games[0];
                 for(var i=0;i<$scope.players.length;i++){
                     var player = $scope.players[i];
-                    player.isPlaying = ((_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) ||
-                                        (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1));
+                    player.teamRef = (_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) ?
+                                     "A" : (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1) ?
+                                     "B" : "N";
                 }
             }, function errorCallback() {
                 alert("Oops unable to get info from server. Please refresh. :(");
@@ -41,5 +42,13 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
         }, function errorCallback() {
             alert("Oops unable to update server. Please refresh. :(");
         });
+    };
+
+    $scope.isPlaying = function(player) {
+        return (player.teamRef==="A" || player.teamRef==="B");
+    };
+
+    $scope.scorerSelected = function() {
+        $scope.scoringTeam = $scope.scorer.teamRef;
     };
 });
