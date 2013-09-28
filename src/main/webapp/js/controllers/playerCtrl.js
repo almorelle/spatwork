@@ -17,8 +17,10 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
 
     $scope.join = function(player){
         $('#updateFade').modal('toggle');
-        $scope.game.customPUT({}, "join", {keyTeam: "A", keyPlayer: player._id}).then(function(){
-            $scope.game.teamA.teammateRefs.push(player._id);
+        var team = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? $scope.game.teamA : $scope.game.teamB ;
+        var keyTeam = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? "A" : "B" ;
+        $scope.game.customPUT({}, "join", {keyTeam: keyTeam, keyPlayer: player._id}).then(function(){
+            team.teammateRefs.push(player._id);
             player.isPlaying = true;
         }), function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
