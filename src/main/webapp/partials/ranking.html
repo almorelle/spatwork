@@ -13,7 +13,7 @@
         <table class="table table-condensed  table-striped  table-hover">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th class="text-center" style="width: 5%">#</th>
                     <th><a href="" ng-click="predicate = 'firstName'; reverse=!reverse">Joueur</a></th>
                     <th><a href="" ng-click="predicate = ['wins', 'goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Victoires">V</a></th>
                     <th><a href="" ng-click="predicate = ['draws', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Nuls">N</a></th>
@@ -25,7 +25,10 @@
             </thead>
             <tbody>
                 <tr ng-repeat="player in players | orderBy:predicate:reverse">
-                    <td>{{$index+1}}</td>
+                    <td class="text-center"><i class="icon-trophy icon-2x text-warning" ng-show="$first"></i>
+                        <i class="icon-trophy icon-large text-muted" ng-show="$index == 1"></i>
+                        <i class="icon-trophy" ng-show="$index == 2"></i>
+                        <strong ng-show="$index > 2">{{$index+1}}</strong></td>
                     <td>{{player.firstName}} {{player.lastName}}</td>
                     <td>{{player.wins}}</td>
                     <td>{{player.draws}}</td>
