@@ -189,8 +189,8 @@ public class GameResource {
      *                  whenever he's not part of the team scoring the goal. If the player doesn't exist, the goal
      *                  is counted for the team and no error is returned.
      * @return the updated game.
-     * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team does not exist
-     * and/or the game is already finished.
+     * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team and/or the player
+     * does not exist and/or the game is already finished.
      */
     @PermitAll
     @PUT("/games/{key}/goal")
@@ -211,12 +211,12 @@ public class GameResource {
                     teamByKey = Optional.absent();
                     break;
             }
-            if(teamByKey.isPresent()){
+            Optional<Player> playerByKey = playerResource.findPlayerByKey(keyScorer);
+            if(teamByKey.isPresent() && playerByKey.isPresent()){
                 Team team = teamByKey.get();
                 team.scored(keyScorer);
                 games.get().save(game);
-                Optional<Player> playerByKey = playerResource.findPlayerByKey(keyScorer);
-                if(playerByKey.isPresent() && team.isInTeam(keyScorer)){
+                if(team.isInTeam(keyScorer)){
                     Player player = playerByKey.get();
                     player.scored();
                     playerResource.updatePlayer(keyScorer, player);
