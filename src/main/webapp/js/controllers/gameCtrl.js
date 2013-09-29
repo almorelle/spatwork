@@ -14,9 +14,17 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
                 $scope.game = _.last(games);
                 for(var i=0;i<$scope.players.length;i++){
                     var player = $scope.players[i];
-                    player.teamRef = (_.contains($scope.game.teamA.teammateRefs, player._id)) ?
-                                     "A" : (_.contains($scope.game.teamB.teammateRefs, player._id)) ?
-                                     "B" : "N";
+                    if(_.contains($scope.game.teamA.teammateRefs, player._id)){
+                        player.teamRef = "A";
+                        player.scored = _.reduce($scope.game.teamA.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+                        player.ownGoals = _.reduce($scope.game.teamB.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+                    } else if (_.contains($scope.game.teamB.teammateRefs, player._id)){
+                        player.teamRef = "B";
+                        player.scored = _.reduce($scope.game.teamB.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+                        player.ownGoals = _.reduce($scope.game.teamA.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+                    } else {
+                        player.teamRef = "N";
+                    }
                 }
             }, function errorCallback() {
                 alert("Oops unable to get info from server. Please refresh. :(");
@@ -57,10 +65,5 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
 
     $scope.scorerSelected = function() {
         $scope.scoringTeam = $scope.scorer.teamRef;
-    };
-
-    $scope.hasScoredMoreThanOnce = function(team, player) {
-        player.scoredInGame = _.reduce(team.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
-        return  player.scoredInGame > 1;
     };
 });
