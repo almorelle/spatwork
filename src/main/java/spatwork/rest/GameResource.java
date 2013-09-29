@@ -70,7 +70,8 @@ public class GameResource {
      * @param key the reference of the game to update.
      * @param game the game to update.
      * @return the updated game.
-     * @throws @WebException (HTTP404) whenever the key doesn't correspond to any game.
+     * @throws @WebException (HTTP404) whenever the key doesn't correspond to any game and (HTTP400) if a player is
+     * in twice in the same team or in both teams and/or the game is already finished.
      */
     @PermitAll
     @PUT("/games/{key}")
@@ -78,6 +79,7 @@ public class GameResource {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             checkEquals("key", key, "game.key", game.getKey());
+            if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
             Collection<String> playersInGame = new HashSet<String>();
             for(String playerKey: game.getTeamA().getTeammateRefs()){
                 if(!playersInGame.add(playerKey)){
@@ -122,7 +124,7 @@ public class GameResource {
      * @param keyPlayer the reference of the player joining the game.
      * @return the updated game.
      * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team or the player does
-     * not exist.
+     * not exist and/or the game is already finished.
      */
     @PermitAll
     @PUT("/games/{key}/join")
@@ -130,6 +132,7 @@ public class GameResource {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
+            if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
             Optional<Player> playerByKey = playerResource.findPlayerByKey(keyPlayer);
             if(playerByKey.isPresent()){
                 switch(keyTeam){
@@ -160,7 +163,7 @@ public class GameResource {
      * @param key the reference of the game to update.
      * @param keyPlayer the reference of the player leaving the game.
      * @return the updated game.
-     * @throws @WebException HTTP404 whenever the referenced game is absent.
+     * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the game is already finished.
      */
     @PermitAll
     @PUT("/games/{key}/leave")
@@ -168,6 +171,7 @@ public class GameResource {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
+            if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
             game.leaveGame(keyPlayer);
             games.get().save(game);
             return game;
@@ -185,7 +189,8 @@ public class GameResource {
      *                  whenever he's not part of the team scoring the goal. If the player doesn't exist, the goal
      *                  is counted for the team and no error is returned.
      * @return the updated game.
-     * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team does not exist.
+     * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team does not exist
+     * and/or the game is already finished.
      */
     @PermitAll
     @PUT("/games/{key}/goal")
@@ -193,6 +198,7 @@ public class GameResource {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
+            if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
             Optional<Team> teamByKey;
             switch(keyTeam){
                 case "A":
@@ -207,7 +213,7 @@ public class GameResource {
             }
             if(teamByKey.isPresent()){
                 Team team = teamByKey.get();
-                team.scored();
+                team.scored(keyScorer);
                 games.get().save(game);
                 Optional<Player> playerByKey = playerResource.findPlayerByKey(keyScorer);
                 if(playerByKey.isPresent() && team.isInTeam(keyScorer)){
@@ -229,7 +235,7 @@ public class GameResource {
      * "api-url/games/{gameKey}/end"
      * @param key the reference game to update.
      * @return the updated game.
-     * @throws WebException HTTP404 if the referenced game is absent.
+     * @throws WebException HTTP404 if the referenced game is absent of HTTP400 if the game is finished already.
      */
     @PermitAll
     @PUT("/games/{key}/end")
@@ -237,20 +243,11 @@ public class GameResource {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
-            switch (game.result()) {
-                case TEAM_A_WON:
-                    finishGame(game.getTeamA(), true, GameResult.TEAM_A_WON);
-                    finishGame(game.getTeamB(), false, GameResult.TEAM_A_WON);
-                    break;
-                case TEAM_B_WON:
-                    finishGame(game.getTeamA(), false, GameResult.TEAM_B_WON);
-                    finishGame(game.getTeamB(), true, GameResult.TEAM_B_WON);
-                    break;
-                case DRAW:
-                    finishGame(game.getTeamA(), false, GameResult.DRAW);
-                    finishGame(game.getTeamB(), false, GameResult.DRAW);
-                    break;
-            }
+            if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
+            GameResult result = game.result();
+            finishGame(game.getTeamA(), result.equals(GameResult.TEAM_A_WON), result);
+            finishGame(game.getTeamB(), result.equals(GameResult.TEAM_B_WON), result);
+            game.setFinished(true);
             games.get().save(game);
             return game;
         } else {
@@ -273,7 +270,5 @@ public class GameResource {
                 playerResource.updatePlayer(playerKey, player);
             }
         }
-        team.setScore(0);
-        team.getTeammateRefs().clear();
     }
 }

@@ -10,6 +10,16 @@ public class Team {
     private Collection<String> teammateRefs;
     private int score;
 
+    private Collection<String> scorersRefs;
+
+    public Collection<String> getScorersRefs() {
+        return scorersRefs;
+    }
+
+    public void setScorersRefs(Collection<String> scorersRefs) {
+        this.scorersRefs = scorersRefs;
+    }
+
     public Collection<String> getTeammateRefs() {
         return teammateRefs;
     }
@@ -56,8 +66,9 @@ public class Team {
     /**
      * When a team scores, his goal count is incremented.
      */
-    public void scored() {
+    public void scored(String scorerKey) {
         score++;
+        scorersRefs.add(scorerKey);
     }
 
     @Override
@@ -65,6 +76,7 @@ public class Team {
         return "Team{" +
                 "teammateRefs=" + teammateRefs +
                 ", score=" + score +
+                ", scorersRefs=" + scorersRefs +
                 '}';
     }
 }
