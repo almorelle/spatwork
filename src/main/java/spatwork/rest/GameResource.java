@@ -79,7 +79,7 @@ public class GameResource {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             checkEquals("key", key, "game.key", game.getKey());
-            if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
+            if(gameByKey.get().getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
             Collection<String> playersInGame = new HashSet<String>();
             for(String playerKey: game.getTeamA().getTeammateRefs()){
                 if(!playersInGame.add(playerKey)){
