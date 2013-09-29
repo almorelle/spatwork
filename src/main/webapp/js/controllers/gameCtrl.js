@@ -1,4 +1,5 @@
 var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
+    $scope._ = _;
     refreshScopeData();
     $scope.goal = function(){
         $scope.keyTeam = "";
@@ -13,8 +14,8 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
                 $scope.game = _.last(games);
                 for(var i=0;i<$scope.players.length;i++){
                     var player = $scope.players[i];
-                    player.teamRef = (_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) ?
-                                     "A" : (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1) ?
+                    player.teamRef = (_.contains($scope.game.teamA.teammateRefs, player._id)) ?
+                                     "A" : (_.contains($scope.game.teamB.teammateRefs, player._id)) ?
                                      "B" : "N";
                 }
             }, function errorCallback() {
@@ -56,5 +57,10 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
 
     $scope.scorerSelected = function() {
         $scope.scoringTeam = $scope.scorer.teamRef;
+    };
+
+    $scope.hasScoredMoreThanOnce = function(team, player) {
+        player.scoredInGame = _.reduce(team.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+        return  player.scoredInGame > 1;
     };
 });

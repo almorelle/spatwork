@@ -1,9 +1,24 @@
 	<!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
-		<div class="container text-center">
-			<p class="lead">Team Abdallah - Team Medjo</p>
-			<h1>{{game.teamA.score}} - {{game.teamB.score}}</h1>
-		</div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1 text-right">
+                <h1>{{game.teamA.score}}</h1>
+                <h5 ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
+                    <i class="fam-sport-soccer" ng-show="_.contains(game.teamA.scorersRefs, player._id)"></i>
+                    <span ng-show="hasScoredMoreThanOnce(game.teamA, player)"> (x{{player.scoredInGame}})</span> {{player.firstName}}
+                </h5>
+            </div>
+            <div class="col-md-2 text-center">
+                <h1><i class="icon-trophy text-warning icon-large"></i></h1>
+            </div>
+            <div class="col-md-4 text-left">
+                <h1>{{game.teamB.score}}</h1>
+                <h5 ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">{{player.firstName}}
+                    <i class="fam-sport-soccer" ng-show="_.contains(game.teamB.scorersRefs, player._id)"></i>
+                    <span ng-show="hasScoredMoreThanOnce(game.teamB, player)"> (x{{player.scoredInGame}})</span>
+                </h5>
+            </div>
+        </div>
     </div>
 
     <div class="container text-center">

@@ -5,8 +5,8 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
             $scope.game = _.last(games);
             for(var i=0;i<$scope.players.length;i++){
                 var player = $scope.players[i];
-                player.teamRef = (_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) ?
-                                 "A" : (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1) ?
+                player.teamRef = (_.contains($scope.game.teamA.teammateRefs, player._id)) ?
+                                 "A" : (_.contains($scope.game.teamB.teammateRefs, player._id)) ?
                                  "B" : "N";
             }
         }, function errorCallback() {
