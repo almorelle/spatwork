@@ -1,0 +1,22 @@
+/* icons */
+[class^="fam-"],
+[class*=" fam-"] {
+    display: inline-block;
+    width: 17px;
+    height: 16px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("icons/famfamfam-icons.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+}
+[class^="fam-"]:last-child,
+[class*=" fam-"]:last-child {
+    *margin-left: 0;
+}
+
+/* icons code below */
+.fam-sport-basketball{ background-position: 0 0; width: 16px; height: 16px; }
+.fam-sport-shuttlecock{ background-position: -21px 0; width: 16px; height: 16px; }
+.fam-sport-soccer{ background-position: -42px 0; width: 16px; height: 16px; }
