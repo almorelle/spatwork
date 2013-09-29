@@ -3,12 +3,12 @@ given:
   - time: 2013-05-26T09:18:51.791+02:00
   - collection: games
     data: |
-        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":8},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":6}}
+        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":5,"scorersRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2"]},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":5, "scorersRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3","51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"]}, "finished": false}
 wts:
   - when: GET games
     then: |
         [
-          {"_id":"32c1f6b10edeff092741eac7","teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":8},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":6}}
+          {"_id":"32c1f6b10edeff092741eac7","teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":5,"scorersRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2"]},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":5, "scorersRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3","51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"]}, "finished": false}
         ]
   - when: DELETE games/32c1f6b10edeff092741eac7
     then: |

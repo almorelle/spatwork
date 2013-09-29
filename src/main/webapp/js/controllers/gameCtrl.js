@@ -1,4 +1,5 @@
 var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
+    $scope._ = _;
     refreshScopeData();
     $scope.goal = function(){
         $scope.keyTeam = "";
@@ -10,12 +11,20 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
         Restangular.all("players").getList().then(function(players){
             $scope.players = players;
             Restangular.all("games").getList().then(function(games){
-                $scope.game = games[0];
+                $scope.game = _.findWhere(games,{finished: false});
                 for(var i=0;i<$scope.players.length;i++){
                     var player = $scope.players[i];
-                    player.teamRef = (_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) ?
-                                     "A" : (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1) ?
-                                     "B" : "N";
+                    if(_.contains($scope.game.teamA.teammateRefs, player._id)){
+                        player.teamRef = "A";
+                        player.scored = _.reduce($scope.game.teamA.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+                        player.ownGoals = _.reduce($scope.game.teamB.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+                    } else if (_.contains($scope.game.teamB.teammateRefs, player._id)){
+                        player.teamRef = "B";
+                        player.scored = _.reduce($scope.game.teamB.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+                        player.ownGoals = _.reduce($scope.game.teamA.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
+                    } else {
+                        player.teamRef = "N";
+                    }
                 }
             }, function errorCallback() {
                 alert("Oops unable to get info from server. Please refresh. :(");
@@ -38,6 +47,12 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
 
     $scope.end = function(){
         $scope.game.customPUT({}, "end", {}).then(function(){
+            var newGame = {"teamA":{"teammateRefs":[],"score":0,"scorersRefs":[]},"teamB":{"teammateRefs":[],"score":0, "scorersRefs":[]}, "finished": false};
+            Restangular.all("games").post(newGame).then(function(){
+                $scope.game = newGame;
+            }, function errorCallback() {
+                alert("Oooops unable create new game on server. Please refresh. :(");
+            });
             refreshScopeData();
         }, function errorCallback() {
             alert("Oops unable to update server. Please refresh. :(");

@@ -15,7 +15,7 @@
                 <tr>
                     <th class="text-center" style="width: 5%">#</th>
                     <th><a href="" ng-click="predicate = 'firstName'; reverse=!reverse">Joueur</a></th>
-                    <th><a href="" ng-click="predicate = ['wins', 'goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Victoires">V</a></th>
+                    <th><a href="" ng-click="predicate = ['wins', 'draws', 'goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Victoires">V</a></th>
                     <th><a href="" ng-click="predicate = ['draws', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Nuls">N</a></th>
                     <th><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Défaites">D</a></th>
                     <th><a href="" ng-click="predicate = ['goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts">B</a></th>
@@ -40,6 +40,9 @@
             </tbody>
         </table>
 
+        <div class="alert alert-info alert-dismissable" ng-show="players.length == 0">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-remove"></i></button>
+            Aucun joueur enregistré pour l'instant.
+        </div>
+
     </div><!-- /.container -->
-
-

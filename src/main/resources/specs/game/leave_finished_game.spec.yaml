@@ -1,20 +1,20 @@
-title: "update game wrong game parameter"
+title: "update game already finished"
 given:
   - time: 2013-05-26T09:17:10.132+02:00
   - collection: games
     data: |
-        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":3,"scorersRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc0"]},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":1,"scorersRefs":["51a1b6b10edeff044953bbc1"]}, "finished": false}
+        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":3,"scorersRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc0"]},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":1,"scorersRefs":["51a1b6b10edeff044953bbc1"]}, "finished": true}
 wts:
   - when: |
-       PUT games/3e71f6b10e56f1ca2741bb99/leave?keyPlayer=51a1b6b10edeff044953bbc0
+       PUT games/32c1f6b10edeff092741eac7/leave?keyPlayer=51a1b6b10edeff044953bbc0
     then: |
-       404
+       400
   - when: GET games
     then: |
         [
             { "_id" : "32c1f6b10edeff092741eac7" ,
             	"teamA" : { "teammateRefs" : [ "51a1b6b10edeff044953bbc0" , "51a1b6b10edeff044953bbc2" ] , "score" : 3 ,"scorersRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc0"]} ,
             	"teamB" : { "teammateRefs" : [ "51a1b6b10edeff044953bbc1" , "51a1b6b10edeff044953bbc3" ] , "score" : 1 ,"scorersRefs":["51a1b6b10edeff044953bbc1"] } ,
-            	"finished": false
+            	"finished": true
             }
         ]

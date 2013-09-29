@@ -2,11 +2,11 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
     Restangular.all("players").getList().then(function(players){
         $scope.players = players;
         Restangular.all("games").getList().then(function(games){
-            $scope.game = games[0];
+            $scope.game = _.findWhere(games,{finished: false});
             for(var i=0;i<$scope.players.length;i++){
                 var player = $scope.players[i];
-                player.teamRef = (_.indexOf($scope.game.teamA.teammateRefs, player._id) !== -1) ?
-                                 "A" : (_.indexOf($scope.game.teamB.teammateRefs, player._id) !== -1) ?
+                player.teamRef = (_.contains($scope.game.teamA.teammateRefs, player._id)) ?
+                                 "A" : (_.contains($scope.game.teamB.teammateRefs, player._id)) ?
                                  "B" : "N";
             }
         }, function errorCallback() {
@@ -32,9 +32,9 @@ var playerCtrl = controllers.controller("PlayerCtrl", function($scope, Restangul
         $scope.game.customPUT({}, "join", {keyTeam: keyTeam, keyPlayer: player._id}).then(function(){
             team.teammateRefs.push(player._id);
             player.teamRef = keyTeam;
-        }), function errorCallback() {
+        }, function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
-        };
+        });
         $('#updateFade').modal('toggle');
     }
 

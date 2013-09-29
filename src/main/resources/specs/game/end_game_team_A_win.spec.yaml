@@ -1,4 +1,4 @@
-title: "team A win"
+title: "end game team A win"
 given:
   - time: 2013-05-26T09:17:30.440+02:00
   - collection: players
@@ -9,18 +9,28 @@ given:
         { "_id" : { "$oid" : "51a1b6b10edeff044953bbc3" } , "firstName" : "Hold" , "lastName" : "On" , "goals" : 3 , "wins" : 1 , "losses" : 0  , "draws" : 0 , "subscription" : true , "certificate" : true }
   - collection: games
     data: |
-        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":8},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":6}}
+        {"_id":{"$oid":"32c1f6b10edeff092741eac7"},"teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":3,"scorersRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2"]},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":1,"scorersRefs":["51a1b6b10edeff044953bbc1"]}, "finished": false}
 wts:
   - when: |
        PUT games/32c1f6b10edeff092741eac7/end
     then: |
-        {"_id" : "32c1f6b10edeff092741eac7","teamA" : { "teammateRefs" : [ ] , "score" : 0 },"teamB" : { "teammateRefs" : [ ] , "score" : 0 }}
+        {"_id":"32c1f6b10edeff092741eac7","teamA":{"teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],"score":3,"scorersRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2"]},"teamB":{"teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],"score":1,"scorersRefs":["51a1b6b10edeff044953bbc1"]}, "finished": true}
   - when: GET games
     then: |
         [
-            { "_id" : "32c1f6b10edeff092741eac7" ,
-                "teamA" : { "teammateRefs" : [ ] , "score" : 0 } ,
-                "teamB" : { "teammateRefs" : [ ] , "score" : 0 }
+            {
+                "_id":"32c1f6b10edeff092741eac7",
+                "teamA": {
+                    "teammateRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2"],
+                    "score":3,
+                    "scorersRefs":["51a1b6b10edeff044953bbc0","51a1b6b10edeff044953bbc2","51a1b6b10edeff044953bbc2"]
+                },
+                "teamB":{
+                    "teammateRefs":["51a1b6b10edeff044953bbc1","51a1b6b10edeff044953bbc3"],
+                    "score":1,
+                    "scorersRefs":["51a1b6b10edeff044953bbc1"]
+                },
+                "finished": true
             }
         ]
   - when: GET players

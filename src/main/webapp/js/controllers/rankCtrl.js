@@ -4,7 +4,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, Restangular){
     }, function errorCallback() {
         alert("Oops unable to update server. Please refresh. :(");
     });
-    $scope.predicate = ['-wins', '-goals', 'firstName'];
+    $scope.predicate = ['-wins', '-draws', '-goals', 'firstName'];
 
     $("[data-toggle='tooltip']").tooltip({placement: "top"});
 });
