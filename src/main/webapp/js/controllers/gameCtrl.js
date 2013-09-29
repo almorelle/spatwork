@@ -11,7 +11,7 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
         Restangular.all("players").getList().then(function(players){
             $scope.players = players;
             Restangular.all("games").getList().then(function(games){
-                $scope.game = _.last(games);
+                $scope.game = _.findWhere(games,{finished: false});
                 for(var i=0;i<$scope.players.length;i++){
                     var player = $scope.players[i];
                     if(_.contains($scope.game.teamA.teammateRefs, player._id)){
