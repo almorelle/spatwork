@@ -13,6 +13,8 @@ public class Game {
     private Team teamA;
     private Team teamB;
 
+    private boolean finished = false;
+
     public String getKey() {
         return key;
     }
@@ -37,12 +39,21 @@ public class Game {
         return teamB;
     }
 
+    public boolean getFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
                 "key='" + key + '\'' +
                 ", teamA=" + teamA +
                 ", teamB=" + teamB +
+                ", finished=" + finished +
                 '}';
     }
 
@@ -51,8 +62,8 @@ public class Game {
      * @param playerKey The reference of the player leaving the team.
      */
     public void leaveGame(String playerKey){
-        getTeamA().leaveTeam(playerKey);
-        getTeamB().leaveTeam(playerKey);
+        if(teamA.isInTeam(playerKey)) teamA.leaveTeam(playerKey);
+        else teamB.leaveTeam(playerKey);
     }
 
     public GameResult result(){
