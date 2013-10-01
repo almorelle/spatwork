@@ -16,7 +16,22 @@ var teamsCtrl = controllers.controller("TeamsCtrl", function($scope, Restangular
         alert("Oops unable to get info from server. Please refresh. :(");
     });
 
+    //init tooltips
     $('.tooltiped').tooltip({container: 'body'});
+
+    //init collapsible elements
+    $('#collapseOne').collapse({
+      toggle: false,
+      parent: "#accordion"
+    })
+    $('#collapseTwo').collapse({
+      toggle: false,
+      parent: "#accordion"
+    })
+    $('#collapseThree').collapse({
+      toggle: false,
+      parent: "#accordion"
+    })
 
     $scope.join = function(player){
         $('#updateFade').modal('toggle');
@@ -32,6 +47,11 @@ var teamsCtrl = controllers.controller("TeamsCtrl", function($scope, Restangular
         $scope.game.customPUT({}, "join", {keyTeam: keyTeam, keyPlayer: player._id}).then(function(){
             team.teammateRefs.push(player._id);
             player.teamRef = keyTeam;
+            if(player.teamRef == "A"){
+                $('#collapseOne').collapse('toggle');
+            } else {
+                $('#collapseTwo').collapse('toggle');
+            }
         }, function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
         });
@@ -50,6 +70,7 @@ var teamsCtrl = controllers.controller("TeamsCtrl", function($scope, Restangular
                 $scope.game.teamB.teammateRefs.splice(i, 1);
             }
             player.teamRef = "N";
+            $('#collapseThree').collapse('toggle')
         }, function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
          });
