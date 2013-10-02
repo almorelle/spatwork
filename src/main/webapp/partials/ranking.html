@@ -15,12 +15,13 @@
                 <tr>
                     <th class="text-center" style="width: 5%">#</th>
                     <th><a href="" ng-click="predicate = 'firstName'; reverse=!reverse">Joueur</a></th>
-                    <th><a href="" ng-click="predicate = ['wins', 'draws', 'goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Victoires">V</a></th>
-                    <th><a href="" ng-click="predicate = ['draws', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Nuls">N</a></th>
-                    <th><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Défaites">D</a></th>
-                    <th><a href="" ng-click="predicate = ['goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts">B</a></th>
-                    <th><i class="icon-user-md" data-toggle="tooltip" title="Certificat Médical"></i></th>
-                    <th><i class="icon-euro" data-toggle="tooltip" title="Cotisation"></i></th>
+                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['points', '-goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Points">Pts</a></th>
+                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['wins', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Victoires">V</a></th>
+                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['draws', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Nuls">N</a></th>
+                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Défaites">D</a></th>
+                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts">Buts</a></th>
+                    <th class="text-center" style="width: 10%"><i class="icon-user-md" data-toggle="tooltip" title="Certificat Médical"></i></th>
+                    <th class="text-center" style="width: 10%"><i class="icon-euro" data-toggle="tooltip" title="Cotisation"></i></th>
                 </tr>
             </thead>
             <tbody>
@@ -30,12 +31,13 @@
                         <i class="icon-trophy" ng-show="$index == 2"></i>
                         <strong ng-show="$index > 2">{{$index+1}}</strong></td>
                     <td>{{player.firstName}} {{player.lastName}}</td>
-                    <td>{{player.wins}}</td>
-                    <td>{{player.draws}}</td>
-                    <td>{{player.losses}}</td>
-                    <td>{{player.goals}}</td>
-                    <td><i class="{{player.certificate | checkmark}}"></i></td>
-                    <td><i class="{{player.subscription | checkmark}}"></i></td>
+                    <td class="text-center">{{player.points}}</td>
+                    <td class="text-center">{{player.wins}}</td>
+                    <td class="text-center">{{player.draws}}</td>
+                    <td class="text-center">{{player.losses}}</td>
+                    <td class="text-center">{{player.goals}}</td>
+                    <td class="text-center"><i class="{{player.certificate | checkmark}}"></i></td>
+                    <td class="text-center"><i class="{{player.subscription | checkmark}}"></i></td>
                 </tr>
             </tbody>
         </table>
