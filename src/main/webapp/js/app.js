@@ -28,6 +28,12 @@ spatwork.config(function($routeProvider, RestangularProvider) {
     });
 
     $routeProvider
+        .when('/current-game', {
+            templateUrl: 'partials/current-game.html',
+            controller: 'CurrentGameCtrl'
+    });
+
+    $routeProvider
         .when('/about', {
             templateUrl: 'partials/about.html'
     });
