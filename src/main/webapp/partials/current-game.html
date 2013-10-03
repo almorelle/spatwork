@@ -1,0 +1,75 @@
+	<!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-1 text-right">
+                <h1>{{game.teamA.score}}</h1>
+                <h5 ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
+                    <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
+                    <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
+                    <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
+                    (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span> {{player.firstName}}
+                </h5>
+            </div>
+            <div class="col-md-2 text-center">
+                <h1><i class="icon-trophy text-warning icon-large"></i></h1>
+            </div>
+            <div class="col-md-4 text-left">
+                <h1>{{game.teamB.score}}</h1>
+                <h5 ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">{{player.firstName}}
+                    <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
+                    <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
+                    <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
+                    (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
+                </h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center">
+      <!-- Example row of columns -->
+      <div>
+        <div>
+          <p><a class="btn btn-lg btn-success" href="" ng-click="goal()">Buuuuuut !!!!</a></p>
+       </div>
+        <div>
+            <p><a class="btn btn-lg btn-success" href="" ng-click="end()">Fin de match</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; Alcatel-Lucent 2013</p>
+      </footer>
+    </div> <!-- /container -->
+
+    <div id="goalModal" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Score a goal...</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" novalidate>
+                        <div class="form-group">
+                            <label for="scorer">Scorer</label>
+                            <select class="form-control" required ng-model="scorer" id="scorer" ng-change="scorerSelected()" ng-options="player.firstName + ' ' + player.lastName for player in players | filter:isPlaying | orderBy:'firstName'"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="scoringTeam">Scoring team</label>
+                            <select class="form-control" required ng-model="scoringTeam" id="scoringTeam" ng-options="team as team for team in ['A', 'B']"></select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" ng-click="saveGoal()">Goal</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
