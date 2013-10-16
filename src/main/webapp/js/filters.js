@@ -8,3 +8,10 @@ filters.filter('checkmark', function() {
         return input ? 'icon-ok' : 'icon-remove';
     };
 });
+
+filters.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return _.rest(input,start);
+    }
+});
