@@ -27,11 +27,21 @@
 
     <div class="container text-center">
 
-        <ul class="pagination">
-            <li><a href="" ng-click="setGame(selectedGame-1)">&laquo;</a></li>
-            <li ng-repeat="game in games | orderBy:'timestamp'" ng-class="{'active': (selectedGame == $index)}"><a href="" ng-click="setGame($index)">{{$index+1}}</a></li>
-            <li><a href="" ng-click="setGame(selectedGame+1)">&raquo;</a></li>
-        </ul>
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h2>Matchs précédents :</h2>
+            </div>
+
+            <div class="col-md-4">
+                <ul class="pagination">
+                    <li><a href="" ng-click="setGame(0)" ng-class="{'disabled': (selectedGame == 0)}"><i class="icon-double-angle-left"></i></a></li>
+                    <li><a href="" ng-click="setGame(selectedGame-1)" ng-class="{'disabled': (selectedGame == 0)}"><i class="icon-angle-left"></i></a></li>
+                    <li ng-repeat="game in games | orderBy:'timestamp' | startFrom:pageStart | limitTo:5 " ng-class="{'active': (selectedGame == game.index)}"><a href="" ng-click="setGame(game.index)">{{game.index+1}}</a></li>
+                    <li><a href="" ng-click="setGame(selectedGame+1)" ng-class="{'disabled': (selectedGame == games.length-1)}"><i class="icon-angle-right"></i></a></li>
+                    <li><a href="" ng-click="setGame(games.length-1)" ng-class="{'disabled': (selectedGame == games.length-1)}"><i class="icon-double-angle-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
 
         <hr>
 
