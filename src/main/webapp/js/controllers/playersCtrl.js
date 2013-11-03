@@ -1,4 +1,4 @@
-var teamsCtrl = controllers.controller("TeamsCtrl", function($scope, Restangular){
+var playersCtrl = controllers.controller("PlayersCtrl", function($scope, Restangular){
     Restangular.all("players").getList().then(function(players){
         $scope.players = players;
         Restangular.all("games").getList().then(function(games){

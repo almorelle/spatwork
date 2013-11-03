@@ -9,10 +9,10 @@ var controllers = angular.module('spatwork.controllers', ['restangular']);
 spatwork.config(function($routeProvider, RestangularProvider) {
 
     $routeProvider
-        .when('/teams',
+        .when('/players',
         {
-            templateUrl: 'partials/teams.html',
-            controller: 'TeamsCtrl'
+            templateUrl: 'partials/players.html',
+            controller: 'PlayersCtrl'
         });
 
     $routeProvider
@@ -39,7 +39,7 @@ spatwork.config(function($routeProvider, RestangularProvider) {
     });
 
     $routeProvider
-        .otherwise({redirectTo: '/teams'});
+        .otherwise({redirectTo: '/players'});
 
     RestangularProvider.setBaseUrl('/api');
     RestangularProvider.setRestangularFields({
