@@ -15,3 +15,9 @@ filters.filter('startFrom', function() {
         return _.rest(input,start);
     }
 });
+
+filters.filter('filterPlaying', function() {
+    return function(input) {
+        return _.filter(input, function(player){return player.teamRef==="A" || player.teamRef==="B";});
+    }
+});
