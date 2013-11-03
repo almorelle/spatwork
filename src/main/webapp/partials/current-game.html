@@ -54,7 +54,7 @@
                     <form role="form" novalidate>
                         <div class="form-group">
                             <label for="scorer">Scorer</label>
-                            <select class="form-control" required ng-model="scorer" id="scorer" ng-change="scorerSelected()" ng-options="player.firstName + ' ' + player.lastName for player in players | filter:isPlaying | orderBy:'firstName'"></select>
+                            <select class="form-control" required ng-model="scorer" id="scorer" ng-change="scorerSelected()" ng-options="player.firstName + ' ' + player.lastName for player in players | filterPlaying | orderBy:'firstName'"></select>
                         </div>
                         <div class="form-group">
                             <label for="scoringTeam">Scoring team</label>

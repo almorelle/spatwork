@@ -44,11 +44,6 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
         }
     }
 
-    //Returns true if the player in parameter is in team A or B, false otherwise.
-    $scope.isPlaying = function(player) {
-        return (player.teamRef==="A" || player.teamRef==="B");
-    };
-
     //Updates the current game object to the one at the index in parameter.
     $scope.setGame = function (index){
         if( ($scope.selectedGame != index) && (index >= 0) && (index < $scope.games.length) ){

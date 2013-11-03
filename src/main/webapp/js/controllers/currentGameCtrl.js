@@ -60,10 +60,7 @@ var currentGameCtrl = controllers.controller("CurrentGameCtrl", function($scope,
         });
     };
 
-    $scope.isPlaying = function(player) {
-        return (player.teamRef==="A" || player.teamRef==="B");
-    };
-
+    //auto-affect scoring team depending on selected scorer.
     $scope.scorerSelected = function() {
         $scope.scoringTeam = $scope.scorer.teamRef;
     };
