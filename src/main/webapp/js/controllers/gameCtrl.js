@@ -1,12 +1,13 @@
 var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
 
+    $scope.teamEditing = false;
     refreshScopeData();
 
     function refreshScopeData(){
         Restangular.all("players").getList().then(function(players){
             $scope.players = players;
             Restangular.all("games").getList().then(function(games){
-                $scope.games = _.where(games,{finished: true});
+                $scope.games = games;
                 //Sorting the collection by timestamps while attaching a timestamp attribute to each element.
                 _.sortBy($scope.games, function(game) { return game.timestamp = parseInt(game._id.toString().substring(0,8), 16 ) * 1000; });
                 //Providing then an index attribute for quicker access.
@@ -15,6 +16,8 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
                 }
                 //Selecting the latest element.
                 $scope.game = $scope.games[$scope.games.length-1];
+                $scope.game.teamA.score = '-';
+                $scope.game.teamB.score = '-';
                 $scope.selectedGame = $scope.game.index;
                 $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
                 attributeTeamAndGoals();
@@ -42,6 +45,26 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
                 player.teamRef = "N";
             }
         }
+    }
+
+    $scope.join = function(player){
+        $('#updateFade').modal('toggle');
+        var team = {};
+        var keyTeam = "";
+        if(player.teamRef==="N"){
+            team = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? $scope.game.teamA : $scope.game.teamB ;
+            keyTeam = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? "A" : "B" ;
+        } else {
+            team = (player.teamRef==="A") ? $scope.game.teamB : $scope.game.teamA ;
+            keyTeam = (player.teamRef==="A") ? "B" : "A" ;
+        }
+        $scope.game.customPUT({}, "join", {keyTeam: keyTeam, keyPlayer: player._id}).then(function(){
+            team.teammateRefs.push(player._id);
+            player.teamRef = keyTeam;
+        }, function errorCallback() {
+            alert("Oooops unable to update server. Please refresh. :(");
+        });
+        $('#updateFade').modal('toggle');
     }
 
     //Updates the current game object to the one at the index in parameter.
