@@ -25,7 +25,7 @@ var playersCtrl = controllers.controller("PlayersCtrl", function($scope, Restang
       parent: "#accordion"
     })
     $('#collapseTwo').collapse({
-      toggle: false,
+      toggle: true,
       parent: "#accordion"
     })
 
@@ -43,7 +43,6 @@ var playersCtrl = controllers.controller("PlayersCtrl", function($scope, Restang
         $scope.game.customPUT({}, "join", {keyTeam: keyTeam, keyPlayer: player._id}).then(function(){
             team.teammateRefs.push(player._id);
             player.teamRef = keyTeam;
-            $('#collapseOne').collapse('toggle');
         }, function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
         });
@@ -62,7 +61,6 @@ var playersCtrl = controllers.controller("PlayersCtrl", function($scope, Restang
                 $scope.game.teamB.teammateRefs.splice(i, 1);
             }
             player.teamRef = "N";
-            $('#collapseTwo').collapse('toggle')
         }, function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
          });
