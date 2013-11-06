@@ -6,7 +6,7 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
         Restangular.all("players").getList().then(function(players){
             $scope.players = players;
             Restangular.all("games").getList().then(function(games){
-                $scope.games = _.where(games,{finished: true});
+                $scope.games = games;
                 //Sorting the collection by timestamps while attaching a timestamp attribute to each element.
                 _.sortBy($scope.games, function(game) { return game.timestamp = parseInt(game._id.toString().substring(0,8), 16 ) * 1000; });
                 //Providing then an index attribute for quicker access.
@@ -15,6 +15,8 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
                 }
                 //Selecting the latest element.
                 $scope.game = $scope.games[$scope.games.length-1];
+                $scope.game.teamA.score = '-';
+                $scope.game.teamB.score = '-';
                 $scope.selectedGame = $scope.game.index;
                 $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
                 attributeTeamAndGoals();
@@ -43,11 +45,6 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
             }
         }
     }
-
-    //Returns true if the player in parameter is in team A or B, false otherwise.
-    $scope.isPlaying = function(player) {
-        return (player.teamRef==="A" || player.teamRef==="B");
-    };
 
     //Updates the current game object to the one at the index in parameter.
     $scope.setGame = function (index){

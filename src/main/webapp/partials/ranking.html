@@ -5,9 +5,9 @@
             <h2>Classement :</h2>
         </div>
 
-        <div class="alert alert-danger alert-dismissable">
+        <div class="alert alert-info alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-remove"></i></button>
-            <span class="glyphicon glyphicon-warning-sign"></span> <strong>Attention</strong>, à partir du mois d'Octobre, ceux qui ne sont pas inscrits passeront en seconde partie de classement.
+            <i class="icon-comment"></i> La nouvelle formule de calcul pour le classement est active. <strong>( 3pts par Victoire + 1pt par match Nul ) + ( Buts / Matchs joués )</strong>
         </div>
 
         <table class="table table-condensed  table-striped  table-hover">
@@ -15,7 +15,7 @@
                 <tr>
                     <th class="text-center" style="width: 5%">#</th>
                     <th><a href="" ng-click="predicate = 'firstName'; reverse=!reverse">Joueur</a></th>
-                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['points', '-goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Points">Pts</a></th>
+                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['points', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Points = ( 3 x V + N ) + ( Buts / Match )">Pts</a></th>
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['wins', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Victoires">V</a></th>
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['draws', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Nuls">N</a></th>
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Défaites">D</a></th>
@@ -31,7 +31,7 @@
                         <i class="icon-trophy" ng-show="$index == 2"></i>
                         <strong ng-show="$index > 2">{{$index+1}}</strong></td>
                     <td>{{player.firstName}} {{player.lastName}}</td>
-                    <td class="text-center">{{player.points}}</td>
+                    <td class="text-center">{{player.points | number:2}}</td>
                     <td class="text-center">{{player.wins}}</td>
                     <td class="text-center">{{player.draws}}</td>
                     <td class="text-center">{{player.losses}}</td>

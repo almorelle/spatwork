@@ -1,4 +1,4 @@
-	<!-- Main jumbotron for a primary marketing message or call to action -->
+    <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-4 col-md-offset-1 text-right">
@@ -22,6 +22,10 @@
                     (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
                 </h5>
             </div>
+        </div>
+
+        <div class="container text-center" ng-show="selectedGame == games.length-1">
+                <h4><small><span class="label label-danger">Prochain match</span></small></h4>
         </div>
     </div>
 
