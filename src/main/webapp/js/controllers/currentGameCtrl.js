@@ -6,6 +6,11 @@ var currentGameCtrl = controllers.controller("CurrentGameCtrl", function($scope,
     function refreshScopeData(){
         Restangular.all("players").getList().then(function(players){
             $scope.players = players;
+            for(var i=0;i<$scope.players.length;i++){
+                $scope.players[i].played = $scope.players[i].wins + $scope.players[i].draws + $scope.players[i].losses;
+                $scope.players[i].points = $scope.players[i].played == 0 ? 0 :
+                    (($scope.players[i].wins*3) + $scope.players[i].draws) + ($scope.players[i].goals / $scope.players[i].played);
+            }
             Restangular.all("games").getList().then(function(games){
                 $scope.game = _.findWhere(games,{finished: false});
                 for(var i=0;i<$scope.players.length;i++){
@@ -50,6 +55,57 @@ var currentGameCtrl = controllers.controller("CurrentGameCtrl", function($scope,
         });
         $('#updateFade').modal('toggle');
     }
+
+    //Reset the scoring parameters and open up the goal form.
+    $scope.balanceTeams = function(){
+        if($scope.game.teamA.score == 0 && $scope.game.teamB.score == 0){
+            //balance teams only if the game has not started yet
+            $('#updateFade').modal('toggle');
+            var editGame = Restangular.copy($scope.game);
+            var players = _.filter($scope.players, function(player){return _.indexOf(editGame.teamA.teammateRefs, player._id) != -1 || _.indexOf(editGame.teamB.teammateRefs, player._id) != -1;});
+            players = _.sortBy(players, "points");
+
+            //balancing teams
+            var pointsA = 0;
+            var pointsB = 0;
+            editGame.teamA.teammateRefs = [];
+            editGame.teamB.teammateRefs = [];
+            for(var i=0;i<players.length;i+=2){
+                if(i+1 >= players.length){
+                    var heaviestOfAll = players[i]._id;
+                    if(pointsA <= pointsB){
+                        editGame.teamA.teammateRefs.push(heaviestOfAll);
+                        pointsA += heaviestOfAll.points;
+                    } else {
+                        editGame.teamB.teammateRefs.push(heaviestOfAll);
+                        pointsB += heaviestOfAll.points;
+                    }
+                } else {
+                    var lightest = players[i]._id;
+                    var heaviest = players[i+1]._id;
+                    if(pointsA <= pointsB){
+                        editGame.teamA.teammateRefs.push(heaviest);
+                        editGame.teamB.teammateRefs.push(lightest);
+                        pointsA += heaviest.points;
+                        pointsB += lightest.points;
+                    } else {
+                        editGame.teamA.teammateRefs.push(lightest);
+                        editGame.teamB.teammateRefs.push(heaviest);
+                        pointsA += lightest.points;
+                        pointsB += heaviest.points;
+                    }
+                }
+            }
+            editGame.put().then(function(){
+                $scope.keyTeam = "";
+                $scope.scoringTeam = {};
+                refreshScopeData();
+            }), function errorCallback() {
+                alert("Oops unable to update server. Please refresh. :(");
+            };
+            $('#updateFade').modal('toggle');
+        }
+    };
 
     //Reset the scoring parameters and open up the goal form.
     $scope.goal = function(){
