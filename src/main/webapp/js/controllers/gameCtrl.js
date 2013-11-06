@@ -1,6 +1,5 @@
 var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
 
-    $scope.teamEditing = false;
     refreshScopeData();
 
     function refreshScopeData(){
@@ -45,26 +44,6 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
                 player.teamRef = "N";
             }
         }
-    }
-
-    $scope.join = function(player){
-        $('#updateFade').modal('toggle');
-        var team = {};
-        var keyTeam = "";
-        if(player.teamRef==="N"){
-            team = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? $scope.game.teamA : $scope.game.teamB ;
-            keyTeam = ($scope.game.teamA.teammateRefs.length <= $scope.game.teamB.teammateRefs.length) ? "A" : "B" ;
-        } else {
-            team = (player.teamRef==="A") ? $scope.game.teamB : $scope.game.teamA ;
-            keyTeam = (player.teamRef==="A") ? "B" : "A" ;
-        }
-        $scope.game.customPUT({}, "join", {keyTeam: keyTeam, keyPlayer: player._id}).then(function(){
-            team.teammateRefs.push(player._id);
-            player.teamRef = keyTeam;
-        }, function errorCallback() {
-            alert("Oooops unable to update server. Please refresh. :(");
-        });
-        $('#updateFade').modal('toggle');
     }
 
     //Updates the current game object to the one at the index in parameter.

@@ -8,7 +8,6 @@
                     <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
                     <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
                     (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span> {{player.firstName}}
-                    <button ng-show="selectedGame == games.length-1 && teamEditing" type="button" class="btn btn-xs btn-success" ng-click="join(player)" href="" data-toggle="tooltip" title="Changer d'équipe"><i class="icon-share-alt"></i></button>
                 </h5>
             </div>
             <div class="col-md-2 text-center">
@@ -16,9 +15,7 @@
             </div>
             <div class="col-md-4 text-left">
                 <h1>{{game.teamB.score}}</h1>
-                <h5 ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
-                    <button ng-show="selectedGame == games.length-1 && teamEditing" type="button" class="btn btn-xs btn-success" ng-click="join(player)" href="" data-toggle="tooltip" title="Changer d'équipe"><i class="icon-reply"></i></button>
-                    {{player.firstName}}
+                <h5 ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">{{player.firstName}}
                     <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
                     <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
                     <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
@@ -28,13 +25,7 @@
         </div>
 
         <div class="container text-center" ng-show="selectedGame == games.length-1">
-            <div class="btn-group">
-                <button type="button" class="btn btn-xs btn-danger dropdown-toggle" data-toggle="dropdown">Prochain match <span class="caret"></span></button>
-                <ul class="dropdown-menu text-left" role="menu">
-                    <li><a href="" ng-click="teamEditing = !teamEditing"><i class="icon-edit"></i> Modifier les &eacute;quipes</a></li>
-                    <!--li><a href="" class="disabled"><i class="icon-random"></i> &Eacute;quilibrer automatiquement</a></li-->
-                </ul>
-            </div>
+                <h4><small><span class="label label-danger">Prochain match</span></small></h4>
         </div>
     </div>
 
