@@ -7,7 +7,7 @@
 
         <div class="alert alert-info alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="icon-remove"></i></button>
-            <i class="icon-comment"></i> La nouvelle formule de calcul pour le classement est active. <strong>( 3pts par Victoire + 1pt par match Nul ) + ( Buts / Matchs joués )</strong>
+            <i class="icon-comment"></i> La nouvelle formule de calcul pour le classement est active. <strong>3 pts par Victoire + 1 pt par match Nul + 0,05 pts par But</strong>
         </div>
 
         <table class="table table-condensed  table-striped  table-hover">
@@ -15,7 +15,7 @@
                 <tr>
                     <th class="text-center" style="width: 5%">#</th>
                     <th><a href="" ng-click="predicate = 'firstName'; reverse=!reverse">Joueur</a></th>
-                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['points', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Points = ( 3 x V + N ) + ( Buts / Matchs )">Pts</a></th>
+                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['points', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Points = ( 3 x V + N ) + ( Buts x 0,05 )">Pts</a></th>
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['wins', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Victoires">V</a></th>
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['draws', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Nuls">N</a></th>
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Défaites">D</a></th>

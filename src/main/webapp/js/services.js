@@ -4,9 +4,9 @@
 var services = angular.module('spatworkServices', []);
 
 // Ranking points computing service.
-// Current formula is Points = ( 3 x V + N ) + ( Goals / Matchs ) or 0 if never played.
+// Current formula is Points = ( 3 x V + N ) + ( Goals x 0,05 ).
 services.service('rankingPoints', function() {
     this.computePoints = function(player) {
-        return player.played == 0 ? 0 : ((player.wins*3) + player.draws) + (player.goals / player.played);
+        return ((player.wins*3) + player.draws) + (player.goals * 5e-2);
     };
 });

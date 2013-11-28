@@ -4,6 +4,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingPoints
         for(var i=0;i<$scope.players.length;i++){
         	$scope.players[i].played = $scope.players[i].wins + $scope.players[i].draws + $scope.players[i].losses;
             $scope.players[i].points = rankingPoints.computePoints($scope.players[i]);
+            $scope.players[i].gpm = $scope.players[i].played == 0 ? 0 : ($scope.players[i].goals / $scope.players[i].played);
         }
     }, function errorCallback() {
         alert("Oops unable to update server. Please refresh. :(");
