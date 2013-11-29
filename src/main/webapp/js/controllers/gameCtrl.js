@@ -1,4 +1,4 @@
-var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
+var gameCtrl = controllers.controller("GameCtrl", function($scope, $http, Restangular){
 
     refreshScopeData();
 
@@ -20,6 +20,11 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
                 $scope.selectedGame = $scope.game.index;
                 $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
                 attributeTeamAndGoals();
+                //Load video urls to game objects
+                $scope.game.hasVideo = false;
+                $http.get('videos/videos.json').success(function(data) {
+                    $scope.videos = data;
+                });
             }, function errorCallback() {
                 alert("Oops unable to get info from server. Please refresh. :(");
             });
@@ -53,6 +58,11 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, Restangular){
             $scope.selectedGame = index;
             attributeTeamAndGoals();
             $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
+            var video = _.find($scope.videos, function(vid){return vid.id == index+1});
+            $scope.game.hasVideo = video !== undefined;
+            if($scope.game.hasVideo){
+                $scope.game.videoUrl = video.url;
+            }
         }
     }
 

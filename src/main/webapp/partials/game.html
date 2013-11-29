@@ -29,7 +29,7 @@
         </div>
 
         <div class="container text-center" ng-show="selectedGame != games.length-1">
-            <a type="button" ng-href="videos/match-{{selectedGame+1}}.mov" download="match-{{selectedGame+1}}.mov" class="btn btn-xs btn-primary"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="icon-youtube-play icon-large"></i></a>
+            <a type="button" ng-class="{'disabled': !game.hasVideo}" ng-href="{{game.videoUrl}}" class="btn btn-xs btn-primary"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="icon-youtube-play icon-large"></i></a>
         </div>
     </div>
 
