@@ -55,23 +55,23 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Score a goal...</h4>
+                    <h4 class="modal-title">Enregistrer un but...</h4>
                 </div>
                 <div class="modal-body">
                     <form role="form" novalidate>
                         <div class="form-group">
-                            <label for="scorer">Scorer</label>
+                            <label for="scorer">Buteur</label>
                             <select class="form-control" required ng-model="scorer" id="scorer" ng-change="scorerSelected()" ng-options="player.firstName + ' ' + player.lastName for player in players | filterPlaying | orderBy:'firstName'"></select>
                         </div>
                         <div class="form-group">
-                            <label for="scoringTeam">Scoring team</label>
+                            <label for="scoringTeam">&Eacute;quipe qui marque</label>
                             <select class="form-control" required ng-model="scoringTeam" id="scoringTeam" ng-options="team as team for team in ['A', 'B']"></select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" ng-click="saveGoal()">Goal</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" ng-click="saveGoal()">But</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

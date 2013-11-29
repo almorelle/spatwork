@@ -1,10 +1,10 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-var spatwork = angular.module('spatwork', ['spatwork.controllers', 'spatworkFilters']);
+var spatwork = angular.module('spatwork', ['spatworkControllers', 'spatworkFilters', 'spatworkServices']);
 
 //App controllers
-var controllers = angular.module('spatwork.controllers', ['restangular']);
+var controllers = angular.module('spatworkControllers', ['restangular']);
 
 spatwork.config(function($routeProvider, RestangularProvider) {
 
