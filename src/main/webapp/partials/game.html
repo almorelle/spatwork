@@ -24,12 +24,9 @@
             </div>
         </div>
 
-        <div class="container text-center" ng-show="selectedGame == games.length-1">
-            <h4><small><span class="label label-danger">Prochain match</span></small></h4>
-        </div>
-
-        <div class="container text-center" ng-show="selectedGame != games.length-1">
-            <a type="button" ng-class="{'disabled': !game.hasVideo}" ng-href="{{game.videoUrl}}" class="btn btn-xs btn-primary"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="icon-youtube-play icon-large"></i></a>
+        <div class="container text-center" ng-switch="game.nextGame">
+            <div ng-switch-when="true"><h4><small><span class="label label-danger">Prochain match</span></small></h4></div>
+            <div ng-switch-default><a type="button" ng-show="game.hasVideo" ng-href="{{game.videoUrl}}" class="btn btn-xs btn-primary"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="icon-youtube-play icon-large"></i></a></div>
         </div>
     </div>
 

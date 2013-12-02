@@ -18,6 +18,7 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, $http, Restan
                 $scope.game.teamA.score = '-';
                 $scope.game.teamB.score = '-';
                 $scope.selectedGame = $scope.game.index;
+                $scope.game.nextGame = true;
                 $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
                 attributeTeamAndGoals();
                 //Load video urls to game objects
@@ -56,10 +57,11 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, $http, Restan
         if( ($scope.selectedGame != index) && (index >= 0) && (index < $scope.games.length) ){
             $scope.game = $scope.games[index];
             $scope.selectedGame = index;
+            $scope.game.nextGame = (index == $scope.games.length-1);
             attributeTeamAndGoals();
             $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
             var video = _.find($scope.videos, function(vid){return vid.id == index+1});
-            $scope.game.hasVideo = video !== undefined;
+            $scope.game.hasVideo = (video !== undefined);
             if($scope.game.hasVideo){
                 $scope.game.videoUrl = video.url;
             }
