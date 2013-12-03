@@ -10,3 +10,12 @@ services.service('rankingPoints', function() {
         return ((player.wins*3) + player.draws) + (player.goals * 5e-2);
     };
 });
+
+// Retrieves the videos data.
+services.service('videoService', function($http) {
+    this.getData = function() {
+        return $http.get('videos/videos.json').then(function(result) {
+            return result.data;
+        });
+    };
+});
