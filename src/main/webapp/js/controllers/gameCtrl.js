@@ -1,4 +1,4 @@
-var gameCtrl = controllers.controller("GameCtrl", function($scope, $http, Restangular){
+var gameCtrl = controllers.controller("GameCtrl", function($scope, videoService, Restangular){
 
     refreshScopeData();
 
@@ -23,7 +23,7 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, $http, Restan
                 attributeTeamAndGoals();
                 //Load video urls to game objects
                 $scope.game.hasVideo = false;
-                $http.get('videos/videos.json').success(function(data) {
+                videoService.getData().then(function(data){
                     $scope.videos = data;
                 });
             }, function errorCallback() {

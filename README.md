@@ -11,6 +11,16 @@ Run with `java -cp target/classes:target/dependency/* spatwork.AppServer`.
 
 You will need a [mongoDB](http://www.mongodb.org/) server running on localhost (you can use `-Pembedmongo` during the build).
 
+## Videos
+
+You can provide video links for each recorded game. A `videos.json` file is expected in `webapp/videos` directory.
+```JSON
+[
+    { "id": "2", "url": "videos/match-2-video.mp4" },
+    { "id": "8", "url": "videos/some-kick-ass-video.mp4" }
+]
+```
+
 ## Credits
 
 Built using [restx.io](http://restx.io) and integrates with mongoDB thanks to [jongo](http://jongo.org) API.
