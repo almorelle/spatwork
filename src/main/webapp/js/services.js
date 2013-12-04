@@ -14,7 +14,7 @@ services.service('rankingPoints', function() {
 // Retrieves the videos data.
 services.service('videoService', function($http) {
     this.getData = function() {
-        return $http.get('videos/videos.json').then(function(result) {
+        return $http.get('videos/videos.json', {cache: false}).then(function(result) {
             return result.data;
         });
     };
