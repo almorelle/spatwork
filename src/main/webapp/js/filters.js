@@ -5,7 +5,7 @@ var filters = angular.module('spatworkFilters', []);
 
 filters.filter('checkmark', function() {
     return function(input) {
-        return input ? 'icon-ok' : 'icon-remove';
+        return input ? 'fa-check' : 'fa-times';
     };
 });
 
