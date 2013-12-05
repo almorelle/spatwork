@@ -63,7 +63,8 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, videoService,
             var video = _.find($scope.videos, function(vid){return vid.id == index+1});
             $scope.game.hasVideo = (video !== undefined);
             if($scope.game.hasVideo){
-                $scope.game.videoUrl = video.url;
+                $scope.game.videoUrl = video.file;
+                $scope.game.videoStream = video.web;
             }
         }
     }

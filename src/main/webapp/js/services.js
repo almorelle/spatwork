@@ -12,9 +12,10 @@ services.service('rankingService', function() {
 });
 
 // Retrieves the videos data.
-services.service('videoService', function($http) {
+services.service('videoService', function($http, $cacheFactory) {
     this.getData = function() {
-        return $http.get('videos/videos.json', {cache: false}).then(function(result) {
+        return $http.get('videos/videos.json').then(function(result) {
+            $cacheFactory.get('$http').remove('videos/videos.json');
             return result.data;
         });
     };

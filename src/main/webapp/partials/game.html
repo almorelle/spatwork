@@ -25,8 +25,13 @@
         </div>
 
         <div class="container text-center" ng-switch="game.nextGame">
-            <div ng-switch-when="true"><h4><small><span class="label label-danger">Prochain match</span></small></h4></div>
-            <div ng-switch-default><a type="button" ng-show="game.hasVideo" ng-href="{{game.videoUrl}}" class="btn btn-xs btn-primary"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="fa fa-youtube-play fa-lg"></i></a></div>
+            <div ng-switch-when="true">
+                <h4><small><span class="label label-danger">Prochain match</span></small></h4>
+            </div>
+            <div ng-switch-default class="btn-group">
+                <a type="button" ng-show="game.hasVideo" ng-href="{{game.videoStream}}" ng-class="{'disabled': (game.videoStream == '')}" class="btn btn-xs btn-primary" target="_blank"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="fa fa-youtube-play fa-lg"></i></a>
+                <a type="button" ng-show="game.hasVideo" ng-href="{{game.videoUrl}}" ng-class="{'disabled': (game.videoUrl == '')}" class="btn btn-xs btn-primary" download><i class="fa fa-download fa-lg"></i></a>
+            </div>
         </div>
     </div>
 

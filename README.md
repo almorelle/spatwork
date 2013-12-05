@@ -16,8 +16,9 @@ You will need a [mongoDB](http://www.mongodb.org/) server running on localhost (
 You can provide video links for each recorded game. A `videos.json` file is expected in `webapp/videos` directory.
 ```JSON
 [
-    { "id": "2", "url": "videos/match-2-video.mp4" },
-    { "id": "8", "url": "videos/some-kick-ass-video.mp4" }
+    { "id": "2", "file": "videos/match-2-video.mp4", "web": "youtube-url" },
+    { "id": "8", "file": "videos/some-kick-ass-video.mp4", "web": "dailymotion-url" },
+    { "id": "8", "file": "videos/some-kick-ass-video.mp4", "web": "vimeo-url" }
 ]
 ```
 
