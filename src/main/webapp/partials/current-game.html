@@ -8,16 +8,16 @@
                     <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
                     <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
                     (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span> {{player.firstName}}
-                    <button ng-show="teamEditing" type="button" class="btn btn-xs btn-success" ng-click="join(player)" href="" data-toggle="tooltip" title="Changer d'équipe"><i class="icon-share-alt"></i></button>
+                    <button ng-show="teamEditing" type="button" class="btn btn-xs btn-success" ng-click="join(player)" href="" data-toggle="tooltip" title="Changer d'équipe"><i class="fa fa-share"></i></button>
                 </h5>
             </div>
             <div class="col-md-2 text-center">
-                <h1><i class="icon-trophy text-warning icon-large"></i></h1>
+                <h1><i class="fa fa-trophy text-warning fa-lg"></i></h1>
             </div>
             <div class="col-md-4 text-left">
                 <h1>{{game.teamB.score}}</h1>
                 <h5 ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
-                    <button ng-show="teamEditing" type="button" class="btn btn-xs btn-success" ng-click="join(player)" href="" data-toggle="tooltip" title="Changer d'équipe"><i class="icon-reply"></i></button>
+                    <button ng-show="teamEditing" type="button" class="btn btn-xs btn-success" ng-click="join(player)" href="" data-toggle="tooltip" title="Changer d'équipe"><i class="fa fa-reply"></i></button>
                     {{player.firstName}}
                     <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
                     <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
@@ -31,11 +31,11 @@
             <div class="btn-group">
                 <button type="button" class="btn btn-xs btn-danger dropdown-toggle" data-toggle="dropdown">Gestion du match <span class="caret"></span></button>
                 <ul class="dropdown-menu text-left" role="menu">
-                    <li><a href="" ng-click="teamEditing = !teamEditing"><i class="icon-edit"></i> Modifier les &eacute;quipes</a></li>
-                    <li><a href="" ng-click="balanceTeams()"><i class="icon-random"></i> &Eacute;quilibrer automatiquement</a></li>
+                    <li><a href="" ng-click="teamEditing = !teamEditing"><i class="fa fa-pencil-square-o"></i> Modifier les &eacute;quipes</a></li>
+                    <li><a href="" ng-click="balanceTeams()"><i class="fa fa-random"></i> &Eacute;quilibrer automatiquement</a></li>
                     <li class="divider"></li>
-                    <li><a href="" ng-click="goal()"><i class="icon-dribbble"></i> Enregistrer un but</a></li>
-                    <li><a href="" ng-click="end()"><i class="icon-legal"></i> Clore le match</a></li>
+                    <li><a href="" ng-click="goal()"><i class="fa fa-dribbble"></i> Enregistrer un but</a></li>
+                    <li><a href="" ng-click="end()"><i class="fa fa-gavel"></i> Clore le match</a></li>
                 </ul>
             </div>
         </div>

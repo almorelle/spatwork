@@ -11,7 +11,7 @@
                 </h5>
             </div>
             <div class="col-md-2 text-center">
-                <h1><i class="icon-trophy text-warning icon-large"></i></h1>
+                <h1><i class="fa fa-trophy text-warning fa-lg"></i></h1>
             </div>
             <div class="col-md-4 text-left">
                 <h1>{{game.teamB.score}}</h1>
@@ -25,8 +25,13 @@
         </div>
 
         <div class="container text-center" ng-switch="game.nextGame">
-            <div ng-switch-when="true"><h4><small><span class="label label-danger">Prochain match</span></small></h4></div>
-            <div ng-switch-default><a type="button" ng-show="game.hasVideo" ng-href="{{game.videoUrl}}" class="btn btn-xs btn-primary"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="icon-youtube-play icon-large"></i></a></div>
+            <div ng-switch-when="true">
+                <h4><small><span class="label label-danger">Prochain match</span></small></h4>
+            </div>
+            <div ng-switch-default class="btn-group">
+                <a type="button" ng-show="game.hasVideo" ng-href="{{game.videoStream}}" ng-class="{'disabled': (game.videoStream == '')}" class="btn btn-xs btn-primary" target="_blank"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="fa fa-youtube-play fa-lg"></i></a>
+                <a type="button" ng-show="game.hasVideo" ng-href="{{game.videoUrl}}" ng-class="{'disabled': (game.videoUrl == '')}" class="btn btn-xs btn-primary" download><i class="fa fa-download fa-lg"></i></a>
+            </div>
         </div>
     </div>
 
@@ -39,11 +44,11 @@
 
             <div class="col-md-4">
                 <ul class="pagination">
-                    <li><a href="" ng-click="setGame(0)" ng-class="{'disabled': (selectedGame == 0)}"><i class="icon-double-angle-left"></i></a></li>
-                    <li><a href="" ng-click="setGame(selectedGame-1)" ng-class="{'disabled': (selectedGame == 0)}"><i class="icon-angle-left"></i></a></li>
+                    <li><a href="" ng-click="setGame(0)" ng-class="{'disabled': (selectedGame == 0)}"><i class="fa fa-angle-double-left"></i></a></li>
+                    <li><a href="" ng-click="setGame(selectedGame-1)" ng-class="{'disabled': (selectedGame == 0)}"><i class="fa fa-angle-left"></i></a></li>
                     <li ng-repeat="game in games | orderBy:'timestamp' | startFrom:pageStart | limitTo:5 " ng-class="{'active': (selectedGame == game.index)}"><a href="" ng-click="setGame(game.index)">{{game.index+1}}</a></li>
-                    <li><a href="" ng-click="setGame(selectedGame+1)" ng-class="{'disabled': (selectedGame == games.length-1)}"><i class="icon-angle-right"></i></a></li>
-                    <li><a href="" ng-click="setGame(games.length-1)" ng-class="{'disabled': (selectedGame == games.length-1)}"><i class="icon-double-angle-right"></i></a></li>
+                    <li><a href="" ng-click="setGame(selectedGame+1)" ng-class="{'disabled': (selectedGame == games.length-1)}"><i class="fa fa-angle-right"></i></a></li>
+                    <li><a href="" ng-click="setGame(games.length-1)" ng-class="{'disabled': (selectedGame == games.length-1)}"><i class="fa fa-angle-double-right"></i></a></li>
                 </ul>
             </div>
         </div>
