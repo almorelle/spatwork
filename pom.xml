@@ -23,7 +23,7 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <restx.version>0.2.9.2</restx.version>
+        <restx.version>0.31</restx.version>
     </properties>
 
     <dependencies>
@@ -131,7 +131,7 @@
 								<configuration>
 									<port>27017</port> <!-- optional, default 27017 -->
 									<randomPort>false</randomPort> <!-- optional, default is false, if true allocates a random port and overrides embedmongo.port -->
-									<version>2.4.6</version>  <!-- optional, default 2.2.1 -->
+									<version>2.4.9</version>  <!-- optional, default 2.2.1 -->
 									<!--<databaseDirectory></databaseDirectory>   optional, default is a new dir in java.io.tmpdir -->
 									<logging>none</logging> <!-- optional (file|console|none), default console -->
 									<!--<logFile>${project.build.directory}/myfile.log</logFile>  optional, can be used when logging=file, default is ./embedmongo.log -->

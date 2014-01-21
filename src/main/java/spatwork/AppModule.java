@@ -1,10 +1,10 @@
 package spatwork;
 
 import com.google.common.base.Charsets;
-import restx.SignatureKey;
+import restx.security.SignatureKey;
 import restx.factory.Module;
 import restx.factory.Provides;
-import restx.jongo.JongoFactory;
+import restx.mongo.MongoModule;
 
 import javax.inject.Named;
 
@@ -15,7 +15,7 @@ public class AppModule {
          return new SignatureKey("9341429873785201943 b3754614-d7a5-4778-923f-40c11479534d restx-spatwork restx-spatwork".getBytes(Charsets.UTF_8));
     }
 
-    @Provides @Named(JongoFactory.JONGO_DB_NAME)
+    @Provides @Named(MongoModule.MONGO_DB_NAME)
     public String dbName() {
         return "restx-spatwork";
     }
