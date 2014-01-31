@@ -1,4 +1,4 @@
-var currentGameCtrl = controllers.controller("CurrentGameCtrl", function($scope, rankingService, Restangular){
+var nextGameCtrl = controllers.controller("NextGameCtrl", function($scope, rankingService, Restangular){
 
     $scope.teamEditing = false;
     refreshScopeData();
