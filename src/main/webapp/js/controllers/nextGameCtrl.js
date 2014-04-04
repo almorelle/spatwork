@@ -62,7 +62,7 @@ var nextGameCtrl = controllers.controller("NextGameCtrl", function($scope, ranki
             $('#updateFade').modal('toggle');
             var editGame = Restangular.copy($scope.game);
             var players = _.filter($scope.players, function(player){return _.indexOf(editGame.teamA.teammateRefs, player._id) != -1 || _.indexOf(editGame.teamB.teammateRefs, player._id) != -1;});
-            players = _.sortBy(players, "points");
+            players = _.sortBy(players, "gpm");
 
             //balancing teams
             var pointsA = 0;
@@ -80,8 +80,8 @@ var nextGameCtrl = controllers.controller("NextGameCtrl", function($scope, ranki
                         pointsB += heaviestOfAll.points;
                     }
                 } else {
-                    var lightest = players[i]._id;
-                    var heaviest = players[i+1]._id;
+                    var heaviest = players[i]._id;
+                    var lightest = players[i+1]._id;
                     if(pointsA <= pointsB){
                         editGame.teamA.teammateRefs.push(heaviest);
                         editGame.teamB.teammateRefs.push(lightest);
