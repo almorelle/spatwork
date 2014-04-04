@@ -28,9 +28,9 @@ spatwork.config(function($routeProvider, RestangularProvider) {
     });
 
     $routeProvider
-        .when('/current-game', {
-            templateUrl: 'partials/current-game.html',
-            controller: 'CurrentGameCtrl'
+        .when('/next-game', {
+            templateUrl: 'partials/next-game.html',
+            controller: 'NextGameCtrl'
     });
 
     $routeProvider
