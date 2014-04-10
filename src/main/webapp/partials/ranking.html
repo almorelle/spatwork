@@ -15,6 +15,7 @@
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['draws', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Nuls">N</a></th>
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Défaites">D</a></th>
                     <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts">Buts</a></th>
+                    <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['gpm', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts / match">Bpm</a></th>
                     <th class="text-center" style="width: 10%"><i class="fa fa-user-md" data-toggle="tooltip" title="Certificat Médical"></i></th>
                     <th class="text-center" style="width: 10%"><i class="fa fa-euro" data-toggle="tooltip" title="Cotisation"></i></th>
                 </tr>
@@ -31,6 +32,7 @@
                     <td class="text-center">{{player.draws}}</td>
                     <td class="text-center">{{player.losses}}</td>
                     <td class="text-center">{{player.goals}}</td>
+                    <td class="text-center">{{player.gpm | number:2}}</td>
                     <td class="text-center"><i class="fa {{player.certificate | checkmark}}"></i></td>
                     <td class="text-center"><i class="fa {{player.subscription | checkmark}}"></i></td>
                 </tr>
