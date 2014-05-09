@@ -9,6 +9,8 @@ import restx.annotations.*;
 import restx.factory.Component;
 import restx.jongo.JongoCollection;
 import restx.security.PermitAll;
+import restx.security.RolesAllowed;
+import spatwork.AppModule.Roles;
 import spatwork.domain.Player;
 
 import javax.inject.Named;
@@ -64,7 +66,7 @@ public class PlayerResource {
      * @return the updated player.
      * @throws @WebException (HTTP404) whenever the key doesn't correspond to any player.
      */
-    @PermitAll
+    @RolesAllowed(Roles.ADMIN)
     @PUT("/players/{key}")
     public Player updatePlayer(String key, Player player) {
         Optional<Player> playerByKey = findPlayerByKey(key);
@@ -83,7 +85,7 @@ public class PlayerResource {
      * @return a deletion confirmation.
      * @throws @WebException (HTTP404) whenever the key doesn't correspond to any player.
      */
-    @PermitAll
+    @RolesAllowed(Roles.ADMIN)
     @DELETE("/players/{key}")
     public Status deletePlayer(String key) {
         Optional<Player> player = findPlayerByKey(key);

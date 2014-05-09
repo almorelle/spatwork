@@ -9,6 +9,8 @@ import restx.annotations.*;
 import restx.factory.Component;
 import restx.jongo.JongoCollection;
 import restx.security.PermitAll;
+import restx.security.RolesAllowed;
+import spatwork.AppModule.Roles;
 import spatwork.domain.Game;
 import spatwork.domain.GameResult;
 import spatwork.domain.Player;
@@ -58,7 +60,7 @@ public class GameResource {
      * @param game the game to add.
      * @return the added game.
      */
-    @PermitAll
+    @RolesAllowed(Roles.ADMIN)
     @POST("/games")
     public Game createGame(Game game) {
         games.get().save(game);
@@ -73,7 +75,7 @@ public class GameResource {
      * @throws @WebException (HTTP404) whenever the key doesn't correspond to any game and (HTTP400) if a player is
      * in twice in the same team or in both teams and/or the game is already finished.
      */
-    @PermitAll
+    @RolesAllowed(Roles.ADMIN)
     @PUT("/games/{key}")
     public Game updateGame(String key, Game game) {
         Optional<Game> gameByKey = findGameByKey(key);
@@ -104,7 +106,7 @@ public class GameResource {
      * @return a deletion confirmation.
      * @throws @WebException HTTP404 whenever the key doesn't correspond to any game.
      */
-    @PermitAll
+    @RolesAllowed(Roles.ADMIN)
     @DELETE("/games/{key}")
     public Status deleteGame(String key) {
         Optional<Game> game = findGameByKey(key);
@@ -192,7 +194,7 @@ public class GameResource {
      * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team and/or the player
      * does not exist and/or the game is already finished.
      */
-    @PermitAll
+    @RolesAllowed(Roles.ADMIN)
     @PUT("/games/{key}/goal")
     public Game goal(String key, @Param(kind = Param.Kind.QUERY) String keyTeam, @Param(kind = Param.Kind.QUERY) String keyScorer) {
         Optional<Game> gameByKey = findGameByKey(key);
@@ -237,7 +239,7 @@ public class GameResource {
      * @return the updated game.
      * @throws WebException HTTP404 if the referenced game is absent of HTTP400 if the game is finished already.
      */
-    @PermitAll
+    @RolesAllowed(Roles.ADMIN)
     @PUT("/games/{key}/end")
     public Game endGame(String key) {
         Optional<Game> gameByKey = findGameByKey(key);
@@ -261,7 +263,7 @@ public class GameResource {
      * @param hasWon whether the team has won or not.
      * @param result result of the game.
      */
-    public void finishGame(Team team, boolean hasWon, GameResult result) {
+    private void finishGame(Team team, boolean hasWon, GameResult result) {
         for(String playerKey : team.getTeammateRefs()){
             Optional<Player> playerByKey = playerResource.findPlayerByKey(playerKey);
             if(playerByKey.isPresent()){
