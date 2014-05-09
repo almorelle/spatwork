@@ -9,21 +9,29 @@ import restx.annotations.*;
 import restx.factory.Component;
 import restx.jongo.JongoCollection;
 import restx.security.PermitAll;
+import restx.security.RestxSession;
 import restx.security.RolesAllowed;
 import spatwork.AppModule.Roles;
+import spatwork.AppPlayerRepository;
 import spatwork.domain.Player;
+import spatwork.domain.Signup;
 
 import javax.inject.Named;
 
+import java.util.ArrayList;
+
+import static java.util.Arrays.asList;
 import static restx.common.MorePreconditions.checkEquals;
 
 @Component @RestxResource
 public class PlayerResource {
 
     private final JongoCollection players;
+    private final AppPlayerRepository playerRepository;
 
-    public PlayerResource(@Named("players") JongoCollection players) {
+    public PlayerResource(@Named("players") JongoCollection players, AppPlayerRepository playerRepository) {
         this.players = players;
+        this.playerRepository = playerRepository;
     }
 
     /**
@@ -34,6 +42,12 @@ public class PlayerResource {
     @GET("/players")
     public Iterable<Player> findPlayers() {
         return players.get().find().as(Player.class);
+    }
+
+    @RolesAllowed(Roles.ADMIN)
+    @GET("/users")
+    public Iterable<Player> findUsers() {
+        return playerRepository.findAllUsers();
     }
 
     /**
@@ -47,15 +61,38 @@ public class PlayerResource {
         return Optional.fromNullable(players.get().findOne(new ObjectId(key)).as(Player.class));
     }
 
-    /**
-     * Adds a player.
-     * @param player the player to add.
-     * @return the added player.
-     */
     @PermitAll
-    @POST("/players")
-    public Player createPlayer(Player player) {
-        players.get().save(player);
+    @GET("/users/:email")
+    public Optional<Player> getCurrentUser(String email) {
+        Optional<Player> principal = (Optional<Player>) RestxSession.current().getPrincipal();
+        if ("current".equals(email)) {
+            return principal;
+        } else {
+            if (principal.isPresent()
+                    || (
+                    !principal.get().getEmail().equals(email)
+                            && !principal.get().getRoles().contains(Roles.ADMIN))) {
+                throw new WebException(HttpStatus.UNAUTHORIZED);
+            }
+
+            return playerRepository.findUserByName(email);
+        }
+    }
+
+    @PermitAll
+    @POST("/users")
+    public Player signup(Signup signup) {
+        Player player = playerRepository.createUser(
+                new Player().setEmail(signup.getEmail()).setFirstName(signup.getFirstName()).setLastName(signup.getLastName())
+                        .setRoles(new ArrayList<>(asList(Roles.USER)))
+        );
+
+        playerRepository.setCredentials(player.getName(), signup.getPasswordHash());
+
+        if (!RestxSession.current().getPrincipal().isPresent()) {
+            RestxSession.current().authenticateAs(player);
+        }
+
         return player;
     }
 

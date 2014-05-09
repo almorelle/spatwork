@@ -83,10 +83,10 @@ public class AppModule {
 
     @Provides
     public BasicPrincipalAuthenticator basicPrincipalAuthenticator(
-            AppUserRepository userRepository, SecuritySettings securitySettings,
+            AppPlayerRepository playerRepository, SecuritySettings securitySettings,
             CredentialsStrategy credentialsStrategy,
             @Named("restx.admin.passwordHash") String adminPasswordHash) {
         return new StdBasicPrincipalAuthenticator(
-                new StdUserService<>(userRepository, credentialsStrategy, adminPasswordHash), securitySettings);
+                new StdUserService<>(playerRepository, credentialsStrategy, adminPasswordHash), securitySettings);
     }
 }

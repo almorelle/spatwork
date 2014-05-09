@@ -2,19 +2,12 @@ package spatwork.domain;
 
 public class Signup {
     private String email;
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String passwordHash;
 
     public String getEmail() {
         return email;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
     }
 
     public Signup setEmail(final String email) {
@@ -22,9 +15,26 @@ public class Signup {
         return this;
     }
 
-    public Signup setFullName(final String fullName) {
-        this.fullName = fullName;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public Signup setFirstName(String firstName) {
+        this.firstName = firstName;
         return this;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Signup setLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     public Signup setPasswordHash(final String passwordHash) {
@@ -36,7 +46,8 @@ public class Signup {
     public String toString() {
         return "Signup{" +
                 "email='" + email + '\'' +
-                ", fullName='" + fullName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
                 '}';
     }

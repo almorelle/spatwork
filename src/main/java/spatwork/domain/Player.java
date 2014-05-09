@@ -1,17 +1,24 @@
 package spatwork.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.ImmutableSet;
 import org.jongo.marshall.jackson.oid.Id;
 import org.jongo.marshall.jackson.oid.ObjectId;
+import restx.security.RestxPrincipal;
+
+import java.util.Collection;
 
 /**
  *  Simple POJO of a sport player
  */
-public class Player {
+public class Player implements RestxPrincipal {
     @Id @ObjectId
     private String key;
 
     private String firstName;
     private String lastName;
+    private String email;
+    private Collection<String> roles;
 
     private int goals;
     private int wins;
@@ -25,72 +32,111 @@ public class Player {
         return key;
     }
 
-    public void setKey(String key) {
+    public Player setKey(String key) {
         this.key = key;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public Player setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public Player setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Player setEmail(final String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Collection<String> getRoles() {
+        return roles;
+    }
+
+    public Player setRoles(final Collection<String> roles) {
+        this.roles = roles;
+        return this;
     }
 
     public int getGoals() {
         return goals;
     }
 
-    public void setGoals(int goals) {
+    public Player setGoals(int goals) {
         this.goals = goals;
+        return this;
     }
 
     public int getWins() {
         return wins;
     }
 
-    public void setWins(int wins) {
+    public Player setWins(int wins) {
         this.wins = wins;
+        return this;
     }
 
     public int getLosses() {
         return losses;
     }
 
-    public void setLosses(int losses) {
+    public Player setLosses(int losses) {
         this.losses = losses;
+        return this;
     }
 
     public int getDraws() {
         return draws;
     }
 
-    public void setDraws(int draws) {
+    public Player setDraws(int draws) {
         this.draws = draws;
+        return this;
     }
 
     public boolean getSubscription() {
         return subscription;
     }
 
-    public void setSubscription(boolean subscription) {
+    public Player setSubscription(boolean subscription) {
         this.subscription = subscription;
+        return this;
     }
 
     public boolean getCertificate() {
         return certificate;
     }
 
-    public void setCertificate(boolean certificate) {
+    public Player setCertificate(boolean certificate) {
         this.certificate = certificate;
+        return this;
+    }
+
+    @Override
+    @JsonIgnore
+    public ImmutableSet<String> getPrincipalRoles() {
+        return ImmutableSet.copyOf(roles);
+    }
+
+    @Override
+    @JsonIgnore
+    public String getName() {
+        return getEmail();
     }
 
     /**
@@ -132,14 +178,16 @@ public class Player {
     public String toString() {
         return "Player{" +
                 "key='" + key + '\'' +
-                ", first_name='" + firstName + '\'' +
-                ", last_name='" + lastName + '\'' +
-                ", goals='" + goals + '\'' +
-                ", wins='" + wins + '\'' +
-                ", losses='" + losses + '\'' +
-                ", draws='" + draws + '\'' +
-                ", subscription='" + subscription + '\'' +
-                ", certificate='" + certificate + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                ", goals=" + goals +
+                ", wins=" + wins +
+                ", losses=" + losses +
+                ", draws=" + draws +
+                ", subscription=" + subscription +
+                ", certificate=" + certificate +
                 '}';
     }
 }
