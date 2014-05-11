@@ -16,14 +16,20 @@ spatwork.config(function($routeProvider, RestangularProvider) {
         });
 
     $routeProvider
+        .when('/teams', {
+            templateUrl: 'partials/teams.html',
+            controller: 'TeamCtrl'
+    });
+
+    $routeProvider
         .when('/ranking', {
             templateUrl: 'partials/ranking.html',
             controller: 'RankCtrl'
     });
 
     $routeProvider
-        .when('/game', {
-            templateUrl: 'partials/game.html',
+        .when('/games', {
+            templateUrl: 'partials/games.html',
             controller: 'GameCtrl'
     });
 
@@ -31,11 +37,6 @@ spatwork.config(function($routeProvider, RestangularProvider) {
         .when('/next-game', {
             templateUrl: 'partials/next-game.html',
             controller: 'NextGameCtrl'
-    });
-
-    $routeProvider
-        .when('/about', {
-            templateUrl: 'partials/about.html'
     });
 
     $routeProvider
