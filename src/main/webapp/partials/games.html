@@ -30,7 +30,8 @@
             <div class="col-md-2 col-md-offset-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center"><b class="panel-title">Team A</b></div>
-                    <ul class="list-group">
+                    <ul class="list-group text-center">
+                        <li class="list-group-item" ng-show="game.teamA.teammateRefs.length==0">Aucun</li>
                         <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
                             {{player.firstName}}
                             <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
@@ -45,7 +46,8 @@
             <div class="col-md-2">
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center"><b class="panel-title">Team B</b></div>
-                    <ul class="list-group">
+                    <ul class="list-group text-center">
+                        <li class="list-group-item" ng-show="game.teamB.teammateRefs.length==0">Aucun</li>
                         <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
                             {{player.firstName}}
                             <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
