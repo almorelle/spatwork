@@ -1,28 +1,18 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="row">
-            <div class="col-md-4 col-md-offset-1 text-right">
+            <div class="col-xs-4 col-md-4 col-md-offset-1 text-right">
                 <h1>{{game.teamA.score}}</h1>
-                <h5 ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
-                    <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
-                    <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
-                    <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
-                    (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span> {{player.firstName}}
-                </h5>
             </div>
-            <div class="col-md-2 text-center">
+            <div class="col-xs-4 col-md-2 text-center">
                 <h1><i class="fa fa-trophy text-warning fa-lg"></i></h1>
             </div>
-            <div class="col-md-4 text-left">
+            <div class="col-xs-4 col-md-4 text-left">
                 <h1>{{game.teamB.score}}</h1>
-                <h5 ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">{{player.firstName}}
-                    <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
-                    <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
-                    <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
-                    (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
-                </h5>
             </div>
         </div>
+
+        <br ng-show="game.nextGame" />
 
         <div class="container text-center" ng-switch="game.nextGame">
             <div ng-switch-when="true">
@@ -31,6 +21,40 @@
             <div ng-switch-default class="btn-group">
                 <a type="button" ng-show="game.hasVideo" ng-href="{{game.videoStream}}" ng-class="{'disabled': (game.videoStream == '')}" class="btn btn-xs btn-primary" target="_blank"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="fa fa-youtube-play fa-lg"></i></a>
                 <a type="button" ng-show="game.hasVideo" ng-href="{{game.videoUrl}}" ng-class="{'disabled': (game.videoUrl == '')}" class="btn btn-xs btn-primary" download><i class="fa fa-download fa-lg"></i></a>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"><b class="panel-title">Team A</b></div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
+                            {{player.firstName}}
+                            <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
+                            <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
+                            <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
+                            (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center"><b class="panel-title">Team B</b></div>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
+                            {{player.firstName}}
+                            <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
+                            <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
+                            <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
+                            (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -60,8 +84,3 @@
         </footer>
 
     </div> <!-- /container -->
-
-
-
-
-
