@@ -12,7 +12,7 @@ spatwork.config(function($routeProvider, RestangularProvider) {
         .when('/players',
         {
             templateUrl: 'partials/players.html',
-            controller: 'PlayersCtrl'
+            controller: 'PlayerCtrl'
         });
 
     $routeProvider
