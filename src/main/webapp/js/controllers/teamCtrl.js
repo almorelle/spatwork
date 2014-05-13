@@ -1,6 +1,5 @@
 var teamCtrl = controllers.controller("TeamCtrl", function($scope, rankingService, Restangular){
 
-    $scope.teamEditing = false;
     refreshScopeData();
 
     function refreshScopeData(){
