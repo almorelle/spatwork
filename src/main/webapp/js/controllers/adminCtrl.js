@@ -50,8 +50,7 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
     $("[data-toggle='tooltip']").tooltip({placement: "top"});
 
     //Changes a player from one team to the other or add him.
-    $scope.join = function(player){
-        $('#updateFade').modal('toggle');
+    $scope.changeTeam = function(player){
         var team = {};
         var keyTeam = "";
         if(player.teamRef==="N"){
@@ -67,12 +66,27 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
         }, function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
         });
-        $('#updateFade').modal('toggle');
+        $('#goalModal').modal('toggle');
     }
 
+    //Reset the scoring parameters and open up the goal form.
+    $scope.goal = function(player){
+        $scope.selectedPlayer = player;
+        $scope.oppositeTeamRef = player.teamRef == 'A' ? 'A' : 'B' ;
+        $('#goalModal').modal('toggle');
+    };
 
-
-    $("[data-toggle='tooltip']").tooltip({placement: "top"});
+    //Saves the goal and update the game.
+    $scope.saveGoal = function(player, team){
+        $scope.game.customPUT({}, "goal", {keyTeam: team, keyScorer: player._id}).then(function(){
+            $scope.selectedPlayer={};
+            $scope.oppositeTeamRef="";
+            refreshScopeData();
+        }), function errorCallback() {
+            alert("Oops unable to update server. Please refresh. :(");
+        };
+        $('#goalModal').modal('toggle');
+    };
 
     //Balance teams and reset.
     $scope.balanceTeams = function(algo){
@@ -129,26 +143,12 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
         }
     };
 
-    //Reset the scoring parameters and open up the goal form.
-    $scope.goal = function(){
-        $scope.keyTeam = "";
-        $scope.scoringTeam = {};
-        $('#goalModal').modal('toggle');
+    //Ask for game end confirmation.
+    $scope.confirmEnd = function(){
+        $('#endModal').modal('toggle');
     };
 
-    //Saves the goal and update the game.
-    $scope.saveGoal = function(){
-        $scope.game.customPUT({}, "goal", {keyTeam: $scope.scoringTeam, keyScorer: $scope.scorer._id}).then(function(){
-            $scope.keyTeam = "";
-            $scope.scoringTeam = {};
-            refreshScopeData();
-        }), function errorCallback() {
-            alert("Oops unable to update server. Please refresh. :(");
-        };
-        $('#goalModal').modal('toggle');
-    };
-
-    //Close the game.
+    //Ends the game.
     $scope.end = function(){
         $scope.game.customPUT({}, "end", {}).then(function(){
             var newGame = {"teamA":{"teammateRefs":[],"score":0,"scorersRefs":[]},"teamB":{"teammateRefs":[],"score":0, "scorersRefs":[]}, "finished": false};
@@ -161,10 +161,6 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
         }, function errorCallback() {
             alert("Oops unable to update server. Please refresh. :(");
         });
-    };
-
-    //auto-affect scoring team depending on selected scorer when declaring a goal.
-    $scope.scorerSelected = function() {
-        $scope.scoringTeam = $scope.scorer.teamRef;
+        $('#endModal').modal('toggle');
     };
 });

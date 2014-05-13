@@ -31,16 +31,16 @@
                                 {{game.teamA.averagegpm | number:2}} | {{game.teamA.averagepts | number:2}}
                             </span>
                     </div>
-                    <ul class="list-group text-center">
-                        <li class="list-group-item" ng-show="game.teamA.teammateRefs.length==0">Aucun</li>
-                        <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
+                    <div class="list-group text-center">
+                        <a href="" class="list-group-item" ng-show="game.teamA.teammateRefs.length==0">Aucun</a>
+                        <a href="" ng-click="goal(player)" class="list-group-item" ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
                             {{player.firstName}}
                             <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
                             <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
                                 <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
                                 (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
-                        </li>
-                    </ul>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -52,16 +52,16 @@
                                 {{game.teamB.averagegpm | number:2}} | {{game.teamB.averagepts | number:2}}
                             </span>
                     </div>
-                    <ul class="list-group text-center">
-                        <li class="list-group-item" ng-show="game.teamB.teammateRefs.length==0">Aucun</li>
-                        <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
+                    <div class="list-group text-center">
+                        <a href="" class="list-group-item" ng-show="game.teamB.teammateRefs.length==0">Aucun</a>
+                        <a href="" ng-click="goal(player)" class="list-group-item" ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
                             {{player.firstName}}
                             <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
                             <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
                                 <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
                                 (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
-                        </li>
-                    </ul>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,6 +74,8 @@
                 <ul class="dropdown-menu text-left">
                     <li><a href="" ng-click="balanceTeams('points')"><i class="fa fa-random fa-fw"></i> Moyenne de points</a></li>
                     <li><a href="" ng-click="balanceTeams('gpm')"><i class="fa fa-dribbble fa-fw"></i> Moyenne de buts par match</a></li>
+                    <li class="divider"></li>
+                    <li><a href="" ng-click="confirmEnd()"><i class="fa fa-gavel"></i> Finir le match</a></li>
                 </ul>
             </div>
         </div>
@@ -92,29 +94,34 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Enregistrer un but...</h4>
+                    <h4 class="modal-title text-center">{{selectedPlayer.firstName}} {{selectedPlayer.lastName}}</h4>
                 </div>
                 <div class="modal-body">
-                    <form role="form" novalidate>
-                        <div class="form-group">
-                            <label for="scorer">Buteur</label>
-                            <select class="form-control" required ng-model="scorer" id="scorer" ng-change="scorerSelected()" ng-options="player.firstName + ' ' + player.lastName for player in players | filterPlaying | orderBy:'firstName'"></select>
+                    <button type="button" ng-click="saveGoal(selectedPlayer, selectedPlayer.teamRef)" class="btn btn-primary btn-lg btn-block">But !!!</button>
+                    <br />
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group">
+                            <button type="button" ng-click="saveGoal(selectedPlayer, oppositeTeamRef)" class="btn btn-danger">contre son camp</button>
                         </div>
-                        <div class="form-group">
-                            <label for="scoringTeam">&Eacute;quipe qui marque</label>
-                            <select class="form-control" required ng-model="scoringTeam" id="scoringTeam" ng-options="team as team for team in ['A', 'B']"></select>
+                        <div class="btn-group">
+                            <button type="button" ng-click="changeTeam(selectedPlayer)" class="btn btn-warning">changer d'&Eacute;quipe</button>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary" ng-click="saveGoal()">But</button>
+                    </div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-
-
-
+    <div id="endModal" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="modal-title">Finir le match ?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" ng-click="end()">OK</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
