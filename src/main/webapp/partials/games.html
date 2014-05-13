@@ -12,15 +12,14 @@
             </div>
         </div>
 
-        <br ng-show="game.nextGame" />
+        <br ng-show="game.hasVideo" />
 
-        <div class="container text-center" ng-switch="game.nextGame">
-            <div ng-switch-when="true">
-                <h4><small><span class="label label-danger">Prochain match</span></small></h4>
-            </div>
-            <div ng-switch-default class="btn-group">
-                <a type="button" ng-show="game.hasVideo" ng-href="{{game.videoStream}}" ng-class="{'disabled': (game.videoStream == '')}" class="btn btn-xs btn-primary" target="_blank"><strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="fa fa-youtube-play fa-lg"></i></a>
-                <a type="button" ng-show="game.hasVideo" ng-href="{{game.videoUrl}}" ng-class="{'disabled': (game.videoUrl == '')}" class="btn btn-xs btn-primary" download><i class="fa fa-download fa-lg"></i></a>
+        <div class="container text-center" ng-show="game.hasVideo">
+            <div class="btn-group">
+                <a type="button" ng-href="{{game.videoStream}}" ng-class="{'disabled': (game.videoStream == '')}" class="btn btn-xs btn-primary" target="_blank">
+                    <strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="fa fa-youtube-play fa-lg"></i></a>
+                <a type="button" ng-href="{{game.videoUrl}}" ng-class="{'disabled': (game.videoUrl == '')}" class="btn btn-xs btn-primary" download>
+                    <i class="fa fa-download fa-lg"></i></a>
             </div>
         </div>
 
@@ -65,7 +64,7 @@
 
         <div class="row text-center">
             <div class="col-md-4">
-                <h2>Matchs précédents :</h2>
+                <h2>Historique des matchs :</h2>
             </div>
 
             <div class="col-md-4">

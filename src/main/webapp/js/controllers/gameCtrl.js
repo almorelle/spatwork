@@ -6,26 +6,19 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, videoService,
         Restangular.all("players").getList().then(function(players){
             $scope.players = players;
             Restangular.all("games").getList().then(function(games){
-                $scope.games = games;
+                $scope.games = _.filter(games,{finished: true});
                 //Sorting the collection by timestamps while attaching a timestamp attribute to each element.
                 _.sortBy($scope.games, function(game) { return game.timestamp = parseInt(game._id.toString().substring(0,8), 16 ) * 1000; });
                 //Providing then an index attribute for quicker access.
                 for(var i=0;i<$scope.games.length;i++){
                     $scope.games[i].index = i;
                 }
-                //Selecting the latest element.
-                $scope.game = $scope.games[$scope.games.length-1];
-                $scope.game.teamA.score = '-';
-                $scope.game.teamB.score = '-';
-                $scope.selectedGame = $scope.game.index;
-                $scope.game.nextGame = true;
-                $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
-                attributeTeamAndGoals();
                 //Load video urls to game objects
-                $scope.game.hasVideo = false;
                 videoService.getData().then(function(data){
                     $scope.videos = data;
                 });
+                //Select the latest element.
+                $scope.setGame($scope.games.length-1);
             }, function errorCallback() {
                 alert("Oops unable to get info from server. Please refresh. :(");
             });
@@ -57,7 +50,6 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, videoService,
         if( ($scope.selectedGame != index) && (index >= 0) && (index < $scope.games.length) ){
             $scope.game = $scope.games[index];
             $scope.selectedGame = index;
-            $scope.game.nextGame = (index == $scope.games.length-1);
             attributeTeamAndGoals();
             $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
             var video = _.find($scope.videos, function(vid){return vid.id == index+1});
