@@ -1,4 +1,4 @@
-var gameCtrl = controllers.controller("GameCtrl", function($scope, videoService, Restangular){
+var gameCtrl = controllers.controller("GameCtrl", function($scope, rankingService, videoService, Restangular){
 
     refreshScopeData();
 
@@ -6,26 +6,19 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, videoService,
         Restangular.all("players").getList().then(function(players){
             $scope.players = players;
             Restangular.all("games").getList().then(function(games){
-                $scope.games = games;
+                $scope.games = _.filter(games,{finished: true});
                 //Sorting the collection by timestamps while attaching a timestamp attribute to each element.
                 _.sortBy($scope.games, function(game) { return game.timestamp = parseInt(game._id.toString().substring(0,8), 16 ) * 1000; });
                 //Providing then an index attribute for quicker access.
                 for(var i=0;i<$scope.games.length;i++){
                     $scope.games[i].index = i;
                 }
-                //Selecting the latest element.
-                $scope.game = $scope.games[$scope.games.length-1];
-                $scope.game.teamA.score = '-';
-                $scope.game.teamB.score = '-';
-                $scope.selectedGame = $scope.game.index;
-                $scope.game.nextGame = true;
-                $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
-                attributeTeamAndGoals();
                 //Load video urls to game objects
-                $scope.game.hasVideo = false;
                 videoService.getData().then(function(data){
                     $scope.videos = data;
                 });
+                //Select the latest element.
+                $scope.setGame($scope.games.length-1);
             }, function errorCallback() {
                 alert("Oops unable to get info from server. Please refresh. :(");
             });
@@ -34,16 +27,25 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, videoService,
         });
     };
 
+    $("[data-toggle='tooltip']").tooltip({placement: "top"});
+
     //Adds as attribute of each player a team reference and the number of scored goals and own goals depending on the current game.
     function attributeTeamAndGoals(){
         for(var i=0;i<$scope.players.length;i++){
             var player = $scope.players[i];
+            player.played = player.wins + player.draws + player.losses;
+            player.points = rankingService.points(player);
+            player.gpm = rankingService.goalsPerMatch(player);
             if(_.contains($scope.game.teamA.teammateRefs, player._id)){
                 player.teamRef = "A";
+                $scope.game.teamA.totalgpm += player.gpm;
+                $scope.game.teamA.totalpts += player.points;
                 player.scored = _.reduce($scope.game.teamA.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
                 player.ownGoals = _.reduce($scope.game.teamB.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
             } else if (_.contains($scope.game.teamB.teammateRefs, player._id)){
                 player.teamRef = "B";
+                $scope.game.teamB.totalgpm += player.gpm;
+                $scope.game.teamB.totalpts += player.points;
                 player.scored = _.reduce($scope.game.teamB.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
                 player.ownGoals = _.reduce($scope.game.teamA.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
             } else {
@@ -57,8 +59,15 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, videoService,
         if( ($scope.selectedGame != index) && (index >= 0) && (index < $scope.games.length) ){
             $scope.game = $scope.games[index];
             $scope.selectedGame = index;
-            $scope.game.nextGame = (index == $scope.games.length-1);
+            $scope.game.teamA.totalgpm = 0;
+            $scope.game.teamA.totalpts = 0;
+            $scope.game.teamB.totalgpm = 0;
+            $scope.game.teamB.totalpts = 0;
             attributeTeamAndGoals();
+            $scope.game.teamA.averagegpm = $scope.game.teamA.totalgpm / $scope.game.teamA.teammateRefs.length;
+            $scope.game.teamA.averagepts = $scope.game.teamA.totalpts / $scope.game.teamA.teammateRefs.length;
+            $scope.game.teamB.averagegpm = $scope.game.teamB.totalgpm / $scope.game.teamB.teammateRefs.length;
+            $scope.game.teamB.averagepts = $scope.game.teamB.totalpts / $scope.game.teamB.teammateRefs.length;
             $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
             var video = _.find($scope.videos, function(vid){return vid.id == index+1});
             $scope.game.hasVideo = (video !== undefined);

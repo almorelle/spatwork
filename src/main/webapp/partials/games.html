@@ -1,0 +1,97 @@
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-xs-4 col-md-4 col-md-offset-1 text-right">
+                <h1>{{game.teamA.score}}</h1>
+            </div>
+            <div class="col-xs-4 col-md-2 text-center">
+                <h1><i class="fa fa-trophy text-warning fa-lg"></i></h1>
+            </div>
+            <div class="col-xs-4 col-md-4 text-left">
+                <h1>{{game.teamB.score}}</h1>
+            </div>
+        </div>
+
+        <br ng-show="game.hasVideo" />
+
+        <div class="container text-center" ng-show="game.hasVideo">
+            <div class="btn-group">
+                <a type="button" ng-href="{{game.videoStream}}" ng-class="{'disabled': (game.videoStream == '')}" class="btn btn-xs btn-primary" target="_blank">
+                    <strong>R&eacute;sum&eacute; vid&eacute;o</strong> <i class="fa fa-youtube-play fa-lg"></i></a>
+                <a type="button" ng-href="{{game.videoUrl}}" ng-class="{'disabled': (game.videoUrl == '')}" class="btn btn-xs btn-primary" download>
+                    <i class="fa fa-download fa-lg"></i></a>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center">
+                        <b class="panel-title">Team A </b>
+                        <span class="badge badge-active-primary" data-toggle="tooltip" title="stats de l'équipe ( buts | points )">
+                            {{game.teamA.averagegpm | number:2}} | {{game.teamA.averagepts | number:2}}
+                        </span>
+                    </div>
+                    <ul class="list-group text-center">
+                        <li class="list-group-item" ng-show="game.teamA.teammateRefs.length==0">Aucun</li>
+                        <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
+                            {{player.firstName}}
+                            <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
+                            <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
+                            <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
+                            (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center active">
+                        <b class="panel-title">Team B</b>
+                        <span class="badge badge-active-primary" data-toggle="tooltip" title="stats de l'équipe ( buts | points )">
+                            {{game.teamB.averagegpm | number:2}} | {{game.teamB.averagepts | number:2}}
+                        </span>
+                    </div>
+                    <ul class="list-group text-center">
+                        <li class="list-group-item" ng-show="game.teamB.teammateRefs.length==0">Aucun</li>
+                        <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
+                            {{player.firstName}}
+                            <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
+                            <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
+                            <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
+                            (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center">
+
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h2>Historique des matchs :</h2>
+            </div>
+
+            <div class="col-md-4">
+                <ul class="pagination">
+                    <li><a href="" ng-click="setGame(0)" ng-class="{'disabled': (selectedGame == 0)}"><i class="fa fa-angle-double-left"></i></a></li>
+                    <li><a href="" ng-click="setGame(selectedGame-1)" ng-class="{'disabled': (selectedGame == 0)}"><i class="fa fa-angle-left"></i></a></li>
+                    <li ng-repeat="game in games | orderBy:'timestamp' | startFrom:pageStart | limitTo:5 " ng-class="{'active': (selectedGame == game.index)}"><a href="" ng-click="setGame(game.index)">{{game.index+1}}</a></li>
+                    <li><a href="" ng-click="setGame(selectedGame+1)" ng-class="{'disabled': (selectedGame == games.length-1)}"><i class="fa fa-angle-right"></i></a></li>
+                    <li><a href="" ng-click="setGame(games.length-1)" ng-class="{'disabled': (selectedGame == games.length-1)}"><i class="fa fa-angle-double-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        <footer>
+            <p>&copy; Alcatel-Lucent 2013</p>
+        </footer>
+
+    </div> <!-- /container -->

@@ -1,0 +1,127 @@
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-xs-4 col-md-4 col-md-offset-1 text-right">
+                <h1>{{game.teamA.score}}</h1>
+            </div>
+            <div class="col-xs-4 col-md-2 text-center">
+                <h1><i class="fa fa-trophy text-warning fa-lg"></i></h1>
+            </div>
+            <div class="col-xs-4 col-md-4 text-left">
+                <h1>{{game.teamB.score}}</h1>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="container text-center">
+            <div>
+                <h4><small><span class="label label-danger">Prochain match</span></small></h4>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-2 col-md-offset-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center">
+                        <b class="panel-title">Team A </b>
+                            <span class="badge badge-active-primary" data-toggle="tooltip" title="stats de l'équipe ( buts | points )">
+                                {{game.teamA.averagegpm | number:2}} | {{game.teamA.averagepts | number:2}}
+                            </span>
+                    </div>
+                    <div class="list-group text-center">
+                        <a href="" class="list-group-item" ng-show="game.teamA.teammateRefs.length==0">Aucun</a>
+                        <a href="" ng-click="goal(player)" class="list-group-item" ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
+                            {{player.firstName}}
+                            <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
+                            <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
+                                <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
+                                (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center active">
+                        <b class="panel-title">Team B</b>
+                            <span class="badge badge-active-primary" data-toggle="tooltip" title="stats de l'équipe ( buts | points )">
+                                {{game.teamB.averagegpm | number:2}} | {{game.teamB.averagepts | number:2}}
+                            </span>
+                    </div>
+                    <div class="list-group text-center">
+                        <a href="" class="list-group-item" ng-show="game.teamB.teammateRefs.length==0">Aucun</a>
+                        <a href="" ng-click="goal(player)" class="list-group-item" ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
+                            {{player.firstName}}
+                            <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
+                            <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
+                                <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
+                                (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container text-center">
+            <div class="btn-group">
+                <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    &Eacute;quilibrer automatiquement <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu text-left">
+                    <li><a href="" ng-click="balanceTeams('points')"><i class="fa fa-random fa-fw"></i> Moyenne de points</a></li>
+                    <li><a href="" ng-click="balanceTeams('gpm')"><i class="fa fa-dribbble fa-fw"></i> Moyenne de buts par match</a></li>
+                    <li class="divider"></li>
+                    <li><a href="" ng-click="confirmEnd()"><i class="fa fa-gavel"></i> Finir le match</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center">
+
+        <hr>
+
+        <footer>
+            <p>&copy; Alcatel-Lucent 2013</p>
+        </footer>
+    </div> <!-- /container -->
+
+    <div id="goalModal" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-center">{{selectedPlayer.firstName}} {{selectedPlayer.lastName}}</h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" ng-click="saveGoal(selectedPlayer, selectedPlayer.teamRef)" class="btn btn-primary btn-lg btn-block">But !!!</button>
+                    <br />
+                    <div class="btn-group btn-group-justified">
+                        <div class="btn-group">
+                            <button type="button" ng-click="saveGoal(selectedPlayer, oppositeTeamRef)" class="btn btn-danger">contre son camp</button>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" ng-click="changeTeam(selectedPlayer)" class="btn btn-warning">changer d'&Eacute;quipe</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="endModal" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="modal-title">Finir le match ?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" ng-click="end()">OK</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
