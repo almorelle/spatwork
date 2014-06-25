@@ -71,7 +71,7 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
     //Reset the scoring parameters and open up the goal form.
     $scope.goal = function(player){
         $scope.selectedPlayer = player;
-        $scope.oppositeTeamRef = player.teamRef == 'A' ? 'A' : 'B' ;
+        $scope.oppositeTeamRef = (player.teamRef == 'A') ? 'B' : 'A' ;
         $('#goalModal').modal('toggle');
     };
 
