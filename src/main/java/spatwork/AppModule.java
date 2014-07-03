@@ -1,6 +1,7 @@
 package spatwork;
 
 import com.google.common.base.Charsets;
+import io.userapp.client.UserApp;
 import restx.security.SignatureKey;
 import restx.factory.Module;
 import restx.factory.Provides;
@@ -19,4 +20,7 @@ public class AppModule {
     public String dbName() {
         return "restx-spatwork";
     }
+
+    @Provides
+    public UserApp.API userapp() { return new UserApp.API("53aad3e4212d8"); }
 }
