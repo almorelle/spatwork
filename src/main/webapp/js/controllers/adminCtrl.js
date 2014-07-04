@@ -1,8 +1,9 @@
-var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingService, Restangular){
+var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingService, Restangular, user){
 
     refreshScopeData();
 
     function refreshScopeData(){
+
         Restangular.all("players").getList().then(function(players){
             $scope.players = players;
             for(var i=0;i<$scope.players.length;i++){
@@ -77,7 +78,7 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
 
     //Saves the goal and update the game.
     $scope.saveGoal = function(player, team){
-        $scope.game.customPUT({}, "goal", {keyTeam: team, keyScorer: player._id}).then(function(){
+        $scope.game.customPUT({}, "goal", {token: user.token(), keyTeam: team, keyScorer: player._id}).then(function(){
             $scope.selectedPlayer={};
             $scope.oppositeTeamRef="";
             refreshScopeData();
@@ -96,7 +97,7 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
             var players = _.filter($scope.players, function(player)
                         {
                             return _.indexOf(editGame.teamA.teammateRefs, player._id) != -1 ||
-                                _.indexOf(editGame.teamB.teammateRefs, player._id) != -1;
+                               _.indexOf(editGame.teamB.teammateRefs, player._id) != -1;
                         });
             players = _.sortBy(players, algo);
 
@@ -149,9 +150,9 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
 
     //Ends the game.
     $scope.end = function(){
-        $scope.game.customPUT({}, "end", {}).then(function(){
+        $scope.game.customPUT({}, "end", {token: user.token()}).then(function(){
             var newGame = {"teamA":{"teammateRefs":[],"score":0,"scorersRefs":[]},"teamB":{"teammateRefs":[],"score":0, "scorersRefs":[]}, "finished": false};
-            Restangular.all("games").post(newGame).then(function(){
+            Restangular.all("games").customPOST(newGame, "", {token: user.token()}).then(function(){
                 $scope.game = newGame;
             }, function errorCallback() {
                 alert("Oooops unable create new game on server. Please refresh. :(");
