@@ -60,7 +60,7 @@ spatwork.config(function($routeProvider, RestangularProvider) {
 });
 
 spatwork.run(function(user) {
-    user.init({ appId: '53aad3e4212d8' });
+    user.init({ appId: '53aad3e4212d8', heartbeatInterval: 0 });
 });
 
 spatwork.controller("AppCtrl", function($rootScope){
