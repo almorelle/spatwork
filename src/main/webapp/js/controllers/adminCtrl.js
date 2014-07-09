@@ -132,7 +132,7 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
                     }
                 }
             }
-            editGame.put().then(function(){
+            editGame.customPUT(editGame, "", {token: user.token()}).then(function(){
                 $scope.keyTeam = "";
                 $scope.scoringTeam = {};
                 refreshScopeData();

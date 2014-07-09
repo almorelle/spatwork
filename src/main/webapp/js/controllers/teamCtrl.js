@@ -1,4 +1,4 @@
-var teamCtrl = controllers.controller("TeamCtrl", function($scope, rankingService, Restangular){
+var teamCtrl = controllers.controller("TeamCtrl", function($scope, rankingService, Restangular, user){
 
     refreshScopeData();
 
@@ -92,7 +92,7 @@ var teamCtrl = controllers.controller("TeamCtrl", function($scope, rankingServic
                     }
                 }
             }
-            editGame.put().then(function(){
+            editGame.customPUT(editGame, "", {token: user.token()}).then(function(){
                 $scope.keyTeam = "";
                 $scope.scoringTeam = {};
                 refreshScopeData();
