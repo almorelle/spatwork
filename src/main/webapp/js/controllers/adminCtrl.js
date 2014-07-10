@@ -102,7 +102,9 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
                 alert("Oops unable to update server. Please refresh. :(");
             };
             $('#updateFade').modal('toggle');
-        }//TODO else alert "sorry can't update team once game started..."
+        }else{
+            alert("sorry can't update team once game started...");
+        } 
     };
 
     //Ask for game end confirmation.
