@@ -1,4 +1,4 @@
-var teamCtrl = controllers.controller("TeamCtrl", function($scope, rankingService, Restangular, user){
+var teamCtrl = controllers.controller("TeamCtrl", function($scope, rankingService, balancingService, Restangular, user){
 
     refreshScopeData();
 
@@ -49,49 +49,11 @@ var teamCtrl = controllers.controller("TeamCtrl", function($scope, rankingServic
     $("[data-toggle='tooltip']").tooltip({placement: "top"});
 
     //Reset the scoring parameters and open up the goal form.
-    $scope.balanceTeams = function(algo){
+    $scope.balanceTeams = function(sortField){
+        //balance teams only if the game has not started yet
         if($scope.game.teamA.score == 0 && $scope.game.teamB.score == 0){
-            //balance teams only if the game has not started yet
             $('#updateFade').modal('toggle');
-            var editGame = Restangular.copy($scope.game);
-            var players = _.filter($scope.players, function(player)
-                        {
-                            return _.indexOf(editGame.teamA.teammateRefs, player._id) != -1 ||
-                                _.indexOf(editGame.teamB.teammateRefs, player._id) != -1;
-                        });
-            players = _.sortBy(players, algo);
-
-            //balancing teams
-            var pointsA = 0;
-            var pointsB = 0;
-            editGame.teamA.teammateRefs = [];
-            editGame.teamB.teammateRefs = [];
-            for(var i=0;i<players.length;i+=2){
-                if(i+1 >= players.length){
-                    var heaviestOfAll = players[i]._id;
-                    if(pointsA <= pointsB){
-                        editGame.teamA.teammateRefs.push(heaviestOfAll);
-                        pointsA += heaviestOfAll.points;
-                    } else {
-                        editGame.teamB.teammateRefs.push(heaviestOfAll);
-                        pointsB += heaviestOfAll.points;
-                    }
-                } else {
-                    var heaviest = players[i]._id;
-                    var lightest = players[i+1]._id;
-                    if(pointsA <= pointsB){
-                        editGame.teamA.teammateRefs.push(heaviest);
-                        editGame.teamB.teammateRefs.push(lightest);
-                        pointsA += heaviest.points;
-                        pointsB += lightest.points;
-                    } else {
-                        editGame.teamA.teammateRefs.push(lightest);
-                        editGame.teamB.teammateRefs.push(heaviest);
-                        pointsA += lightest.points;
-                        pointsB += heaviest.points;
-                    }
-                }
-            }
+            var editGame = balancingService.balance(Restangular.copy($scope.game), $scope.players, sortField);
             editGame.customPUT(editGame, "", {token: user.token()}).then(function(){
                 $scope.keyTeam = "";
                 $scope.scoringTeam = {};
@@ -100,6 +62,6 @@ var teamCtrl = controllers.controller("TeamCtrl", function($scope, rankingServic
                 alert("Oops unable to update server. Please refresh. :(");
             };
             $('#updateFade').modal('toggle');
-        }
+        }//TODO else alert "sorry can't update team once game started..."
     };
 });

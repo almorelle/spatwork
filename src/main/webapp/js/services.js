@@ -24,3 +24,48 @@ services.service('videoService', function($http, $cacheFactory) {
         });
     };
 });
+
+// Balance the teams.
+services.service('balancingService', function() {
+    this.balance = function(game, players, sortField) {
+            //filtering players playing and sorting them using sortField argument
+            players = _.filter(players, function(player){
+                return _.indexOf(game.teamA.teammateRefs, player._id) != -1 ||
+                    _.indexOf(game.teamB.teammateRefs, player._id) != -1;
+            });
+            players = _.sortBy(players, sortField);
+
+            //balancing teams
+            var pointsA = 0;
+            var pointsB = 0;
+            game.teamA.teammateRefs = [];
+            game.teamB.teammateRefs = [];
+            for(var i=0;i<players.length;i+=2){
+                if(i+1 >= players.length){
+                    var heaviestOfAll = players[i]._id;
+                    if(pointsA <= pointsB){
+                        game.teamA.teammateRefs.push(heaviestOfAll);
+                        pointsA += heaviestOfAll.points;
+                    } else {
+                        game.teamB.teammateRefs.push(heaviestOfAll);
+                        pointsB += heaviestOfAll.points;
+                    }
+                } else {
+                    var heaviest = players[i]._id;
+                    var lightest = players[i+1]._id;
+                    if(pointsA <= pointsB){
+                        game.teamA.teammateRefs.push(heaviest);
+                        game.teamB.teammateRefs.push(lightest);
+                        pointsA += heaviest.points;
+                        pointsB += lightest.points;
+                    } else {
+                        game.teamA.teammateRefs.push(lightest);
+                        game.teamB.teammateRefs.push(heaviest);
+                        pointsA += lightest.points;
+                        pointsB += heaviest.points;
+                    }
+                }
+            }
+        return game;
+    };
+});
