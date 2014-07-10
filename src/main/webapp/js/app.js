@@ -19,7 +19,7 @@ spatwork.config(function($routeProvider, RestangularProvider) {
     $routeProvider
         .when('/teams', {
             templateUrl: 'partials/teams.html',
-            controller: 'TeamCtrl',
+            controller: 'AdminCtrl',
             public: true
     });
 
