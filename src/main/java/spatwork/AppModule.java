@@ -1,6 +1,7 @@
 package spatwork;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Optional;
 import restx.security.SignatureKey;
 import restx.factory.Module;
 import restx.factory.Provides;
@@ -17,6 +18,11 @@ public class AppModule {
 
     @Provides @Named(MongoModule.MONGO_DB_NAME)
     public String dbName() {
-        return "restx-spatwork";
+        return Optional.fromNullable(System.getenv("MONGOHQ_DB_NAME")).or("restx-spatwork");
+    }
+
+    @Provides @Named(MongoModule.MONGO_URI)
+    public String dbUri() {
+        return Optional.fromNullable(System.getenv("MONGOHQ_URL")).or("mongodb://localhost");
     }
 }
