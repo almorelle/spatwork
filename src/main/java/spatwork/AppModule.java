@@ -1,6 +1,7 @@
 package spatwork;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Optional;
 import io.userapp.client.UserApp;
 import restx.security.SignatureKey;
 import restx.factory.Module;
@@ -22,5 +23,5 @@ public class AppModule {
     }
 
     @Provides
-    public UserApp.API userapp() { return new UserApp.API("53aad3e4212d8"); }
+    public UserApp.API userapp() { return new UserApp.API(Optional.fromNullable(System.getenv("USERAPP_APP_ID")).or("")); }
 }
