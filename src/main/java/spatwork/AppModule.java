@@ -2,6 +2,7 @@ package spatwork;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Optional;
+import io.userapp.client.UserApp;
 import restx.security.SignatureKey;
 import restx.factory.Module;
 import restx.factory.Provides;
@@ -25,4 +26,7 @@ public class AppModule {
     public String dbUri() {
         return Optional.fromNullable(System.getenv("MONGOHQ_URL")).or("mongodb://localhost");
     }
+
+    @Provides
+    public UserApp.API userapp() { return new UserApp.API(Optional.fromNullable(System.getenv("USERAPP_APP_ID")).or("")); }
 }

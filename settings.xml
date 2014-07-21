@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<settings xsi:schemaLocation='http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd'
+          xmlns='http://maven.apache.org/SETTINGS/1.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+    <profiles>
+        <profile>
+            <repositories>
+                <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>userapp-java-repository</id>
+                    <name>userapp-java-repository</name>
+                    <url>http://dl.bintray.com/almorelle/userapp-java</url>
+                </repository>
+            </repositories>
+            <id>userapp-java-repository</id>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>userapp-java-repository</activeProfile>
+    </activeProfiles>
+</settings>
