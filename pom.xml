@@ -125,7 +125,7 @@
 					<plugin>
 						<groupId>com.github.joelittlejohn.embedmongo</groupId>
 						<artifactId>embedmongo-maven-plugin</artifactId>
-						<version>0.1.9</version>
+						<version>0.1.12</version>
 						<executions>
 							<execution>
 								<id>start</id>
@@ -136,7 +136,7 @@
 								<configuration>
 									<port>27017</port> <!-- optional, default 27017 -->
 									<randomPort>false</randomPort> <!-- optional, default is false, if true allocates a random port and overrides embedmongo.port -->
-									<version>2.4.9</version>  <!-- optional, default 2.2.1 -->
+									<version>2.6.3</version>  <!-- optional, default 2.2.1 -->
 									<!--<databaseDirectory></databaseDirectory>   optional, default is a new dir in java.io.tmpdir -->
 									<logging>none</logging> <!-- optional (file|console|none), default console -->
 									<!--<logFile>${project.build.directory}/myfile.log</logFile>  optional, can be used when logging=file, default is ./embedmongo.log -->
