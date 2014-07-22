@@ -107,8 +107,7 @@ public class GameResource {
     @DELETE("/games/{key}")
     public Status deleteGame(String key, @Param(kind = Param.Kind.QUERY) String token) {
         checkAuthentication(token);
-        Optional<Game> game = findGameByKey(key);
-        if(game.isPresent()){
+        if(findGameByKey(key).isPresent()){
             games.get().remove(new ObjectId(key));
             return Status.of("deleted");
         } else {
@@ -124,7 +123,7 @@ public class GameResource {
      * @param keyPlayer the reference of the player joining the game.
      * @return the updated game.
      * @throws @WebException HTTP404 whenever the referenced game is absent or HTTP400 if the team or the player does
-     * not exist and/or the game is already finished.
+     * not exist or the game is already finished or the player is already playing in this team.
      */
     @PermitAll
     @PUT("/games/{key}/join")
@@ -133,20 +132,9 @@ public class GameResource {
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
             if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
-            Optional<Player> playerByKey = playerResource.findPlayerByKey(keyPlayer);
-            if(playerByKey.isPresent()){
-                switch(keyTeam){
-                    case "A":
-                        game.getTeamB().leaveTeam(keyPlayer);
-                        game.getTeamA().joinTeam(keyPlayer);
-                        break;
-                    case "B":
-                        game.getTeamA().leaveTeam(keyPlayer);
-                        game.getTeamB().joinTeam(keyPlayer);
-                        break;
-                    default:
-                        throw new WebException(HttpStatus.BAD_REQUEST);
-                }
+            if(playerResource.findPlayerByKey(keyPlayer).isPresent() &&
+                    ( "A".equals(keyTeam) || "B".equals(keyTeam) ) &&
+                    game.joinGame(keyPlayer, keyTeam) ){
                 games.get().save(game);
                 return game;
             } else {
@@ -171,10 +159,12 @@ public class GameResource {
         Optional<Game> gameByKey = findGameByKey(key);
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
-            if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
-            game.leaveGame(keyPlayer);
-            games.get().save(game);
-            return game;
+            if(game.getFinished() || ! playerResource.findPlayerByKey(keyPlayer).isPresent())
+                throw new WebException(HttpStatus.BAD_REQUEST);
+            else if(game.leaveGame(keyPlayer)) {
+                games.get().save(game);
+                return game;
+            } else throw new WebException(HttpStatus.NOT_MODIFIED);
         } else {
             throw new WebException(HttpStatus.NOT_FOUND);
         }
@@ -201,27 +191,15 @@ public class GameResource {
         if(gameByKey.isPresent()){
             Game game = gameByKey.get();
             if(game.getFinished()) throw new WebException(HttpStatus.BAD_REQUEST);
-            Optional<Team> teamByKey;
-            switch(keyTeam){
-                case "A":
-                    teamByKey = Optional.of(game.getTeamA());
-                    break;
-                case "B":
-                    teamByKey = Optional.of(game.getTeamB());
-                    break;
-                default:
-                    teamByKey = Optional.absent();
-                    break;
-            }
             Optional<Player> playerByKey = playerResource.findPlayerByKey(keyScorer);
-            if(teamByKey.isPresent() && playerByKey.isPresent()){
-                Team team = teamByKey.get();
-                team.scored(keyScorer);
+            if(playerByKey.isPresent() && ( "A".equals(keyTeam) || "B".equals(keyTeam) ) &&
+                game.scoreGoal(keyScorer, keyTeam) ){
                 games.get().save(game);
-                if(team.isInTeam(keyScorer)){
-                    Player player = playerByKey.get();
-                    player.scored();
-                    playerResource.updatePlayer(keyScorer, player);
+                Player player = playerByKey.get();
+                if ( ("A".equals(keyTeam) && game.getTeamA().isInTeam(keyScorer)) ||
+                     ("B".equals(keyTeam) && game.getTeamB().isInTeam(keyScorer)) ){
+                        player.scored();
+                        playerResource.updatePlayer(keyScorer, player);
                 }
                 return game;
             } else {
