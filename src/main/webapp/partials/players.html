@@ -1,131 +1,84 @@
+﻿<div class="container">
 
-	<div class="container">
+    <div class="page-header">
+        <h2>Joueurs :</h2>
+    </div>
 
-        <div class="page-header">
-            <h2>Joueurs :</h2>
-        </div>
+    <div class="list-group">
+        <a href="#" class="list-group-item active">
+            Titulaires
+            <span class="badge badge-active-primary">&nbsp;&nbsp;{{(players | filterPlaying).length}}&nbsp;&nbsp;</span>
+        </a>
+        <a href="" ng-click="joinLeave(player)" class="list-group-item" ng-class="{'list-group-item-info': player.teamRef!='N'}" ng-repeat="player in players | orderBy:'firstName'">
+            <strong>{{player.firstName}} {{player.lastName}}</strong>
+            <span ng-show="player.teamRef != 'N'" class="badge badge-active-primary">titulaire</span>
+        </a>
+        <a href="#addPlayerModal" class="list-group-item list-group-item-info" data-toggle="modal">
+            <i class="fa fa-plus"></i> <strong>Ajouter un nouveau joueur...</strong>
+        </a>
+    </div>
+</div><!-- /.container -->
 
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            Titulaires
-                        </a>
-                        <span class="badge pull-right badge-active-success">{{(players | filterPlaying).length}}</span>
-                    </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse">
-                    <div class="panel-body panel-body-accordion">
-                        <ul class="list-group list-group-accordion">
-                            <li class="list-group-item" ng-repeat="player in players | filterPlaying | orderBy:'firstName'">
-                                <div class="btn-group btn-group-xs">
-                                    <button type="button" class="btn btn-danger tooltiped" ng-click="leave(player)" href="" data-placement="left" data-toggle="tooltip" title="Retourner sur le banc"><i class="fa fa-times"></i></button>
-                                </div>
-                                <strong>{{player.firstName}} {{player.lastName}}</strong>
-                                <div class="btn-group btn-group-xs pull-right">
-                                    <button type="button" class="btn disabled btn-default" ng-click="editPlayer(player)"><i class="fa fa-pencil-square-o"></i></button>
-                                    <button type="button" class="btn disabled btn-default" ng-click="destroyPlayer(player)"><i class="fa fa-times"></i></button>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+<div id="addPlayerModal" role="dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Ajouter un nouveau joueur...</h4>
             </div>
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                            Sur le banc
-                        </a>
-                        <span class="badge pull-right badge-active-info">{{(players | filter:{teamRef:"N"}).length}}</span>
-                    </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse in">
-                    <div class="panel-body panel-body-accordion">
-                        <ul class="list-group list-group-accordion">
-                            <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'N'} | orderBy:'firstName'">
-                                <a type="button" class="btn btn-info btn-xs tooltiped" ng-click="join(player)" href="" data-placement="left" data-toggle="tooltip" title="Jouer au prochain match"><i class="fa fa-plus"></i></a>
-                                <strong>{{player.firstName}} {{player.lastName}}</strong>
-                                <div class="btn-group btn-group-xs pull-right">
-                                    <button type="button" class="btn disabled btn-default" ng-click="editPlayer(player)"><i class="fa fa-pencil-square-o"></i></button>
-                                    <button type="button" class="btn disabled btn-default" ng-click="destroyPlayer(player)"><i class="fa fa-times"></i></button>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <a type="button" data-toggle="modal" class="btn btn-info btn-xs tooltiped" data-placement="right" href="#addPlayerModal" title="Ajouter un nouveau joueur"><strong>Ajouter</strong></a>
-                            </li>
-                        </ul>
+            <div class="modal-body">
+                <form role="form" novalidate>
+                    <div class="form-group">
+                        <label for="firstName">Prénom</label>
+                        <input type="text" class="form-control" ng-model="newFirstName" id="firstName" placeholder="First Name">
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="lastName">Nom</label>
+                        <input type="text" class="form-control" ng-model="newLastName" id="lastName" placeholder="Last Name">
+                    </div>
+                </form>
             </div>
-        </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary" ng-click="createPlayer()">Créer</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-    </div><!-- /.container -->
-
-    <div id="addPlayerModal" role="dialog" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Ajouter un nouveau joueur...</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form" novalidate>
-                        <div class="form-group">
-                            <label for="firstName">Prénom</label>
-                            <input type="text" class="form-control" ng-model="newFirstName" id="firstName" placeholder="First Name">
+<div id="editPlayerModal" role="dialog" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Modifier un joueur...</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form" role="form" novalidate>
+                    <div class="form-group">
+                        <label for="firstName">Prénom</label>
+                        <input type="text" class="form-control" ng-model="editedPlayer.firstName" id="editFirstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nom</label>
+                        <input type="text" class="form-control" ng-model="editedPlayer.lastName" id="editLastName">
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <label class="checkbox-inline col-lg-4">
+                                <input type="checkbox" ng-model="editedPlayer.certificate"> Certificat médical
+                            </label>
+                            <label class="checkbox-inline col-lg-4">
+                                <input type="checkbox" ng-model="editedPlayer.subscription"> Cotisation
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label for="lastName">Nom</label>
-                            <input type="text" class="form-control" ng-model="newLastName" id="lastName" placeholder="Last Name">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary" ng-click="createPlayer()">Créer</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-    <div id="editPlayerModal" role="dialog" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Modifier un joueur...</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form" role="form" novalidate>
-                        <div class="form-group">
-                            <label for="firstName">Prénom</label>
-                            <input type="text" class="form-control" ng-model="editedPlayer.firstName" id="editFirstName">
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Nom</label>
-                            <input type="text" class="form-control" ng-model="editedPlayer.lastName" id="editLastName">
-                        </div>
-                        <div class="container">
-                            <div class="row">
-                                <label class="checkbox-inline col-lg-4">
-                                    <input type="checkbox" ng-model="editedPlayer.certificate"> Certificat médical
-                                </label>
-                                <label class="checkbox-inline col-lg-4">
-                                    <input type="checkbox" ng-model="editedPlayer.subscription"> Cotisation
-                                </label>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary" ng-click="updatePlayer()">Modifier</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-
-
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary" ng-click="updatePlayer()">Modifier</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-var spatwork = angular.module('spatwork', ['ngRoute', 'spatworkControllers', 'spatworkFilters', 'spatworkServices']);
+var spatwork = angular.module('spatwork', ['ngRoute', 'spatworkControllers', 'spatworkFilters', 'spatworkServices', 'UserApp']);
 
 //App controllers
 var controllers = angular.module('spatworkControllers', ['restangular']);
@@ -12,30 +12,42 @@ spatwork.config(function($routeProvider, RestangularProvider) {
         .when('/players',
         {
             templateUrl: 'partials/players.html',
-            controller: 'PlayersCtrl'
+            controller: 'PlayerCtrl',
+            public: true
         });
+
+    $routeProvider
+        .when('/teams', {
+            templateUrl: 'partials/teams.html',
+            controller: 'AdminCtrl',
+            public: true
+    });
 
     $routeProvider
         .when('/ranking', {
             templateUrl: 'partials/ranking.html',
-            controller: 'RankCtrl'
+            controller: 'RankCtrl',
+            public: true
     });
 
     $routeProvider
-        .when('/game', {
-            templateUrl: 'partials/game.html',
-            controller: 'GameCtrl'
+        .when('/games', {
+            templateUrl: 'partials/games.html',
+            controller: 'GameCtrl',
+            public: true
     });
 
     $routeProvider
-        .when('/next-game', {
-            templateUrl: 'partials/next-game.html',
-            controller: 'NextGameCtrl'
+        .when('/admingame', {
+            templateUrl: 'partials/admin.html',
+            controller: 'AdminCtrl',
+            hasPermission: 'admin'
     });
 
     $routeProvider
-        .when('/about', {
-            templateUrl: 'partials/about.html'
+        .when('/login', {
+            templateUrl: 'partials/login.html',
+            login: true
     });
 
     $routeProvider
@@ -45,6 +57,10 @@ spatwork.config(function($routeProvider, RestangularProvider) {
     RestangularProvider.setRestangularFields({
         id: '_id'
     });
+});
+
+spatwork.run(function(user) {
+    user.init({ appId: '53aad3e4212d8', heartbeatInterval: 0 });
 });
 
 spatwork.controller("AppCtrl", function($rootScope){

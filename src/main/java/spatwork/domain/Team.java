@@ -1,13 +1,14 @@
 package spatwork.domain;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Teams.
  */
 public class Team {
 
-    private Collection<String> teammateRefs;
+    private Set<String> teammateRefs;
     private int score;
 
     private Collection<String> scorersRefs;
@@ -24,7 +25,7 @@ public class Team {
         return teammateRefs;
     }
 
-    public void setTeammateRefs(Collection<String> teammateRefs) {
+    public void setTeammateRefs(Set<String> teammateRefs) {
         this.teammateRefs = teammateRefs;
     }
 

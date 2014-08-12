@@ -8,7 +8,8 @@
       <link href="css/badge-colors.css" rel="stylesheet" />
       <link href="css/famfamfam-icons.css" rel="stylesheet" />
       <link href="css/jumbotron.css" rel="stylesheet" />
-	  <link href="css/font-awesome.min.css" rel="stylesheet">
+      <link href="css/signin.css" rel="stylesheet" />
+	  <link href="css/font-awesome.min.css" rel="stylesheet" />
 	</head>
 	<body>
 
@@ -27,12 +28,16 @@
               <a class="navbar-brand" href="#">Alcatel-Lucent Colombes FC</a>
             </div>
             <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
+              <ul class="nav navbar-nav navbar-left">
                 <li><a href="#/players">Joueurs</a></li>
+                <li><a href="#/teams">Équipes</a></li>
                 <li><a href="#/ranking">Classement</a></li>
-                <li><a href="#/game">Matchs</a></li>
-                <li><a href="#/about">&Agrave; Propos</a></li>
-                <li><a href="mailto:toto?subject=[basket/foot]&body=Hello,%20comment%20on%20fait?">Contact</a></li>
+                <li><a href="#/games">Historique</a></li>
+                <li ng-show="user.authenticated" class="ng-cloak"><a href="#/admingame">Admin</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                  <li ng-show="!user.authenticated"><div><a role="button" class="btn btn-success navbar-btn" href="#/login">Connexion</a></div></li>
+                  <li ng-show="user.authenticated" class="ng-cloak"><div><a role="button" class="btn btn-primary navbar-btn" href="#" ua-logout>D&eacute;connexion</a></div></li>
               </ul>
             </div><!--/.navbar-collapse -->
           </div>
@@ -45,10 +50,10 @@
         <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-route.min.js"></script>
         <script src="js/app.js"></script>
         <!-- Controllers -->
-        <script src="js/controllers/playersCtrl.js"></script>
+        <script src="js/controllers/playerCtrl.js"></script>
         <script src="js/controllers/rankCtrl.js"></script>
         <script src="js/controllers/gameCtrl.js"></script>
-        <script src="js/controllers/nextGameCtrl.js"></script>
+        <script src="js/controllers/adminCtrl.js"></script>
         <!-- Filters -->
         <script src="js/filters.js"></script>
         <!-- Services -->
@@ -63,5 +68,9 @@
 
         <!-- Boostrap -->
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+        <!-- userapp.io -->
+        <script src="//app.userapp.io/js/userapp.client.js"></script>
+        <script src="//app.userapp.io/js/angularjs.userapp.js"></script>
 	</body>
 </html>

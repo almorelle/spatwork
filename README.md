@@ -9,7 +9,10 @@ Build with `mvn package dependency:copy-dependencies`.
 
 Run with `java -cp target/classes:target/dependency/* spatwork.AppServer`.
 
-You will need a [mongoDB](http://www.mongodb.org/) server running on localhost (you can use `-Pembedmongo` during the build).
+You will need a [mongoDB](http://www.mongodb.org/) server running on localhost (you can use `-Pembedmongo` for the tests) or provide the URI and db name in the environment (retrieved with System.getEnv).
+* `MONGOHQ_DB_NAME` - Name of the database (e.g. restx-spatwork)
+* `MONGOHQ_URL` - MongoDB instance URI (e.g. mongodb://user:pass@server\.mongohq\.com/db_name)
+* `USERAPP_APP_ID` - UserApp Application ID (see [help.userapp.io] (http://help.userapp.io/customer/portal/articles/1322336-how-do-i-find-my-app-id-))
 
 ## Videos
 
@@ -24,4 +27,4 @@ You can provide video links for each recorded game. A `videos.json` file is expe
 
 ## Credits
 
-Built using [restx.io](http://restx.io) and integrates with mongoDB thanks to [jongo](http://jongo.org) API.
+Built using [restx.io](http://restx.io) and integrates with mongoDB thanks to [jongo](http://jongo.org) API. Uses [userapp.io] (http://userapp.io) as well for authentication.
