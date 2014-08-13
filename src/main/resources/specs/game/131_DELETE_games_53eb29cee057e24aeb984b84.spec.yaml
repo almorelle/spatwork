@@ -1,0 +1,16 @@
+title: 131 DELETE games/53eb29cee057e24aeb984b84
+given:
+  - time: 2014-08-13T11:24:16.175+02:00
+  - collection: games
+    data: |
+        { "_id" : { "$oid" : "53eb250be057e24aeb984b7c"} , "teamA" : { "teammateRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb259fe057e24aeb984b7f" , "53eb2549e057e24aeb984b7d"] , "score" : 2 , "scorersRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb2549e057e24aeb984b7d"]} , "teamB" : { "teammateRefs" : [ "53eb25b4e057e24aeb984b80" , "53eb258ce057e24aeb984b7e" , "53eb25d1e057e24aeb984b81"] , "score" : 2 , "scorersRefs" : [ "53eb258ce057e24aeb984b7e" , "53eb259fe057e24aeb984b7f"]} , "finished" : true}
+        { "_id" : { "$oid" : "53eb29cee057e24aeb984b84"} , "teamA" : { "teammateRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb25b4e057e24aeb984b80" , "53eb258ce057e24aeb984b7e"] , "score" : 2 , "scorersRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb25b4e057e24aeb984b80"]} , "teamB" : { "teammateRefs" : [ "53eb259fe057e24aeb984b7f" , "53eb2549e057e24aeb984b7d" , "53eb25d1e057e24aeb984b81"] , "score" : 0 , "scorersRefs" : [ ]} , "finished" : true}
+        { "_id" : { "$oid" : "53eb2a5ce057e24aeb984b85"} , "teamA" : { "teammateRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb2549e057e24aeb984b7d" , "53eb258ce057e24aeb984b7e"] , "score" : 1 , "scorersRefs" : [ "53eb258ce057e24aeb984b7e"]} , "teamB" : { "teammateRefs" : [ "53eb259fe057e24aeb984b7f" , "53eb25b4e057e24aeb984b80" , "53eb25d1e057e24aeb984b81"] , "score" : 2 , "scorersRefs" : [ "53eb25b4e057e24aeb984b80" , "53eb25b4e057e24aeb984b80"]} , "finished" : false}
+wts:
+  - when: |
+       DELETE games/53eb29cee057e24aeb984b84?token=FCB89fMQQYSkAvce2mYsyA
+       Cookie: RestxSession={"_expires":"2014-09-12T11:24:16.175+02:00","principal":"admin","sessionKey":"93eab9ef-6af8-4d68-91ae-1565dcb052c2"}; RestxSessionSignature=4iFCQqcpxNUL+h/4eW64o3ARS84=
+    then: |
+        {
+          "status" : "deleted"
+        }

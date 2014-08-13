@@ -1,0 +1,29 @@
+title: 023 GET players/53eb2494e057e24aeb984b7b
+given:
+  - time: 2014-08-13T10:55:20.844+02:00
+  - collection: players
+    data: |
+        { "_id" : { "$oid" : "53eb2494e057e24aeb984b7b"} , "firstName" : "Alexis" , "lastName" : "Morelle" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb2549e057e24aeb984b7d"} , "firstName" : "Pierre" , "lastName" : "Le Baccon" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb258ce057e24aeb984b7e"} , "firstName" : "Joffrey" , "lastName" : "Tourret" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb259fe057e24aeb984b7f"} , "firstName" : "Michael" , "lastName" : "Madegard" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb25b4e057e24aeb984b80"} , "firstName" : "Hugo" , "lastName" : "Guerineau" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb25d1e057e24aeb984b81"} , "firstName" : "Rodolphe" , "lastName" : "Lefievre" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb25dfe057e24aeb984b82"} , "firstName" : "Guillaume" , "lastName" : "Le Grand" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb2606e057e24aeb984b83"} , "firstName" : "Pierre-Antoine" , "lastName" : "Vandenberghe" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+wts:
+  - when: |
+       GET players/53eb2494e057e24aeb984b7b
+       Cookie: RestxSession={"_expires":"2014-09-12T10:55:20.844+02:00","principal":"admin","sessionKey":"93eab9ef-6af8-4d68-91ae-1565dcb052c2"}; RestxSessionSignature=DRaDw2uuw3fMENGyGEs8GlOD4/o=
+    then: |
+        {
+          "firstName" : "Alexis",
+          "lastName" : "Morelle",
+          "goals" : 0,
+          "wins" : 0,
+          "losses" : 0,
+          "draws" : 0,
+          "subscription" : true,
+          "certificate" : true,
+          "_id" : "53eb2494e057e24aeb984b7b"
+        }

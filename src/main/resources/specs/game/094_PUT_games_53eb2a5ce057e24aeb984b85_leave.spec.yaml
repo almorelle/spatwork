@@ -1,0 +1,24 @@
+title: 094 PUT games/53eb2a5ce057e24aeb984b85/leave
+given:
+  - time: 2014-08-13T11:11:15.816+02:00
+  - collection: games
+    data: |
+        { "_id" : { "$oid" : "53eb250be057e24aeb984b7c"} , "teamA" : { "teammateRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb259fe057e24aeb984b7f" , "53eb2549e057e24aeb984b7d"] , "score" : 2 , "scorersRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb2549e057e24aeb984b7d"]} , "teamB" : { "teammateRefs" : [ "53eb25b4e057e24aeb984b80" , "53eb258ce057e24aeb984b7e" , "53eb25d1e057e24aeb984b81"] , "score" : 2 , "scorersRefs" : [ "53eb258ce057e24aeb984b7e" , "53eb259fe057e24aeb984b7f"]} , "finished" : true}
+        { "_id" : { "$oid" : "53eb29cee057e24aeb984b84"} , "teamA" : { "teammateRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb25b4e057e24aeb984b80" , "53eb258ce057e24aeb984b7e"] , "score" : 2 , "scorersRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb25b4e057e24aeb984b80"]} , "teamB" : { "teammateRefs" : [ "53eb259fe057e24aeb984b7f" , "53eb2549e057e24aeb984b7d" , "53eb25d1e057e24aeb984b81"] , "score" : 0 , "scorersRefs" : [ ]} , "finished" : true}
+        { "_id" : { "$oid" : "53eb2a5ce057e24aeb984b85"} , "teamA" : { "teammateRefs" : [ "53eb2494e057e24aeb984b7b" , "53eb2549e057e24aeb984b7d" , "53eb258ce057e24aeb984b7e"] , "score" : 0 , "scorersRefs" : [ ]} , "teamB" : { "teammateRefs" : [ "53eb259fe057e24aeb984b7f" , "53eb25b4e057e24aeb984b80" , "53eb25d1e057e24aeb984b81"] , "score" : 0 , "scorersRefs" : [ ]} , "finished" : false}
+  - collection: players
+    data: |
+        { "_id" : { "$oid" : "53eb2494e057e24aeb984b7b"} , "firstName" : "Alexis" , "lastName" : "Morelle" , "goals" : 2 , "wins" : 1 , "losses" : 0 , "draws" : 1 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb2549e057e24aeb984b7d"} , "firstName" : "Pierre" , "lastName" : "Le Baccon" , "goals" : 1 , "wins" : 0 , "losses" : 1 , "draws" : 1 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb258ce057e24aeb984b7e"} , "firstName" : "Joffrey" , "lastName" : "Tourret" , "goals" : 1 , "wins" : 1 , "losses" : 0 , "draws" : 1 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb259fe057e24aeb984b7f"} , "firstName" : "Michael" , "lastName" : "Madegard" , "goals" : 0 , "wins" : 0 , "losses" : 1 , "draws" : 1 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb25b4e057e24aeb984b80"} , "firstName" : "Hugo" , "lastName" : "Guerineau" , "goals" : 1 , "wins" : 1 , "losses" : 0 , "draws" : 1 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb25d1e057e24aeb984b81"} , "firstName" : "Rodolphe" , "lastName" : "Lefievre" , "goals" : 0 , "wins" : 0 , "losses" : 1 , "draws" : 1 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb25dfe057e24aeb984b82"} , "firstName" : "Guillaume" , "lastName" : "Le Grand" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+        { "_id" : { "$oid" : "53eb2606e057e24aeb984b83"} , "firstName" : "Pierre-Antoine" , "lastName" : "Vandenberghe" , "goals" : 0 , "wins" : 0 , "losses" : 0 , "draws" : 0 , "subscription" : true , "certificate" : true}
+wts:
+  - when: |
+       PUT games/53eb2a5ce057e24aeb984b85/leave?keyPlayer=53eb2606e057e24aeb984b83
+       Cookie: RestxSession={"_expires":"2014-09-12T11:11:15.816+02:00","principal":"admin","sessionKey":"93eab9ef-6af8-4d68-91ae-1565dcb052c2"}; RestxSessionSignature=aRMivWkHl17xvFc8ovCibWL5aFs=
+    then: |
+       304

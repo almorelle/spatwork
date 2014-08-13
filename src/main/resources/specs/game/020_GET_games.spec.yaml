@@ -1,0 +1,25 @@
+title: 020 GET games
+given:
+  - time: 2014-08-13T10:49:04.344+02:00
+  - collection: games
+    data: |
+        { "_id" : { "$oid" : "53eb250be057e24aeb984b7c"} , "teamA" : { "teammateRefs" : [ ] , "score" : 0 , "scorersRefs" : [ ]} , "teamB" : { "teammateRefs" : [ ] , "score" : 0 , "scorersRefs" : [ ]} , "finished" : false}
+wts:
+  - when: |
+       GET games
+       Cookie: RestxSession={"_expires":"2014-09-12T10:49:04.344+02:00","principal":"admin","sessionKey":"93eab9ef-6af8-4d68-91ae-1565dcb052c2"}; RestxSessionSignature=NzXX6RNFrzklGmz1ffalVDcWC6s=
+    then: |
+        [ {
+          "teamA" : {
+            "teammateRefs" : [ ],
+            "score" : 0,
+            "scorersRefs" : [ ]
+          },
+          "teamB" : {
+            "teammateRefs" : [ ],
+            "score" : 0,
+            "scorersRefs" : [ ]
+          },
+          "finished" : false,
+          "_id" : "53eb250be057e24aeb984b7c"
+        } ]

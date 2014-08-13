@@ -1,0 +1,32 @@
+title: 010 POST players
+given:
+  - time: 2014-08-13T10:40:51.898+02:00
+  - collection: players
+    sequence: 53eb2494e057e24aeb984b7b
+wts:
+  - when: |
+       POST players
+       Cookie: RestxSession={"_expires":"2014-09-12T10:40:51.898+02:00","principal":"admin","sessionKey":"93eab9ef-6af8-4d68-91ae-1565dcb052c2"}; RestxSessionSignature=axNeB2zzEAWpPZhVFC6AhTLy3IU=
+
+        {
+        "firstName":"Alexis",
+        "lastName":"Morelle",
+        "goals":0,
+        "wins":0,
+        "losses":0,
+        "draws":0,
+        "subscription":true,
+        "certificate":true
+        }
+    then: |
+        {
+          "firstName" : "Alexis",
+          "lastName" : "Morelle",
+          "goals" : 0,
+          "wins" : 0,
+          "losses" : 0,
+          "draws" : 0,
+          "subscription" : true,
+          "certificate" : true,
+          "_id" : "53eb2494e057e24aeb984b7b"
+        }

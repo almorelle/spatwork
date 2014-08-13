@@ -1,0 +1,10 @@
+title: 001 GET players
+given:
+  - time: 2014-08-13T10:39:08.545+02:00
+  - collection: players
+    data: |
+
+wts:
+  - when: GET players
+    then: |
+        [ ]

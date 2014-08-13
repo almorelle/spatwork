@@ -1,0 +1,26 @@
+title: 011 POST games
+given:
+  - time: 2014-08-13T10:42:50.255+02:00
+  - collection: games
+    sequence: 53eb250be057e24aeb984b7c
+wts:
+  - when: |
+       POST games?token=FCB89fMQQYSkAvce2mYsyA
+       Cookie: RestxSession={"_expires":"2014-09-12T10:42:50.255+02:00","principal":"admin","sessionKey":"93eab9ef-6af8-4d68-91ae-1565dcb052c2"}; RestxSessionSignature=v2oNSAD1mTYuLXNasKzYQSTPhVg=
+
+        {"teamA":{"teammateRefs":[],"score":0,"scorersRefs":[]},"teamB":{"teammateRefs":[],"score":0,"scorersRefs":[]},"finished":false}
+    then: |
+        {
+          "teamA" : {
+            "teammateRefs" : [ ],
+            "score" : 0,
+            "scorersRefs" : [ ]
+          },
+          "teamB" : {
+            "teammateRefs" : [ ],
+            "score" : 0,
+            "scorersRefs" : [ ]
+          },
+          "finished" : false,
+          "_id" : "53eb250be057e24aeb984b7c"
+        }

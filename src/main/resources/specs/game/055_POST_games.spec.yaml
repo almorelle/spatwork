@@ -1,0 +1,27 @@
+title: 055 POST games
+given:
+  - time: 2014-08-13T11:03:10.649+02:00
+  - collection: games
+    data: |
+        { "_id" : { "$oid" : "53eb250be057e24aeb984b7c"} , "teamA" : { "teammateRefs" : [ "53eb2494e057e24aeb984b7b", "53eb259fe057e24aeb984b7f", "53eb2549e057e24aeb984b7d" ] , "score" : 2 , "scorersRefs" : [ "53eb2494e057e24aeb984b7b", "53eb2549e057e24aeb984b7d" ]} , "teamB" : { "teammateRefs" : [ "53eb25b4e057e24aeb984b80", "53eb258ce057e24aeb984b7e", "53eb25d1e057e24aeb984b81" ] , "score" : 2 , "scorersRefs" : [ "53eb258ce057e24aeb984b7e", "53eb259fe057e24aeb984b7f" ]} , "finished" : true}
+    sequence: 53eb29cee057e24aeb984b84
+wts:
+  - when: |
+       POST games?token=FCB89fMQQYSkAvce2mYsyA
+
+        {"teamA":{"teammateRefs":[],"score":0,"scorersRefs":[]},"teamB":{"teammateRefs":[],"score":0,"scorersRefs":[]},"finished":false}
+    then: |
+        {
+          "teamA" : {
+            "teammateRefs" : [ ],
+            "score" : 0,
+            "scorersRefs" : [ ]
+          },
+          "teamB" : {
+            "teammateRefs" : [ ],
+            "score" : 0,
+            "scorersRefs" : [ ]
+          },
+          "finished" : false,
+          "_id" : "53eb29cee057e24aeb984b84"
+        }

@@ -1,0 +1,10 @@
+title: 002 GET games
+given:
+  - time: 2014-08-13T10:39:10.250+02:00
+  - collection: games
+    data: |
+
+wts:
+  - when: GET games
+    then: |
+        [ ]
