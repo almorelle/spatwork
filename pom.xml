@@ -108,6 +108,14 @@
     </dependencies>
 
     <build />
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-spatwork</id>
+            <name>bintray-spatwork</name>
+            <url>https://api.bintray.com/maven/almorelle/Spatwork/Spatwork</url>
+        </repository>
+    </distributionManagement>
 	
 	<profiles>
         <profile>
