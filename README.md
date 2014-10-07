@@ -9,6 +9,8 @@ Build with `mvn package` to create an executable jar (uberjar) or use the maven 
 
 Run with `java -jar spatwork-<version>.jar` or deploy the war in any application container.
 
+You can also use the dockerfile to deploy the app as a container. The docker container image uses the binaries deployed to [bintray] (https://bintray.com/almorelle/Spatwork/Spatwork/) instead of rebuilding them.
+
 You will need a [mongoDB](http://www.mongodb.org/) server running on localhost (you can use `-Pembedmongo` for the tests) or provide the URI and db name in the environment (retrieved with System.getEnv).
 * `MONGOHQ_DB_NAME` - Name of the database (e.g. restx-spatwork)
 * `MONGOHQ_URL` - MongoDB instance URI (e.g. mongodb://user:pass@server\.mongohq\.com/db_name)
