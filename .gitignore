@@ -3,6 +3,8 @@
 
 #Maven
 target/
+release.properties
+pom.xml.releaseBackup
 dependency-reduced-pom.xml
 
 #IntelliJ
