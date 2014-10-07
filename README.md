@@ -5,9 +5,9 @@ Simple REST API for keeping scores about who's the best in the office (just kidd
 
 [![Build Status](https://buildhive.cloudbees.com/job/almorelle/job/spatwork/badge/icon)](https://buildhive.cloudbees.com/job/almorelle/job/spatwork/)
 
-Build with `mvn package dependency:copy-dependencies`.
+Build with `mvn package` to create an executable jar (uberjar) or use the maven profile `-Pwebapp` to create a war.
 
-Run with `java -cp target/classes:target/dependency/* spatwork.AppServer`.
+Run with `java -jar spatwork-<version>.jar` or deploy the war in any application container.
 
 You will need a [mongoDB](http://www.mongodb.org/) server running on localhost (you can use `-Pembedmongo` for the tests) or provide the URI and db name in the environment (retrieved with System.getEnv).
 * `MONGOHQ_DB_NAME` - Name of the database (e.g. restx-spatwork)
@@ -27,4 +27,8 @@ You can provide video links for each recorded game. A `videos.json` file is expe
 
 ## Credits
 
-Built using [restx.io](http://restx.io) and integrates with mongoDB thanks to [jongo](http://jongo.org) API. Uses [userapp.io] (http://userapp.io) as well for authentication.
+Built using or relying on:
+* [restx.io](http://restx.io)
+* [jongo](http://jongo.org)
+* [userapp.io] (http://userapp.io)
+* [compose.io] (http://compose.io) (former mongohq)
