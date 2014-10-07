@@ -27,7 +27,6 @@ You can provide video links for each recorded game. A `videos.json` file is expe
 
 ## Credits
 
-Built using or relying on:
 * [restx.io](http://restx.io)
 * [jongo](http://jongo.org)
 * [userapp.io] (http://userapp.io)
