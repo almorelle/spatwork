@@ -4,8 +4,8 @@
 
     <groupId>com.github.almorelle</groupId>
     <artifactId>spatwork</artifactId>
-    <version>0.5.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <version>0.6.0-SNAPSHOT</version>
+    <packaging>${packaging.type}</packaging>
     <name>Spatwork</name>
 
     <issueManagement>
@@ -23,7 +23,10 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <maven.compiler.source>1.7</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <restx.version>0.32</restx.version>
+        <packaging.type>jar</packaging.type>
+        <project.main.classname>spatwork.AppServer</project.main.classname>
+        <restx.version>0.33.1</restx.version>
+        <userapp.version>1.0.0-usercontrib</userapp.version>
     </properties>
 
     <dependencies>
@@ -52,11 +55,13 @@
             <artifactId>restx-factory-admin</artifactId>
             <version>${restx.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.restx</groupId>
-            <artifactId>restx-monitor-admin</artifactId>
-            <version>${restx.version}</version>
-        </dependency>
+        <!--
+            <dependency>
+                <groupId>io.restx</groupId>
+                <artifactId>restx-monitor-admin</artifactId>
+                <version>${restx.version}</version>
+            </dependency>
+        -->
         <dependency>
             <groupId>io.restx</groupId>
             <artifactId>restx-server-jetty</artifactId>
@@ -98,67 +103,161 @@
         <dependency>
             <groupId>io.userapp</groupId>
             <artifactId>userapp-java</artifactId>
-            <version>1.0.0-usercontrib</version>
+            <version>${userapp.version}</version>
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <build />
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-spatwork</id>
+            <name>bintray-spatwork</name>
+            <url>https://api.bintray.com/maven/almorelle/Spatwork/Spatwork</url>
+        </repository>
+    </distributionManagement>
 	
 	<profiles>
-		<profile>
-			<id>embedmongo</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>com.github.joelittlejohn.embedmongo</groupId>
-						<artifactId>embedmongo-maven-plugin</artifactId>
-						<version>0.1.12</version>
-						<executions>
-							<execution>
-								<id>start</id>
-								<goals>
-									<goal>start</goal>
-								</goals>
-								<phase>process-test-classes</phase>
-								<configuration>
-									<port>27017</port> <!-- optional, default 27017 -->
-									<randomPort>false</randomPort> <!-- optional, default is false, if true allocates a random port and overrides embedmongo.port -->
-									<version>2.6.3</version>  <!-- optional, default 2.2.1 -->
-									<!--<databaseDirectory></databaseDirectory>   optional, default is a new dir in java.io.tmpdir -->
-									<logging>none</logging> <!-- optional (file|console|none), default console -->
-									<!--<logFile>${project.build.directory}/myfile.log</logFile>  optional, can be used when logging=file, default is ./embedmongo.log -->
-									<!--<logFileEncoding>utf-8</logFileEncoding>  optional, can be used when logging=file, default is utf-8 -->
-									<!--<proxyHost>myproxy.company.com</proxyHost>   optional, default is none -->
-									<!--<proxyPort>8080</proxyPort>   optional, default 80 -->
-									<!--<proxyUser>joebloggs</proxyUser>   optional, default is none -->
-									<!--<proxyPassword>pa55w0rd</proxyPassword>   optional, default is none -->
-									<!--<bindIp>127.0.0.1</bindIp>  optional, default is to listen on all interfaces -->
-								</configuration>
-							</execution>
-							<execution>
-								<id>stop</id>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-								<phase>prepare-package</phase>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+        <profile>
+            <id>embedmongo</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.joelittlejohn.embedmongo</groupId>
+                        <artifactId>embedmongo-maven-plugin</artifactId>
+                        <version>0.1.12</version>
+                        <executions>
+                            <execution>
+                                <id>start</id>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                                <phase>process-test-classes</phase>
+                                <configuration>
+                                    <port>27017</port> <!-- optional, default 27017 -->
+                                    <randomPort>false</randomPort> <!-- optional, default is false, if true allocates a random port and overrides embedmongo.port -->
+                                    <version>2.6.3</version>  <!-- optional, default 2.2.1 -->
+                                    <!--<databaseDirectory></databaseDirectory>   optional, default is a new dir in java.io.tmpdir -->
+                                    <logging>none</logging> <!-- optional (file|console|none), default console -->
+                                    <!--<logFile>${project.build.directory}/myfile.log</logFile>  optional, can be used when logging=file, default is ./embedmongo.log -->
+                                    <!--<logFileEncoding>utf-8</logFileEncoding>  optional, can be used when logging=file, default is utf-8 -->
+                                    <!--<proxyHost>myproxy.company.com</proxyHost>   optional, default is none -->
+                                    <!--<proxyPort>8080</proxyPort>   optional, default 80 -->
+                                    <!--<proxyUser>joebloggs</proxyUser>   optional, default is none -->
+                                    <!--<proxyPassword>pa55w0rd</proxyPassword>   optional, default is none -->
+                                    <!--<bindIp>127.0.0.1</bindIp>  optional, default is to listen on all interfaces -->
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>stop</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                                <phase>prepare-package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>webapp</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <packaging.type>war</packaging.type>
+            </properties>
+            <build>
+                <resources />
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.4</version>
+                        <configuration>
+                            <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>standalone</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <packaging.type>jar</packaging.type>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${basedir}/src/main/resources</directory>
+                        <includes>
+                            <include>logback.xml</include>
+                        </includes>
+                    </resource>
+                    <resource>
+                        <directory>${basedir}/src/main/webapp</directory>
+                        <targetPath>src/main/webapp</targetPath>
+                        <includes>
+                            <include>**/*</include>
+                        </includes>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <version>2.3</version>
+                        <configuration>
+                            <shadedArtifactAttached>false</shadedArtifactAttached>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <manifestEntries>
+                                        <Main-Class>${project.main.classname}</Main-Class>
+                                    </manifestEntries>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/services/restx.factory.FactoryMachine</resource>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
+                                    <resource>META-INF/README</resource>
+                                    <file>README.txt</file>
+                                </transformer>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>org.eclipse.jetty.orbit:javax.servlet</artifact>
+                                    <excludes>
+                                        <exclude>javax/servlet/**</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>shade</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 	</profiles>
 </project>
