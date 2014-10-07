@@ -14,7 +14,7 @@ RUN apt-get install -y curl
 RUN apt-get clean && rm -rf /var/lib/apt/lists
 
 # Download Spatwork
-RUN curl -Ls http://dl.bintray.com/almorelle/Spatwork/com/github/almorelle/spatwork/0.6.0/spatwork-0.6.0.jar
+RUN curl -s -o spatwork-0.6.0.jar -L http://dl.bintray.com/almorelle/Spatwork/com/github/almorelle/spatwork/0.6.0/spatwork-0.6.0.jar
 
 # Run
 expose 8081
