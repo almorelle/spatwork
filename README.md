@@ -9,9 +9,9 @@ Build with `mvn package` to create an executable jar (uberjar) or use the maven 
 
 Run with `java -jar spatwork-<version>.jar` or deploy the war in any application container.
 
-You can also use the dockerfile to deploy the app as a container. The docker container image uses the binaries deployed to [bintray] (https://bintray.com/almorelle/Spatwork/Spatwork/) instead of rebuilding them.
+The jar file is deployed to [Bintray] (https://bintray.com/almorelle/Spatwork/Spatwork/) and there is a docker image available on [Docker Hub] (https://registry.hub.docker.com/u/almorelle/spatwork/).
 
-You will need a [mongoDB](http://www.mongodb.org/) server running on localhost (you can use `-Pembedmongo` for the tests) or provide the URI and db name in the environment (retrieved with System.getEnv).
+You will need a [MongoDB](http://www.mongodb.org/) server running on localhost (you can use `-Pembedmongo` for the tests) or provide the URI and db name in the environment (retrieved with System.getEnv). I personnally have my database hosted at [compose.io] (http://compose.io) (former MongoHQ).
 * `MONGOHQ_DB_NAME` - Name of the database (e.g. restx-spatwork)
 * `MONGOHQ_URL` - MongoDB instance URI (e.g. mongodb://user:pass@server\.mongohq\.com/db_name)
 * `USERAPP_APP_ID` - UserApp Application ID (see [help.userapp.io] (http://help.userapp.io/customer/portal/articles/1322336-how-do-i-find-my-app-id-))
@@ -32,4 +32,3 @@ You can provide video links for each recorded game. A `videos.json` file is expe
 * [restx.io](http://restx.io)
 * [jongo](http://jongo.org)
 * [userapp.io] (http://userapp.io)
-* [compose.io] (http://compose.io) (former mongohq)
