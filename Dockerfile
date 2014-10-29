@@ -6,10 +6,15 @@ RUN apt-get update \
     && apt-get install -y curl openjdk-7-jre\
     && rm -rf /var/lib/apt/lists/*
 
+WORKDIR /home/spatwork
+
 # Download Spatwork
-RUN curl -s -o spatwork-0.6.0.jar -L http://dl.bintray.com/almorelle/Spatwork/com/github/almorelle/spatwork/0.6.0/spatwork-0.6.0.jar
+RUN curl -s -o /home/spatwork/spatwork-0.7.0-standalone.jar --create-dirs -L http://dl.bintray.com/almorelle/Spatwork/com/github/almorelle/spatwork/0.7.0/spatwork-0.7.0-standalone.jar
+
+# Add Frontend
+ADD src/main/webapp/ /home/spatwork/src/main/webapp/
 
 # Run
 expose 8081
 
-cmd ["java", "-jar", "spatwork-0.6.0.jar", "-Drestx.mode=prod"]
+cmd ["java", "-Drestx.mode=prod", "-jar", "spatwork-0.7.0-standalone.jar"]
