@@ -10,14 +10,20 @@ public class Player {
     @Id @ObjectId
     private String key;
 
+    // Player
     private String firstName;
     private String lastName;
 
+    // Arbitrary attribute (from 1 to 5)
+    private int grade = 3;
+
+    // Statistics built up over the games
     private int goals;
     private int wins;
     private int losses;
     private int draws;
 
+    // Membership
     private boolean subscription;
     private boolean certificate;
 
@@ -43,6 +49,14 @@ public class Player {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 
     public int getGoals() {
@@ -132,14 +146,15 @@ public class Player {
     public String toString() {
         return "Player{" +
                 "key='" + key + '\'' +
-                ", first_name='" + firstName + '\'' +
-                ", last_name='" + lastName + '\'' +
-                ", goals='" + goals + '\'' +
-                ", wins='" + wins + '\'' +
-                ", losses='" + losses + '\'' +
-                ", draws='" + draws + '\'' +
-                ", subscription='" + subscription + '\'' +
-                ", certificate='" + certificate + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", grade=" + grade +
+                ", goals=" + goals +
+                ", wins=" + wins +
+                ", losses=" + losses +
+                ", draws=" + draws +
+                ", subscription=" + subscription +
+                ", certificate=" + certificate +
                 '}';
     }
 }
