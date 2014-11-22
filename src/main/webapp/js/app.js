@@ -59,8 +59,11 @@ spatwork.config(function($routeProvider, RestangularProvider) {
     });
 });
 
-spatwork.run(function(user) {
+spatwork.run(function(user, $location) {
     user.init({ appId: '53aad3e4212d8', heartbeatInterval: 0 });
+    user.onAuthenticationSuccess(function() {
+        $location.path( "/admingame" );
+    });
 });
 
 spatwork.controller("AppCtrl", function($rootScope){
