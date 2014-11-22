@@ -68,15 +68,9 @@
 
         <div class="container text-center">
             <div class="btn-group">
-                <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                    &Eacute;quilibrer automatiquement <span class="caret"></span>
+                <button class="btn btn-xs btn-primary dropdown-toggle" type="button" ng-click="confirmEnd()">
+                    <i class="fa fa-gavel"></i> Finir le match
                 </button>
-                <ul class="dropdown-menu text-left">
-                    <li><a href="" ng-click="balanceTeams('points')"><i class="fa fa-random fa-fw"></i> Moyenne de points</a></li>
-                    <li><a href="" ng-click="balanceTeams('gpm')"><i class="fa fa-dribbble fa-fw"></i> Moyenne de buts par match</a></li>
-                    <li class="divider"></li>
-                    <li><a href="" ng-click="confirmEnd()"><i class="fa fa-gavel"></i> Finir le match</a></li>
-                </ul>
             </div>
         </div>
     </div>
