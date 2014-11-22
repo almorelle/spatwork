@@ -1,4 +1,8 @@
 /* app css stylesheet */
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
 
 .menu {
   list-style: none;
@@ -27,4 +31,8 @@
 .menu > li:nth-child(1):before {
   content: "";
   padding: 0;
+}
+
+.jumbotron {
+  background-color: #fff;
 }
