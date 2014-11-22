@@ -9,7 +9,7 @@ RUN apt-get update \
 WORKDIR /home/spatwork
 
 # Download Spatwork
-RUN curl -s -o /home/spatwork/spatwork-0.7.0-uberjar.jar --create-dirs -L http://dl.bintray.com/almorelle/Spatwork/com/github/almorelle/spatwork/0.7.0/spatwork-0.7.0-uberjar.jar
+ADD target/spatwork-uberjar.jar /home/spatwork/spatwork-uberjar.jar
 
 # Add Frontend
 ADD src/main/webapp/ /home/spatwork/src/main/webapp/
@@ -17,4 +17,4 @@ ADD src/main/webapp/ /home/spatwork/src/main/webapp/
 # Run
 expose 8081
 
-cmd ["java", "-jar", "spatwork-0.7.0-uberjar.jar"]
+cmd ["java", "-jar", "spatwork-uberjar.jar"]
