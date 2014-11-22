@@ -205,6 +205,7 @@
             </activation>
             <properties>
                 <project.packaging>jar</project.packaging>
+                <shadedClassifierName>uberjar</shadedClassifierName>
             </properties>
             <build>
                 <resources>
@@ -228,6 +229,7 @@
                         <configuration>
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <shadedClassifierName>uberjar</shadedClassifierName>
+                            <finalName>${project.artifactId}-${shadedClassifierName}</finalName>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
