@@ -13,11 +13,13 @@
                         <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['points', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Points = ( 3 x V + N ) + ( Buts x 0,05 )">Pts</a></th>
                         <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['wins', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Victoires">V</a></th>
                         <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['draws', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Nuls">N</a></th>
-                        <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Défaites">D</a></th>
+                        <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="D&eacute;faites">D</a></th>
                         <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts">Buts</a></th>
                         <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['gpm', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts / match">Bpm</a></th>
-                        <th class="text-center" style="width: 10%"><i class="fa fa-user-md" data-toggle="tooltip" title="Certificat Médical"></i></th>
-                        <th class="text-center" style="width: 10%"><i class="fa fa-euro" data-toggle="tooltip" title="Cotisation"></i></th>
+                        <th class="text-center" style="width: 5%"><i class="fa fa-user-md" data-toggle="tooltip" title="Certificat M&eacute;dical"></i></th>
+                        <th class="text-center" style="width: 5%"><i class="fa fa-euro" data-toggle="tooltip" title="Cotisation"></i></th>
+                        <th class="text-center" style="width: 5%" ng-show="user.authenticated"></th>
+                        <th class="text-center" style="width: 5%" ng-show="user.authenticated"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +37,12 @@
                         <td class="text-center">{{player.gpm | number:2}}</td>
                         <td class="text-center"><i class="fa {{player.certificate | checkmark}}"></i></td>
                         <td class="text-center"><i class="fa {{player.subscription | checkmark}}"></i></td>
+                        <td class="text-center" ng-show="user.authenticated">
+                            <button type="button" class="btn btn-warning btn-xs" ng-click="editPlayer(player)"><i class="fa fa-edit"></i></button>
+                        </td>
+                        <td class="text-center" ng-show="user.authenticated">
+                            <button type="button" class="btn btn-danger btn-xs" ng-click="destroyPlayer(player)"><i class="fa fa-trash-o"></i></button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -42,7 +50,44 @@
 
         <div class="alert alert-info alert-dismissable" ng-show="players.length == 0">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times"></i></button>
-            Aucun joueur enregistré pour l'instant.
+            Aucun joueur enregistr&eacute; pour l'instant.
         </div>
 
     </div><!-- /.container -->
+
+    <div id="editPlayerModal" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Modifier un joueur...</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form" role="form" novalidate>
+                        <div class="form-group">
+                            <label for="editFirstName">Pr&eacute;nom</label>
+                            <input type="text" class="form-control" ng-model="editedPlayer.firstName" id="editFirstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="editLastName">Nom</label>
+                            <input type="text" class="form-control" ng-model="editedPlayer.lastName" id="editLastName">
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <label class="checkbox-inline col-lg-4">
+                                    <input type="checkbox" ng-model="editedPlayer.certificate"> Certificat m&eacute;dical
+                                </label>
+                                <label class="checkbox-inline col-lg-4">
+                                    <input type="checkbox" ng-model="editedPlayer.subscription"> Cotisation
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" ng-click="updatePlayer()">Modifier</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->

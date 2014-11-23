@@ -9,7 +9,32 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
     }, function errorCallback() {
         alert("Oops unable to update server. Please refresh. :(");
     });
+
     $scope.predicate = ['-points', 'firstName'];
 
     $("[data-toggle='tooltip']").tooltip({placement: "top"});
+
+    $scope.destroyPlayer = function(player){
+        player.remove().then(function() {
+            $scope.players = _.without($scope.players, player);
+        }, function errorCallback(){
+            alert("Oooops unable to delete from server. Please refresh. :(");
+        });
+    }
+
+    $scope.editPlayer = function(player){
+        $scope.editedPlayer = Restangular.copy(player);
+        $('#editPlayerModal').modal('toggle');
+    }
+
+    $scope.updatePlayer = function(){
+        $scope.editedPlayer.put().then(function() {
+            $scope.players[_.indexOf($scope.players, _.findWhere($scope.players, {_id: $scope.editedPlayer._id}))] = $scope.editedPlayer;
+            $scope.editedPlayer = {};
+        }, function errorCallback(){
+            $scope.editedPlayer = {};
+            alert("Oooops unable to update from server. Please refresh. :(");
+        });
+        $('#editPlayerModal').modal('toggle');
+    }
 });
