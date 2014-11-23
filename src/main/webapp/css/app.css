@@ -36,3 +36,20 @@ body {
 .jumbotron {
   background-color: #fff;
 }
+
+.rating {
+  font-size: 175%;
+  padding: 0 0.5em;
+}
+
+.rating > a {
+  text-decoration: none;
+}
+
+.rating .rating-highlight, .rating.rating-highlight:hover {
+  color: #F4914E;
+}
+
+.rating .rating-normal, .rating.rating-normal:hover {
+  color: #3C3C3C;
+}
