@@ -40,12 +40,14 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, rankingServic
                 player.teamRef = "A";
                 $scope.game.teamA.totalgpm += player.gpm;
                 $scope.game.teamA.totalpts += player.points;
+                $scope.game.teamA.totalrating += player.rating;
                 player.scored = _.reduce($scope.game.teamA.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
                 player.ownGoals = _.reduce($scope.game.teamB.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
             } else if (_.contains($scope.game.teamB.teammateRefs, player._id)){
                 player.teamRef = "B";
                 $scope.game.teamB.totalgpm += player.gpm;
                 $scope.game.teamB.totalpts += player.points;
+                $scope.game.teamB.totalrating += player.rating;
                 player.scored = _.reduce($scope.game.teamB.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
                 player.ownGoals = _.reduce($scope.game.teamA.scorersRefs, function(memo, scorerRef){ return player._id == scorerRef ? memo+1 : memo; }, 0);
             } else {
@@ -61,13 +63,17 @@ var gameCtrl = controllers.controller("GameCtrl", function($scope, rankingServic
             $scope.selectedGame = index;
             $scope.game.teamA.totalgpm = 0;
             $scope.game.teamA.totalpts = 0;
+            $scope.game.teamA.totalrating = 0;
             $scope.game.teamB.totalgpm = 0;
             $scope.game.teamB.totalpts = 0;
+            $scope.game.teamB.totalrating = 0;
             attributeTeamAndGoals();
             $scope.game.teamA.averagegpm = $scope.game.teamA.totalgpm / $scope.game.teamA.teammateRefs.length;
             $scope.game.teamA.averagepts = $scope.game.teamA.totalpts / $scope.game.teamA.teammateRefs.length;
+            $scope.game.teamA.averagerating = $scope.game.teamA.totalrating / $scope.game.teamA.teammateRefs.length;
             $scope.game.teamB.averagegpm = $scope.game.teamB.totalgpm / $scope.game.teamB.teammateRefs.length;
             $scope.game.teamB.averagepts = $scope.game.teamB.totalpts / $scope.game.teamB.teammateRefs.length;
+            $scope.game.teamB.averagerating = $scope.game.teamB.totalrating / $scope.game.teamB.teammateRefs.length;
             $scope.pageStart = getPaginationStart($scope.selectedGame, $scope.games.length);
             var video = _.find($scope.videos, function(vid){return vid.id == index+1});
             $scope.game.hasVideo = (video !== undefined);

@@ -53,3 +53,12 @@ body {
 .rating .rating-normal, .rating.rating-normal:hover {
   color: #3C3C3C;
 }
+
+.teamrating {
+  color: #F4914E;
+}
+
+.tooltip-inner {
+    white-space:pre;
+    max-width:none;
+}

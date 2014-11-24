@@ -30,8 +30,9 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center">
                         <b class="panel-title">Team A </b>
-                        <span class="badge badge-active-primary" data-toggle="tooltip" title="stats de l'équipe ( buts | points )">
-                            {{game.teamA.averagegpm | number:2}} | {{game.teamA.averagepts | number:2}}
+                        <span class="badge badge-active-primary" data-toggle="tooltip"
+                              data-original-title="{{game.teamA.averagegpm | number:2}} buts par match | {{game.teamA.totalpts | number:2}} points">
+                            <teamrating teamrate="game.teamA.averagerating" max="5"></teamrating>
                         </span>
                     </div>
                     <ul class="list-group text-center">
@@ -51,8 +52,9 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center active">
                         <b class="panel-title">Team B</b>
-                        <span class="badge badge-active-primary" data-toggle="tooltip" title="stats de l'équipe ( buts | points )">
-                            {{game.teamB.averagegpm | number:2}} | {{game.teamB.averagepts | number:2}}
+                        <span class="badge badge-active-primary" data-toggle="tooltip"
+                              data-original-title="{{game.teamB.averagegpm | number:2}} buts par match | {{game.teamB.totalpts | number:2}} points">
+                            <teamrating teamrate="game.teamB.averagerating" max="5"></teamrating>
                         </span>
                     </div>
                     <ul class="list-group text-center">
