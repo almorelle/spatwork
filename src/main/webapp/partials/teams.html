@@ -71,12 +71,12 @@
         <div class="container text-center" ng-show="user.authenticated">
             <div class="btn-group">
                 <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                    &Eacute;quilibrer automatiquement <span class="caret"></span>
+                    &Eacute;quilibrer les &eacute;quipes <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu text-left">
-                    <li><a href="" ng-click="balanceTeams('points')"><i class="fa fa-random fa-fw"></i> Moyenne de points</a></li>
-                    <li><a href="" ng-click="balanceTeams('gpm')"><i class="fa fa-dribbble fa-fw"></i> Moyenne de buts par match</a></li>
-                    <li><a href="" ng-click="balanceTeams('rating')"><i class="fa fa-star fa-fw"></i> Moyenne de rating</a></li>
+                    <li><a href="" ng-click="balanceTeams('points')"><i class="fa fa-bar-chart fa-fw"></i> par nombre de points</a></li>
+                    <li><a href="" ng-click="balanceTeams('gpm')"><i class="fa fa-futbol-o fa-fw"></i> par nombre de buts par match</a></li>
+                    <li><a href="" ng-click="balanceTeams('rating')"><i class="fa fa-star fa-fw"></i> par rating des joueurs</a></li>
                 </ul>
             </div>
         </div>
