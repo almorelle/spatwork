@@ -16,6 +16,10 @@ public class Player {
 
     // Arbitrary attribute (from 1 to 5)
     private int rating = 3;
+    private int skills = 3;
+    private int stamina = 3;
+    private int defense = 3;
+
 
     // Statistics built up over the games
     private int goals;
@@ -57,6 +61,30 @@ public class Player {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public int getSkills() {
+        return skills;
+    }
+
+    public void setSkills(int skills) {
+        this.skills = skills;
+    }
+
+    public int getStamina() {
+        return stamina;
+    }
+
+    public void setStamina(int stamina) {
+        this.stamina = stamina;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 
     public int getGoals() {
@@ -149,6 +177,9 @@ public class Player {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", rating=" + rating +
+                ", skills=" + skills +
+                ", stamina=" + stamina +
+                ", defense=" + defense +
                 ", goals=" + goals +
                 ", wins=" + wins +
                 ", losses=" + losses +
