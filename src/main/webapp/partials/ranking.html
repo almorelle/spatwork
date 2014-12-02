@@ -16,6 +16,7 @@
                         <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['losses', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="D&eacute;faites">D</a></th>
                         <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['goals', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts">Buts</a></th>
                         <th class="text-center" style="width: 5%"><a href="" ng-click="predicate = ['gpm', 'firstName']; reverse=!reverse" data-toggle="tooltip" title="Buts / match">Bpm</a></th>
+                        <th class="text-center" style="width: 5%"><span data-toggle="tooltip" title="Statistiques">Stats</span></th>
                         <th class="text-center" style="width: 5%"><i class="fa fa-user-md" data-toggle="tooltip" title="Certificat M&eacute;dical"></i></th>
                         <th class="text-center" style="width: 5%"><i class="fa fa-euro" data-toggle="tooltip" title="Cotisation"></i></th>
                         <th class="text-center" style="width: 5%" ng-show="user.authenticated"></th>
@@ -35,6 +36,7 @@
                         <td class="text-center">{{player.losses}}</td>
                         <td class="text-center">{{player.goals}}</td>
                         <td class="text-center">{{player.gpm | number:2}}</td>
+                        <td class="text-center"><a href="" ng-click="displayStats(player)"><i class="fa fa-bar-chart"></i></a></td>
                         <td class="text-center"><i class="fa {{player.certificate | checkmark}}"></i></td>
                         <td class="text-center"><i class="fa {{player.subscription | checkmark}}"></i></td>
                         <td class="text-center" ng-show="user.authenticated">
@@ -123,6 +125,22 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
                     <button type="submit" class="btn btn-primary" ng-click="updatePlayer()">Modifier</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id="displayStatsModal" role="dialog" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Statistiques pour {{playerStats.firstName}}</h4>
+                </div>
+                <div class="modal-body center-block">
+                    <highchart id="plays" config="playsConfig"></highchart>
+                    <highchart id="attributes" config="attributesConfig"></highchart>
+                    <highchart id="goals" config="goalsConfig"></highchart>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

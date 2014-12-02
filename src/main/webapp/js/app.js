@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-var spatwork = angular.module('spatwork', ['ngRoute', 'spatworkControllers', 'spatworkFilters', 'spatworkServices', 'spatworkDirectives', 'UserApp']);
+var spatwork = angular.module('spatwork', ['ngRoute', 'spatworkControllers', 'spatworkFilters', 'spatworkServices', 'spatworkDirectives', 'UserApp', 'highcharts-ng']);
 
 //App controllers
 var controllers = angular.module('spatworkControllers', ['restangular']);
