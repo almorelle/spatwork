@@ -137,11 +137,38 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Statistiques pour {{playerStats.firstName}}</h4>
                 </div>
-                <div class="modal-body row">
-                    <div class="col-md-5"><highchart id="playsChart" config="playsChartConfig"></highchart></div>
-                    <div class="col-md-7"><highchart id="attributesChart" config="attributesChartConfig"></highchart></div>
-                    <div class="col-md-12"><highchart id="goalsChart" config="goalsChartConfig"></highchart></div>
+                <div class="modal-body">
+                    <div class="row vertical-align">
+                        <div class="col-md-6"><highchart id="playsChart" config="playsChartConfig"></highchart></div>
+                        <div class="col-md-6 xs-margin-up">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label>Skills (dribble, frappe)</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <teamrating teamrate="playerStats.skills" max="5"></teamrating>
+                                </div>
+                            </div><!-- /.row -->
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label>Endurance (cardio, motivation)</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <teamrating teamrate="playerStats.stamina" max="5"></teamrating>
+                                </div>
+                            </div><!-- /.row -->
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label>D&eacute;fense (gardien, d&eacute;fense)</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <teamrating teamrate="playerStats.defense" max="5"></teamrating>
+                                </div>
+                            </div><!-- /.row -->
+                        </div>
+                    </div><!-- /.row -->
+                    <highchart id="goalsChart" config="goalsChartConfig"></highchart>
                 </div>
-            </div><!-- /.modal-content -->
+            </div><!-- /.modal-body -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

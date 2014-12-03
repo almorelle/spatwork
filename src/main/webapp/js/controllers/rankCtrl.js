@@ -71,22 +71,13 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                 ]
              }];
 
-        $scope.attributesChartConfig.series = [{
-                type: 'area',
-                name: 'Attributs',
-                marker: {symbol: 'circle'},
-                data: [player.stamina, player.skills, player.defense, player.statLoss, player.statWin],
-                pointPlacement: 'on'
-            }];
-
-        $scope.scatterChartSeries = _.map($scope.scatterChartSeries,
+        $scope.goalsChartConfig.series = _.map($scope.scatterChartSeries,
             function(p) {
                 if(p.id == player._id) p.color='rgba(223, 83, 83, 1)';
                 else p.color='rgba(119, 152, 191, .5)';
                 return p;
             }
         );
-        $scope.goalsChartConfig.series = $scope.scatterChartSeries;
 
         $('#displayStatsModal').modal('toggle');
     }
@@ -101,7 +92,9 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                 plotBackgroundColor: null,
                 plotBorderWidth: 0,
                 plotShadow: false,
-                margin: [0, 0, 0, 0]
+                margin: [-80, 0, -100, 0],
+                spacing: [15, 10, 10, 10],
+                height: 200
             },
             title: {
                 text: 'Matches joués',
@@ -114,6 +107,8 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
              },
             plotOptions: {
                 pie: {
+                    slicedOffset: 0,
+                    size: '100%',
                     dataLabels: {
                         enabled: true,
                         distance: -50,
@@ -136,50 +131,6 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
          series: []
     };
 
-    $scope.attributesChartConfig = {
-         //This is not a highcharts object. It just looks a little like one!
-         options: {
-            //This is the Main Highcharts chart config. Any Highchart options are valid here.
-            //will be ovverriden by values specified below.
-            chart: {
-                polar: true,
-                type: 'line',
-                margin: [0, 0, 0, 0]
-            },
-            title: {
-                text: ''
-            },
-            pane: {
-                size: '80%'
-            },
-            xAxis: {
-                categories: ['Endurance', 'Technique', 'Défense', 'défaites', 'Victoires'],
-                tickmarkPlacement: 'on',
-                lineWidth: 0
-            },
-            yAxis: {
-                gridLineInterpolation: 'polygon',
-                lineWidth: 0,
-                min: 0,
-                tickInterval: 1,
-                max: 5,
-                showLastLabel: true
-            },
-            tooltip: {
-                shared: true,
-                pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
-            },
-            legend: {
-                enabled: false
-            }
-         },
-
-         //The below properties are watched separately for changes.
-
-         //Series object (optional) - a list of series using normal highcharts series options.
-        series: []
-    };
-
     $scope.goalsChartConfig = {
          //This is not a highcharts object. It just looks a little like one!
          options: {
@@ -187,13 +138,11 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
             //will be ovverriden by values specified below.
             chart: {
                 type: 'bubble',
-                zoomType: 'xy'
+                zoomType: 'xy',
+                spacing: [50, 10, 10, 10],
             },
             title: {
                 text: 'Nombre de buts par matches joués'
-            },
-            pane: {
-                size: '80%'
             },
             xAxis: {
                 title: {
@@ -248,9 +197,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
     };
 
     $('#displayStatsModal').on('shown.bs.modal', function() {
-        console.log("reflowing");
         $('#playsChart').highcharts().reflow();
-        $('#attributesChart').highcharts().reflow();
         $('#goalsChart').highcharts().reflow();
     });
 });

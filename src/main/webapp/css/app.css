@@ -37,6 +37,20 @@ body {
   background-color: #fff;
 }
 
+ /* Small devices (tablets, 768px and up) */
+ @media (min-width: 768px) {
+     .vertical-align {
+         display: flex;
+         align-items: center;
+     }
+ }
+
+ @media screen and (max-width: 768px) {
+     .xs-margin-up {
+         margin-top: 20%;
+     }
+ }
+
 .rating {
   font-size: 175%;
   padding: 0 0.5em;
