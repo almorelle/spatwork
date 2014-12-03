@@ -18,10 +18,11 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                 name: $scope.players[i].firstName,
                 marker: {symbol: 'circle'},
                 color: 'rgba(119, 152, 191, .5)',
-                data: [{
-                    x: $scope.players[i].played,
-                    y: $scope.players[i].goals
-                }]
+                data: [[
+                    $scope.players[i].played,
+                    $scope.players[i].goals,
+                    $scope.players[i].points
+                ]]
             });
         }
     }, function errorCallback() {
@@ -75,7 +76,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                     text: 'Matches joués',
                     align: 'center',
                     verticalAlign: 'middle',
-                    y: 50
+                    y: 80
                 },
                  tooltip: {
                      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -110,13 +111,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                     ['Défaites', player.losses],
                     ['Nuls', player.draws]
                 ]
-             }],
-
-             //size (optional) if left out the chart will default to size of the div or something sensible.
-             size: {
-               width: 350,
-               height: 350
-             }
+             }]
         };
 
         $scope.attributesConfig = {
@@ -130,8 +125,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                     margin: [0, 0, 0, 0]
                 },
                 title: {
-                    text: 'Attributs',
-                    x: -80
+                    text: ''
                 },
                 pane: {
                     size: '80%'
@@ -164,15 +158,10 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
             series: [{
                 type: 'area',
                 name: 'Attributs',
+                marker: {symbol: 'circle'},
                 data: [player.stamina, player.skills, player.defense, player.statLoss, player.statWin],
                 pointPlacement: 'on'
-            }],
-
-            //size (optional) if left out the chart will default to size of the div or something sensible.
-            size: {
-                width: 350,
-                height: 350
-            }
+            }]
         };
 
         $scope.goalsConfig = {
@@ -181,7 +170,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                 //This is the Main Highcharts chart config. Any Highchart options are valid here.
                 //will be ovverriden by values specified below.
                 chart: {
-                    type: 'scatter',
+                    type: 'bubble',
                     zoomType: 'xy'
                 },
                 title: {
@@ -210,7 +199,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                     enabled: false
                 },
                 plotOptions: {
-                    scatter: {
+                    bubble: {
                         marker: {
                             radius: 5,
                             states: {
@@ -229,7 +218,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                         },
                         tooltip: {
                             headerFormat: '<b>{series.name}</b><br>',
-                            pointFormat: '{point.y} buts en {point.x} matchs'
+                            pointFormat: '{point.y} buts en {point.x} matchs et {point.z} points'
                         }
                     }
                 }
@@ -239,13 +228,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
 
              //Series object (optional) - a list of series using normal highcharts series options.
 
-        series: $scope.scatterChartSeries,
-
-            //size (optional) if left out the chart will default to size of the div or something sensible.
-            size: {
-                width: 480,
-                height: 350
-            }
+            series: $scope.scatterChartSeries
         };
 
         $scope.scatterChartSeries = _.map($scope.scatterChartSeries,
@@ -253,8 +236,16 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                 if(p.id == player._id) p.color='rgba(223, 83, 83, 1)';
                 else p.color='rgba(119, 152, 191, .5)';
                 return p;
-            });
+            }
+        );
 
         $('#displayStatsModal').modal('toggle');
     }
+
+    $('#displayStatsModal').on('shown.bs.modal', function() {
+        console.log("reflowing");
+        $('#playsChart').highcharts().reflow();
+        $('#attributesChart').highcharts().reflow();
+        $('#goalsChart').highcharts().reflow();
+    });
 });

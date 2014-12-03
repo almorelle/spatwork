@@ -137,10 +137,10 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Statistiques pour {{playerStats.firstName}}</h4>
                 </div>
-                <div class="modal-body center-block">
-                    <highchart id="plays" config="playsConfig"></highchart>
-                    <highchart id="attributes" config="attributesConfig"></highchart>
-                    <highchart id="goals" config="goalsConfig"></highchart>
+                <div class="modal-body row">
+                    <div class="col-md-5"><highchart id="playsChart" config="playsConfig"></highchart></div>
+                    <div class="col-md-7"><highchart id="attributesChart" config="attributesConfig"></highchart></div>
+                    <div class="col-md-12"><highchart id="goalsChart" config="goalsConfig"></highchart></div>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
