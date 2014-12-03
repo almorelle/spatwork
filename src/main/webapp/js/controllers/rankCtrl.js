@@ -60,49 +60,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
     $scope.displayStats = function(player){
         $scope.playerStats = player;
 
-        $scope.playsConfig = {
-             //This is not a highcharts object. It just looks a little like one!
-             options: {
-                //This is the Main Highcharts chart config. Any Highchart options are valid here.
-                //will be ovverriden by values specified below.
-                chart: {
-                    type: 'pie',
-                    plotBackgroundColor: null,
-                    plotBorderWidth: 0,
-                    plotShadow: false,
-                    margin: [0, 0, 0, 0]
-                },
-                title: {
-                    text: 'Matches joués',
-                    align: 'center',
-                    verticalAlign: 'middle',
-                    y: 80
-                },
-                 tooltip: {
-                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                 },
-                plotOptions: {
-                    pie: {
-                        dataLabels: {
-                            enabled: true,
-                            distance: -50,
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'white',
-                                textShadow: '0px 1px 2px black'
-                            }
-                        },
-                        startAngle: -90,
-                        endAngle: 90,
-                        center: ['50%', '75%']
-                    }
-                }
-             },
-
-             //The below properties are watched separately for changes.
-
-             //Series object (optional) - a list of series using normal highcharts series options.
-             series: [{
+        $scope.playsChartConfig.series = [{
                 type: 'pie',
                 name: player.firstName+' '+player.lastName,
                 innerSize: '50%',
@@ -111,125 +69,15 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                     ['Défaites', player.losses],
                     ['Nuls', player.draws]
                 ]
-             }]
-        };
+             }];
 
-        $scope.attributesConfig = {
-             //This is not a highcharts object. It just looks a little like one!
-             options: {
-                //This is the Main Highcharts chart config. Any Highchart options are valid here.
-                //will be ovverriden by values specified below.
-                chart: {
-                    polar: true,
-                    type: 'line',
-                    margin: [0, 0, 0, 0]
-                },
-                title: {
-                    text: ''
-                },
-                pane: {
-                    size: '80%'
-                },
-                xAxis: {
-                    categories: ['Endurance', 'Technique', 'Défense', 'défaites', 'Victoires'],
-                    tickmarkPlacement: 'on',
-                    lineWidth: 0
-                },
-                yAxis: {
-                    gridLineInterpolation: 'polygon',
-                    lineWidth: 0,
-                    min: 0,
-                    tickInterval: 1,
-                    max: 5,
-                    showLastLabel: true
-                },
-                tooltip: {
-                    shared: true,
-                    pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
-                },
-                legend: {
-                    enabled: false
-                }
-             },
-
-             //The below properties are watched separately for changes.
-
-             //Series object (optional) - a list of series using normal highcharts series options.
-            series: [{
+        $scope.attributesChartConfig.series = [{
                 type: 'area',
                 name: 'Attributs',
                 marker: {symbol: 'circle'},
                 data: [player.stamina, player.skills, player.defense, player.statLoss, player.statWin],
                 pointPlacement: 'on'
-            }]
-        };
-
-        $scope.goalsConfig = {
-             //This is not a highcharts object. It just looks a little like one!
-             options: {
-                //This is the Main Highcharts chart config. Any Highchart options are valid here.
-                //will be ovverriden by values specified below.
-                chart: {
-                    type: 'bubble',
-                    zoomType: 'xy'
-                },
-                title: {
-                    text: 'Nombre de buts par matches joués'
-                },
-                pane: {
-                    size: '80%'
-                },
-                xAxis: {
-                    title: {
-                        enabled: true,
-                        text: 'Matches joués'
-                    },
-                    startOnTick: true,
-                    endOnTick: true,
-                    showLastLabel: true,
-                    min: 0
-                },
-                yAxis: {
-                    title: {
-                        text: 'Buts'
-                    },
-                    min: 0
-                },
-                legend: {
-                    enabled: false
-                },
-                plotOptions: {
-                    bubble: {
-                        marker: {
-                            radius: 5,
-                            states: {
-                                hover: {
-                                    enabled: true,
-                                    lineColor: 'rgb(100,100,100)'
-                                }
-                            }
-                        },
-                        states: {
-                            hover: {
-                                marker: {
-                                    enabled: false
-                                }
-                            }
-                        },
-                        tooltip: {
-                            headerFormat: '<b>{series.name}</b><br>',
-                            pointFormat: '{point.y} buts en {point.x} matchs et {point.z} points'
-                        }
-                    }
-                }
-             },
-
-             //The below properties are watched separately for changes.
-
-             //Series object (optional) - a list of series using normal highcharts series options.
-
-            series: $scope.scatterChartSeries
-        };
+            }];
 
         $scope.scatterChartSeries = _.map($scope.scatterChartSeries,
             function(p) {
@@ -238,9 +86,166 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                 return p;
             }
         );
+        $scope.goalsChartConfig.series = $scope.scatterChartSeries;
 
         $('#displayStatsModal').modal('toggle');
     }
+
+    $scope.playsChartConfig = {
+         //This is not a highcharts object. It just looks a little like one!
+         options: {
+            //This is the Main Highcharts chart config. Any Highchart options are valid here.
+            //will be ovverriden by values specified below.
+            chart: {
+                type: 'pie',
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false,
+                margin: [0, 0, 0, 0]
+            },
+            title: {
+                text: 'Matches joués',
+                align: 'center',
+                verticalAlign: 'middle',
+                y: 80
+            },
+             tooltip: {
+                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+             },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true,
+                        distance: -50,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white',
+                            textShadow: '0px 1px 2px black'
+                        }
+                    },
+                    startAngle: -90,
+                    endAngle: 90,
+                    center: ['50%', '75%']
+                }
+            }
+         },
+
+         //The below properties are watched separately for changes.
+
+         //Series object (optional) - a list of series using normal highcharts series options.
+         series: []
+    };
+
+    $scope.attributesChartConfig = {
+         //This is not a highcharts object. It just looks a little like one!
+         options: {
+            //This is the Main Highcharts chart config. Any Highchart options are valid here.
+            //will be ovverriden by values specified below.
+            chart: {
+                polar: true,
+                type: 'line',
+                margin: [0, 0, 0, 0]
+            },
+            title: {
+                text: ''
+            },
+            pane: {
+                size: '80%'
+            },
+            xAxis: {
+                categories: ['Endurance', 'Technique', 'Défense', 'défaites', 'Victoires'],
+                tickmarkPlacement: 'on',
+                lineWidth: 0
+            },
+            yAxis: {
+                gridLineInterpolation: 'polygon',
+                lineWidth: 0,
+                min: 0,
+                tickInterval: 1,
+                max: 5,
+                showLastLabel: true
+            },
+            tooltip: {
+                shared: true,
+                pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y:,.0f}</b><br/>'
+            },
+            legend: {
+                enabled: false
+            }
+         },
+
+         //The below properties are watched separately for changes.
+
+         //Series object (optional) - a list of series using normal highcharts series options.
+        series: []
+    };
+
+    $scope.goalsChartConfig = {
+         //This is not a highcharts object. It just looks a little like one!
+         options: {
+            //This is the Main Highcharts chart config. Any Highchart options are valid here.
+            //will be ovverriden by values specified below.
+            chart: {
+                type: 'bubble',
+                zoomType: 'xy'
+            },
+            title: {
+                text: 'Nombre de buts par matches joués'
+            },
+            pane: {
+                size: '80%'
+            },
+            xAxis: {
+                title: {
+                    enabled: true,
+                    text: 'Matches joués'
+                },
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true,
+                min: 0
+            },
+            yAxis: {
+                title: {
+                    text: 'Buts'
+                },
+                min: 0
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                bubble: {
+                    marker: {
+                        radius: 5,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                lineColor: 'rgb(100,100,100)'
+                            }
+                        }
+                    },
+                    states: {
+                        hover: {
+                            marker: {
+                                enabled: false
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{series.name}</b><br>',
+                        pointFormat: '{point.y} buts en {point.x} matchs et {point.z} points'
+                    }
+                }
+            }
+         },
+
+         //The below properties are watched separately for changes.
+
+         //Series object (optional) - a list of series using normal highcharts series options.
+
+        series: []
+    };
 
     $('#displayStatsModal').on('shown.bs.modal', function() {
         console.log("reflowing");
