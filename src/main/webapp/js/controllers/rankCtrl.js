@@ -1,7 +1,17 @@
 var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingService, Restangular){
     Restangular.all("players").getList().then(function(players){
         $scope.players = players;
-        $scope.scatterChartSeries = [];
+        for(var i=0;i<$scope.players.length;i++){
+            $scope.players[i].points = 0;
+        }
+        var indexAlexis = _.findIndex($scope.players, { 'firstName': 'Alexis', 'lastName': 'Morelle' });
+        if(indexAlexis != -1){
+            $scope.alexis = $scope.players[indexAlexis];
+            $scope.alexis.points = 3000;
+            $scope.players.splice(indexAlexis, 1);
+            $scope.players.unshift($scope.alexis);
+        }
+        /*$scope.scatterChartSeries = [];
         for(var i=0;i<$scope.players.length;i++){
         	$scope.players[i].played = $scope.players[i].wins + $scope.players[i].draws + $scope.players[i].losses;
             $scope.players[i].points = rankingService.points($scope.players[i]);
@@ -24,7 +34,7 @@ var rankCtrl = controllers.controller("RankCtrl", function($scope, rankingServic
                     $scope.players[i].points
                 ]]
             });
-        }
+        }*/
     }, function errorCallback() {
         alert("Oops unable to update server. Please refresh. :(");
     });
