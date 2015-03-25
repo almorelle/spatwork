@@ -72,13 +72,10 @@ var adminCtrl = controllers.controller("AdminCtrl", function($scope, rankingServ
         }, function errorCallback() {
             alert("Oooops unable to update server. Please refresh. :(");
         });
-        $('#goalModal').modal('toggle');
     }
 
     //Reset the scoring parameters and open up the goal form.
     $scope.goal = function(player){
-        $scope.selectedPlayer = player;
-        $scope.oppositeTeamRef = (player.teamRef == 'A') ? 'B' : 'A' ;
         $('#goalModal').modal('toggle');
     };
 

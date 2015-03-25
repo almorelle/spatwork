@@ -31,20 +31,6 @@ spatwork.config(function($routeProvider, RestangularProvider) {
     });
 
     $routeProvider
-        .when('/games', {
-            templateUrl: 'partials/games.html',
-            controller: 'GameCtrl',
-            public: true
-    });
-
-    $routeProvider
-        .when('/admingame', {
-            templateUrl: 'partials/admin.html',
-            controller: 'AdminCtrl',
-            hasPermission: 'admin'
-    });
-
-    $routeProvider
         .when('/login', {
             templateUrl: 'partials/login.html',
             login: true
@@ -62,7 +48,7 @@ spatwork.config(function($routeProvider, RestangularProvider) {
 spatwork.run(function(user, $location) {
     user.init({ appId: '53aad3e4212d8', heartbeatInterval: 0 });
     user.onAuthenticationSuccess(function() {
-        $location.path( "/admingame" );
+        $location.path( "/teams" );
     });
 });
 

@@ -1,14 +1,8 @@
 	<!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="row">
-            <div class="col-xs-4 col-md-4 col-md-offset-1 text-right">
-                <h1>{{game.teamA.score}}</h1>
-            </div>
-            <div class="col-xs-4 col-md-2 text-center">
+            <div class="text-center">
                 <h1><i class="fa fa-trophy text-warning fa-lg"></i></h1>
-            </div>
-            <div class="col-xs-4 col-md-4 text-left">
-                <h1>{{game.teamB.score}}</h1>
             </div>
         </div>
 
@@ -27,21 +21,16 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center">
                         <b class="panel-title">Team A </b>
-                        <span class="badge badge-active-primary" data-toggle="tooltip"
-                              data-original-title="{{game.teamA.averagegpm | number:2}} buts par match | {{game.teamA.totalpts | number:2}} points">
+                        <span class="badge badge-active-primary">
                             <teamrating teamrate="game.teamA.averagerating" max="5"></teamrating>
                         </span>
                     </div>
-                    <ul class="list-group text-center">
-                        <li class="list-group-item" ng-show="game.teamA.teammateRefs.length==0">Aucun</li>
-                        <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
+                    <div class="list-group text-center">
+                        <a href="" class="list-group-item" ng-show="game.teamA.teammateRefs.length==0">Aucun</a>
+                        <a href="" ng-click="changeTeam(player)" class="list-group-item" ng-repeat="player in players | filter:{teamRef:'A'} | orderBy:'firstName'">
                             {{player.firstName}}
-                            <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
-                            <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
-                            <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
-                            (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
-                        </li>
-                    </ul>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -49,38 +38,45 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading text-center active">
                         <b class="panel-title">Team B</b>
-                        <span class="badge badge-active-primary" data-toggle="tooltip"
-                              data-original-title="{{game.teamB.averagegpm | number:2}} buts par match | {{game.teamB.totalpts | number:2}} points">
+                        <span class="badge badge-active-primary">
                             <teamrating teamrate="game.teamB.averagerating" max="5"></teamrating>
                         </span>
                     </div>
-                    <ul class="list-group text-center">
-                        <li class="list-group-item" ng-show="game.teamB.teammateRefs.length==0">Aucun</li>
-                        <li class="list-group-item" ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
+                    <div class="list-group text-center">
+                        <a href="" class="list-group-item" ng-show="game.teamB.teammateRefs.length==0">Aucun</a>
+                        <a href="" ng-click="changeTeam(player)" class="list-group-item" ng-repeat="player in players | filter:{teamRef:'B'} | orderBy:'firstName'">
                             {{player.firstName}}
-                            <i class="fam-sport-soccer" ng-show="player.scored > 0"></i>
-                            <span ng-show="player.scored > 1"> (x{{player.scored}})</span>
-                            <span ng-show="player.ownGoals > 0"><i class="fam-sport-soccer-danger"></i>
-                            (CSC<span ng-show="player.ownGoals > 1"> x{{player.ownGoals}}</span>)</span>
-                        </li>
-                    </ul>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="container text-center" ng-show="user.authenticated">
             <div class="btn-group">
-                <button class="btn btn-xs btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                    &Eacute;quilibrer les &eacute;quipes <span class="caret"></span>
+                <button class="btn btn-xs btn-primary" type="button" ng-click="balanceTeams('rating')">
+                    <i class="fa fa-random"></i> &Eacute;quilibrer les &eacute;quipes
                 </button>
-                <ul class="dropdown-menu text-left">
-                    <li><a href="" ng-click="balanceTeams('points')"><i class="fa fa-bar-chart fa-fw"></i> par nombre de points</a></li>
-                    <li><a href="" ng-click="balanceTeams('gpm')"><i class="fa fa-futbol-o fa-fw"></i> par nombre de buts par match</a></li>
-                    <li><a href="" ng-click="balanceTeams('rating')"><i class="fa fa-star fa-fw"></i> par rating des joueurs</a></li>
-                </ul>
+                <button class="btn btn-xs btn-primary dropdown-toggle" type="button" ng-click="confirmEnd()">
+                    <i class="fa fa-gavel"></i> Finir le match
+                </button>
             </div>
         </div>
     </div>
+
+    <div id="endModal" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="modal-title">Finir le match ?</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" ng-click="end()">OK</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 
 
